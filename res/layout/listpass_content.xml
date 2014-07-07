@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="3dp"
+     >
+
+        <TextView
+            android:id="@+id/listpass_content_passNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/listpass_content_passNumber_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/listpass_content_name"
+            android:layout_alignParentLeft="true"
+            android:text="通行证号："
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/listpass_content_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/listpass_delete_btn"
+            android:layout_alignBottom="@+id/listpass_delete_btn"
+            android:layout_alignParentLeft="true"
+            android:text="姓名："
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/listpass_delete_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="28dp"
+            android:background="@drawable/listpass_content_del_btn_img" />
+
+        <TextView
+            android:id="@+id/listpass_content_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/listpass_delete_btn"
+            android:layout_alignTop="@+id/listpass_delete_btn"
+            android:layout_toLeftOf="@+id/listpass_delete_btn"
+            android:layout_toRightOf="@+id/listpass_content_name_label"
+            android:gravity="center|left"
+            android:textSize="16sp" />
+        
+</RelativeLayout>

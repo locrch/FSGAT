@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">佛山港澳通</string>
+    <string name="action_settings">Settings</string>
+       <string name="title_activity_user_main">用户首页</string>
+    <string name="title_activity_register">注册</string>
+    <string name="title_activity_login">登录</string>
+    <string name="title_activity_change_pass">修改地址</string>
+    <string name="title_activity_add_passport">绑定证件</string>
+    <string name="title_activity_list_pass">通行证列表</string>
+    <string name="title_activity_addpass">添加证件</string>
+    <string name="title_activity_addaddress">添加地址</string>
+    <string name="title_activity_list_address">地址列表</string>
+	<string name="toast_flase_msg">连接失败！</string>
+	<string name="banzheng_place">
+	    1,佛山市公安局出入境管理支队,佛山市禅城区汾江中路215号创业大厦2层,113.114744,23.01971,(0757)82117172|
+	    2,佛山市公安局高明分局出入境管理大队,佛山市高明区荷城文明路283号,112.887484,22.904758,(0757)88828430|
+	    3,佛山市公安局南海分局出入境管理大队,佛山市南海区桂城天佑三路1号,113.148146,23.030952,(0757)86334531|
+	 	4,佛山市公安局三水分局出入境管理大队,佛山市三水区西南街道贤兴路1号,112.888202,23.178964,(0757)87732403|
+	 	5,佛山市公安局禅城分局出入境管理大队,佛山市禅城区魁奇路澜石（国际）金属交易中心4楼B区行政服务大厅,113.121134,22.997531,(0757)9681680|
+	    6,南海九江前移受理点（只受理港澳通行证）,佛山市南海区九江镇江滨二路九江镇政府后面,113.000461,22.837669,(0757)86509206|
+	 	7,南海罗村前移受理点（只受理港澳通行证）,佛山市南海区罗村镇府前路3号罗村行政服务中心二楼,113.059623,23.064232,(0757)81262233|
+	 	8,南海丹灶前移受理点（只受理港澳通行证）,佛山市南海区金沙城区金沙大道金兴路7号（丹灶行政服务中心二楼）,112.966984,23.06848,(0757)85433863|
+	 	9,南海狮山前移受理点（只受理港澳通行证）,佛山市南海区狮山镇狮城路3号（狮山行政服务中心一楼）,113.015371,23.128823,(0757)86681035|
+	 	10,南海西樵前移受理点（只受理港澳通行证）,佛山市南海区西樵镇樵高路63号西樵派出所侧,112.974235,22.954801,(0757)86895850|	 	
+	 	11,南海大沥前移受理点（只受理港澳通行证）,佛山市南海区大沥振兴路54号（大沥行政服务中心三楼）,113.127633,23.114664,(0757)85592626|	 	
+	 	12,南海里水前移受理点（只受理港澳通行证）,佛山市南海区新兴路15号（里水行政服务中心二楼） ,113.17063,23.203762,(0757)85609919
+	</string>
+	<string name="export_place_hk">
+	   1,罗湖口岸,广东省深圳市罗湖区南湖街道人民南路,114.124783,22.53496,06:30-24:00|
+	   2,皇岗口岸,广东省深圳市福田区皇岗南路皇岗口岸,114.080374,22.524486,00:00-24:00|
+	   3,福田口岸,广东省深圳市福田区裕亨路(近保税区东侧),114.076445,22.52129,06:30-22:30|
+	   4,蛇口口岸,广东省深圳市工业八路269,113.925901,22.506783,06:30-22:00|
+	   5,深圳湾口岸,广东省深圳市南山区东四路(近东滨路),113.956056,22.508945,06:30-24:00|
+	   6,文锦渡口岸,广东省深圳市锦联路28号交管大楼,114.143,22.548095,07:00-22:00|
+	   7,沙头角口岸（盐田口岸）,广东省深圳市沙深路口岸办公大楼4楼,114.234425,22.555922,07:00-20:00|
+	   8,机场口岸,广东省深圳市宝安区机场高速	,113.8257,22.652471,00:00-24:00
+	</string>
+	<string name="export_place_macau">
+	 1,拱北口岸,广东省珠海市香洲区拱北迎宾南路1003号,113.560588,22.221558,07:00-24:00|
+	 2,横琴口岸,广东省珠海市香洲区环岛路横琴口岸,113.554486,22.143555,09:00-20:00|
+	 3,湾仔口岸,广东省珠海市香洲区南湾大道,113.541046,22.20098,08:15-16:15|
+	 4,茂盛围口岸,广东省珠海市香洲区中心路珠澳跨境工业园区（拱北昌盛桥下）,113.543178,22.214657,00:00-24:00|
+	 5,九洲港口,广东省珠海市香洲区情侣南路,113.59952,22.244634,07:30-23:00|
+	 6,斗门口岸,广东省珠海市斗门区斗门港路2,113.34088,22.275916,15:40检放旅客|
+	</string>
+	<string name="zhuhaiexport">
+	    http://old.zhbj.gov.cn/Client/PortInfo.aspx?ID=417|
+		http://old.zhbj.gov.cn/Client/PortInfo.aspx?ID=478|
+		http://old.zhbj.gov.cn/Client/PortInfo.aspx?ID=232|
+		http://old.zhbj.gov.cn/Client/PortInfo.aspx?ID=351|
+		http://old.zhbj.gov.cn/Client/PortInfo.aspx?ID=233|
+		http://old.zhbj.gov.cn/Client/PortInfo.aspx?ID=270|
+	</string> 
+	<string name="shenzhenexport">http://www.szbj.gov.cn/webStation/page/web/</string>
+	<string name="applystateurl">http://www.gdcrj.com/wsyw/tcustomer/tcustomer.do?method=find&amp;applyid=</string>
+	<string name="realtimeapplystate">http://www.gdcrj.com/message/transact.do?method=viewds&amp;city=440600000000</string>
+	<string name="getdatetime">http://www.gdcrj.com/wsysl/gzRegionTbAction/getPredateByDwdm.do?cityCode=440600000000</string>
+</resources>

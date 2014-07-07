@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:gravity="end"
+    android:orientation="vertical" >
+  
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rg_tab"
+        android:layout_weight="1" />
+  
+    <RadioGroup
+        android:id="@+id/rg_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#F8F8F8"
+        android:orientation="horizontal" >
+  
+	   	<RadioButton
+	   	    android:id="@+id/rg_ta1"
+	   	    style="@style/tab_style"
+	   	    android:background="@drawable/ywbl_selector" />
+  
+        <RadioButton
+            android:id="@+id/rg_ta2"
+            style="@style/tab_style"
+            android:background="@drawable/zhcx_selector" />
+  
+        <RadioButton
+            android:id="@+id/rg_ta3"
+            style="@style/tab_style"
+            android:background="@drawable/bmfw_selector" />
+  
+        <RadioButton
+            android:id="@+id/rg_ta4"
+            style="@style/tab_style"
+            android:background="@drawable/yhhd_selector" />
+  
+        <RadioButton
+            android:id="@+id/rg_ta5"
+            style="@style/tab_style"
+            android:background="@drawable/grzx_selector" />
+  
+    </RadioGroup>  
+</RelativeLayout>  

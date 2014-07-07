@@ -1,0 +1,200 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_padding_width"
+        android:paddingRight="@dimen/activity_padding_width"
+         >
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:orientation="vertical"
+            android:background="@drawable/frame_line" >
+
+            <RelativeLayout
+                android:id="@+id/reg_username_lay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/list_otherstore_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignBottom="@+id/reg_username"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:text="用  户  名"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/reg_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/list_otherstore_phone"
+                    android:ems="10"
+                    android:hint="请输入本人手机号码"
+                    android:paddingLeft="5dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/reg_password_lay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp" >
+
+                <EditText
+                    android:id="@+id/reg_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/textView4"
+                    android:ems="10"
+                    android:hint="请输入6位数密码"
+                    android:inputType="textPassword"
+                    android:paddingLeft="5dp" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/reg_password"
+                    android:layout_alignBottom="@+id/reg_password"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:text="密        码" 
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/reg_password_con_lay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp" >
+
+                <EditText
+                    android:id="@+id/reg_password_con"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/infos_text"
+                    android:ems="10"
+                    android:hint="请重新输入6位数密码"
+                    android:inputType="textPassword"
+                    android:paddingLeft="5dp" />
+
+                <TextView
+                    android:id="@+id/infos_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="确认密码" 
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/reg_card_lay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:visibility="gone" >
+
+                <EditText
+                    android:id="@+id/card_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/seria_num"
+                    android:ems="10"
+                    android:hint="请输入18位身份证号码"
+                    android:paddingLeft="5dp" />
+
+                <TextView
+                    android:id="@+id/seria_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/card_num"
+                    android:layout_alignBottom="@+id/card_num"
+                    android:layout_alignParentLeft="true"
+                    android:text="身份证号" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/reg_ver_lay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp" >
+
+                <EditText
+                    android:id="@+id/reg_captcha"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/reg_getcaptacha"
+                    android:layout_toRightOf="@+id/list_otherstore_3"
+                    android:layout_weight="1"
+                    android:digits="1234567890"
+                    android:ems="10"
+                    android:hint="请输入验证码"
+                    android:inputType="number"
+                    android:paddingLeft="5dp" >
+
+                    <requestFocus />
+                </EditText>
+
+                <TextView
+                    android:id="@+id/list_otherstore_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/reg_captcha"
+                    android:layout_alignBottom="@+id/reg_captcha"
+                    android:layout_alignParentLeft="true"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="验  证  码" 
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/reg_getcaptacha"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1"
+                    android:text="获取验证码" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/reg_reg_btn"
+                android:layout_width="250dp"
+        android:layout_height="35dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/reg_reg_btn_img" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

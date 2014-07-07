@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">  
+    <item android:state_pressed="true" >
+        <bitmap android:src="@drawable/bmfw_attention_on" android:tileMode="disabled" android:gravity="top" />  
+      </item>    
+    <item android:state_checked="true" >
+        <bitmap android:src="@drawable/bmfw_attention_on" android:tileMode="disabled" android:gravity="top" />  
+    </item>  
+    <item >
+        <bitmap android:src="@drawable/bmfw_attention_off" android:tileMode="disabled" android:gravity="top" />  
+    </item>   
+</selector>  
