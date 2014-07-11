@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    
+    >
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ticket_main_fragment_layout"
+     >
+
+    <RelativeLayout
+        android:id="@+id/relativelayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/ticket_main_back_upplace_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="选择回程上车点：" />
+
+        <Spinner
+            android:id="@+id/ticket_main_back_upplace_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/ticket_main_back_upplace_label"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativelayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/ticket_main_back_downplace_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="选择回程下车点：" />
+
+        <Spinner
+            android:id="@+id/ticket_main_back_downplace_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/ticket_main_back_downplace_label"
+            />
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/relativelayout7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/ticket_main_back_uptime_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="回程乘车时间：" />
+
+		<EditText
+		    android:id="@+id/ticket_main_back_uptime_date"
+		    android:layout_width="150dp"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentTop="true"
+		    android:layout_toRightOf="@+id/ticket_main_back_uptime_label"
+		    android:editable="false"
+		    android:ems="10" >
+
+		   </EditText>
+		 <EditText
+		    android:id="@+id/ticket_main_back_uptime_time"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:layout_alignParentTop="true"
+		    android:layout_toRightOf="@+id/ticket_main_back_uptime_date"
+		    android:editable="false"
+		    android:ems="10" >
+		   </EditText>
+
+    </RelativeLayout>
+</LinearLayout>
+</ScrollView>

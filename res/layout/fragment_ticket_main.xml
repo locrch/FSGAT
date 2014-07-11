@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#ffffff" >
+
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/relativelayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RadioGroup
+            android:id="@+id/ticket_main_choose_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+
+            <RadioButton
+                android:id="@+id/place_hongkong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="香港"
+                android:layout_marginRight="50dp" />
+
+            <RadioButton
+                android:id="@+id/place_macao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="澳门" />
+            </RadioGroup>
+	</RelativeLayout>
+
+   <RelativeLayout
+        android:id="@+id/relativelayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RadioGroup
+            android:id="@+id/ticket_main_choose_company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+
+            <RadioButton
+                android:id="@+id/company_yd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="永东巴士"
+                android:layout_marginRight="50dp" />
+
+            <RadioButton
+                android:id="@+id/company_zgt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="中港通" />
+            </RadioGroup>
+	</RelativeLayout>
+	
+    <RelativeLayout
+        android:id="@+id/relativelayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RadioGroup
+            android:id="@+id/ticket_main_choose_monoway"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+
+            <RadioButton
+                android:id="@+id/monoway_single"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="单程"
+                android:layout_marginRight="50dp" />
+
+            <RadioButton
+                android:id="@+id/monoway_double"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="双程" />
+            </RadioGroup>
+	</RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativelayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Spinner
+            android:id="@+id/ticket_main_way_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ticket_main_way_label"
+            android:entries="@array/ticket_main_way_spinner_values" />
+
+        <TextView
+            android:id="@+id/ticket_main_way_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="选择方向：" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativelayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/ticket_main_upplace_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="选择上车点：" />
+
+        <Spinner
+            android:id="@+id/ticket_main_upplace_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/ticket_main_upplace_label"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativelayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/ticket_main_downplace_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="选择下车点：" />
+
+        <Spinner
+            android:id="@+id/ticket_main_downplace_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/ticket_main_downplace_label"
+            />
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/relativelayout7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/ticket_main_uptime_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="去程乘车时间：" />
+
+		<LinearLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
+		    android:layout_toRightOf="@+id/ticket_main_uptime_label" >
+
+		    <Spinner
+		        android:id="@+id/ticket_main_uptime_date"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:editable="false"
+		        />
+
+		        
+		    
+
+		    
+		</LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ticket_main_selection_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         >
+
+        <TextView
+            android:id="@+id/ticket_main_selection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="点击选座" />
+		 
+    </RelativeLayout>
+	
+    <RelativeLayout
+        android:id="@+id/ticket_main_ticket_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+         >
+
+        <TextView
+            android:id="@+id/ticket_main_ticket_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="购票数量：" />
+
+        <NumberPicker
+            android:id="@+id/ticket_main_ticket_np"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/ticket_main_ticket_label"
+            android:gravity="center"
+            android:orientation="horizontal" />
+		 
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ticket_main_fragment_layout"
+    android:visibility="gone"
+     >
+
+    <RelativeLayout
+        android:id="@+id/relativelayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/ticket_main_back_upplace_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="选择回程上车点：" />
+
+        <Spinner
+            android:id="@+id/ticket_main_back_upplace_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/ticket_main_back_upplace_label"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativelayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/ticket_main_back_downplace_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="选择回程下车点：" />
+
+        <Spinner
+            android:id="@+id/ticket_main_back_downplace_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/ticket_main_back_downplace_label"
+            />
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/relativelayout7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/ticket_main_back_uptime_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="回程乘车时间：" />
+
+		<Spinner
+		    android:id="@+id/ticket_main_back_uptime_time_spinner"
+		    android:layout_width="150dp"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentTop="true"
+		    android:layout_toRightOf="@+id/ticket_main_back_uptime_label"
+		    android:editable="false"
+		    android:ems="10" />
+
+		 
+
+    </RelativeLayout>
+</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/ticket_main_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/ticket_main_contact_label"
+            android:ems="10" >
+		
+        </EditText>
+
+        <TextView
+            android:id="@+id/ticket_main_contact_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="联系人：" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/ticket_main_tellphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/ticket_main_tellphone_label"
+            android:inputType="phone"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/ticket_main_tellphone_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="联系电话：" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <RadioGroup
+            android:id="@+id/ticket_main_sendway"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+
+            <RadioButton
+                android:id="@+id/sendway_onself"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="自取"
+                android:layout_marginRight="50dp" />
+
+            <RadioButton
+                android:id="@+id/sendway_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="邮递" />
+            </RadioGroup>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ticket_main_mail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+         >
+        <RelativeLayout 
+            android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+            <EditText
+            android:id="@+id/ticket_main_mail_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/ticket_main_mail_address_label"
+            android:inputType="phone"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/ticket_main_mail_address_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="地址：" />
+            </RelativeLayout>
+        <RelativeLayout 
+            android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+            <EditText
+            android:id="@+id/ticket_main_mail_zipcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/ticket_main_mail_zipcode_label"
+            android:inputType="phone"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/ticket_main_mail_zipcode_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="邮编：" />
+            </RelativeLayout>    
+        
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/ticket_main_booking_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="订票" />
+
+    </RelativeLayout>
+
+</LinearLayout>
+</ScrollView>

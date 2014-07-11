@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    
+     >
+	<TableRow >
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="选座："
+        android:textColor="#FFFFFF"
+        
+        />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="靠窗位" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal|top"
+        android:text="中间位" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="通道" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal|top"
+        android:text="中间位" />
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal|top"
+        android:text="靠窗位" />
+    </TableRow>
+
+	<TableRow 
+	    android:background="#F00">
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="第一排："
+        
+        
+        />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="4" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="3" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text=" " />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="2" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="1" />
+
+    </TableRow>
+    <TableRow android:background="#F00">
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="第二排："
+        
+        
+        />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="8" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="7" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text=" " />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="6" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="5" />
+
+    </TableRow>
+    <TableRow android:background="#F00">
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="第三排："
+        
+        
+        />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="12" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="11" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_gravity="left|top"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="10" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_weight="1"
+        android:layout_gravity="center_horizontal|top"
+        android:text="9" />
+    </TableRow>
+    <TableRow android:background="#F00">
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="第四排："
+        
+        
+        />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="16" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="15" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_gravity="left|top"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="14" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="13" />
+
+    </TableRow>
+    <TableRow android:background="#F00">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="第五排：" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="20" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="19" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_gravity="left|top"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="18" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="17" />
+
+    </TableRow>
+    <TableRow android:background="#F00">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="第六排：" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="24" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="23" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_gravity="left|top"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="22" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="21" />
+
+    </TableRow>
+    <TableRow android:background="#F00">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="第七排：" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="28" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="27" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_gravity="left|top"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="26" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="25" />
+
+    </TableRow>
+    <TableRow >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="第八排：" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="32" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="31" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_gravity="left|top"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="30" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="29" />
+
+    </TableRow>
+    <TableRow >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="第九排：" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="36" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="35" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_gravity="left|top"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="34" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="33" />
+
+    </TableRow>
+    <TableRow >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="第十排：" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="40" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="39" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_gravity="left|top"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="38" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="37" />
+
+    </TableRow>
+    <TableRow >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="第十一排：" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="44" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="43" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_gravity="left|top"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="42" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="41" />
+
+    </TableRow>
+    <TableRow >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="第十二排：" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_gravity="left|top"
+        android:layout_weight="1"
+        android:text="48" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="47" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_gravity="left|top"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="46" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_weight="1"
+        android:text="45" />
+
+    </TableRow>
+    
+</TableLayout>

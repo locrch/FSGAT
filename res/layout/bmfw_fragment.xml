@@ -1,14 +1,19 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF" >
-  
-    <TextView  
-        android:id="@+id/txt_content"  
-        android:layout_width="match_parent"  
-        android:layout_height="match_parent"  
-        android:gravity="center"  
-        android:padding="10dp"  
-        android:text="便民服务"  
-        android:textSize="20sp" />  
-</RelativeLayout> 
+    android:background="#FFFFFF"
+   
+     >
+
+   
+
+        <Button
+            android:id="@+id/ticket_booking_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="33dp"
+            android:text="车票预订" />
+
+    
+    
+</LinearLayout> 

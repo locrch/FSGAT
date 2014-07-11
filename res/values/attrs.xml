@@ -1,0 +1,18 @@
+
+
+<resources>
+
+    <string-array name="ticket_main_way_spinner_values">
+
+        <item>佛山→香港</item>
+
+        <item>香港→佛山</item>
+
+        <item>佛山→澳门</item>
+
+        <item>澳门→佛山</item>
+
+    </string-array>
+    
+
+</resources>

@@ -2,16 +2,21 @@ package com.fspangu.fsgat;
 
 
 
+import java.util.zip.Inflater;
+
 import com.pangu.neusoft.fsgat.user.LoginFragment;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.PopupMenu;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
@@ -23,6 +28,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +38,12 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Build;
 
+@SuppressLint("NewApi")
 public class MainActivity extends ActionBarActivity {
 	static DisplayMetrics getphonesize;
 	static SharedPreferences sp;
@@ -52,6 +60,8 @@ public class MainActivity extends ActionBarActivity {
 		setTitle(this.getResources().getString(R.string.app_name));
 		
 		
+		
+		
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -59,15 +69,31 @@ public class MainActivity extends ActionBarActivity {
 		sp = getSharedPreferences(getApplication().toString(),Context.MODE_PRIVATE);
 		editor = sp.edit();
 	}
-
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		
+		/*MenuItem actionItem = menu.add("菜单");
+		
+		actionItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);*/
 		return true;
 	}
-
+	
+	@SuppressLint("NewApi")
+	private void showpop(View v) {
+		// TODO Auto-generated method stub
+		PopupMenu popup = new PopupMenu(this, v);
+		MenuInflater inflater = popup.getMenuInflater();
+		inflater.inflate(R.menu.main, popup.getMenu());
+		popup.show();
+	}
+	
+	
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will

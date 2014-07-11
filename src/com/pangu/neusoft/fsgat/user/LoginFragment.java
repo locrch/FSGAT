@@ -134,8 +134,14 @@ public class LoginFragment extends Fragment
 		
 								success = (Boolean) GetParamsMap.get("success");
 								
+								if (success ==null) {
+									return false;
+								}
+								
 								if (success)
 								{
+									
+									
 									user user = new user();
 									
 									user.setUsername(values[0]);
@@ -146,6 +152,7 @@ public class LoginFragment extends Fragment
 									
 									editor.commit();
 								}
+								
 								
 								return success;
 							}
