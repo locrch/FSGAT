@@ -2,7 +2,8 @@
     android:id="@+id/scrollView1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFFFFF" >
+    android:background="#FFFFFF"
+    android:clickable="true"  >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -203,7 +204,7 @@
                     android:layout_weight="5"
                     android:ems="10" >
 
-                    <requestFocus />
+                      <requestFocus />
                 </EditText>
             </TableRow>
             
@@ -230,7 +231,7 @@
                     android:layout_weight="5"
                     android:ems="10" >
 
-                    <requestFocus />
+                  
                 </EditText>
             </TableRow>
             
@@ -255,9 +256,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
                     android:ems="10"
-                    android:inputType="phone" >
-
-                    <requestFocus />
+                    android:inputType="phone" >                   
                 </EditText>
             </TableRow>
 

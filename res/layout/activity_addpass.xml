@@ -1,391 +1,281 @@
-       <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView1"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-        <LinearLayout 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/linearLayout1"
-        android:layout_alignParentTop="true"
-        android:background="#FFFFFF"
-        android:orientation="vertical" >
-        
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" >
+              <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+           android:id="@+id/scrollView1"
+           android:layout_width="fill_parent"
+           android:layout_height="fill_parent"
+           android:background="#FFFFFF"
+           android:clickable="true" >
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+           <LinearLayout
+               android:id="@+id/linearLayout1"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:orientation="vertical"
+               android:padding="10dp" >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_grey"
-            android:paddingTop="10dp"
-			android:paddingRight="10dp"
-             >
+               <TableLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/addpass_passNumber_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="通行证号："
-                android:textSize="18sp" />
+                   <TableRow
+                       android:id="@+id/tableRow1"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/addpass_passNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/addpass_passNumber_label"
-                android:ems="10" />
-        </RelativeLayout>
+                       <TextView
+                           android:id="@+id/addpass_passNumber_label"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:layout_weight="0.001"
+                           android:gravity="center|left"
+                           android:text="通行证号：" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+                       <EditText
+                           android:id="@+id/addpass_passNumber"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:layout_weight="1" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:paddingTop="10dp"
-			android:paddingRight="10dp"
-                 >
+                   </TableRow>
 
-                <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/linearLayout2"
-                android:layout_centerVertical="true"
-                android:layout_weight="1.0" 
-                android:layout_marginRight="10dp"
-                android:background="@drawable/border_grey" 
-                >
-                <TextView
-                    android:id="@+id/addpass_surName_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:text="姓："
-                    android:textSize="18sp" />
+                   <TableRow
+                       android:id="@+id/tableRow2"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" >
 
-                <EditText
-                    android:id="@+id/addpass_surName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/addpass_surName_label"
-                    android:ems="10" />
-            </LinearLayout>
+                       <TextView
+                           android:id="@+id/addpass_surName_label"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:layout_weight="0.001"
+                           android:gravity="center|left"
+                           android:text="姓名：" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.0"
-                    android:background="@drawable/border_grey"
-                    android:paddingRight="10dp"
-                    android:paddingTop="0dp" >
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:layout_weight="1" >
 
-                    <TextView
-                        android:id="@+id/addpass_givenName_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="名："
-                        android:textSize="18sp" />
+                           <EditText
+                               android:id="@+id/addpass_surName"
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent"
+                               android:layout_weight="1"
+                               android:ems="10"
+                               android:hint="姓" />
 
-                    <EditText
-                        android:id="@+id/addpass_givenName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/addpass_givenName_label"
-                        android:ems="10" >
+                           <EditText
+                               android:id="@+id/addpass_givenName"
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent"
+                               android:layout_weight="1"
+                               android:hint="名" />
 
-                        
-                    </EditText>
-                </LinearLayout>
-                
-            </LinearLayout>
+                       </LinearLayout>
 
-            
-        </RelativeLayout>
+                   </TableRow>
 
-         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_grey"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-             >
+                   <TableRow
+                       android:id="@+id/tableRow3"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/addpass_dob"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/addpass_dob_label"
-                android:editable="false"
-                android:ems="10" 
-                android:drawableRight="@drawable/user_main_addpass"
-                android:paddingRight="22dp"
-                />
+                       <TextView
+                           android:id="@+id/addpass_dob_label"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_weight="0.001"
+                           android:gravity="center|left"
+                           android:text="生日：" />
 
-            <TextView
-                android:id="@+id/addpass_dob_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:text="生日："
-                android:textSize="18sp" />
+                       <EditText
+                           android:id="@+id/addpass_dob"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_weight="1"
+                           android:drawableRight="@drawable/user_main_addpass"
+                           android:editable="false" />
 
-        </RelativeLayout>
-        
-<RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_grey"
-            android:paddingTop="10dp"
-			android:paddingRight="10dp"
-             >
+                   </TableRow>
 
-            <TextView
-                android:id="@+id/addpass_expireDate_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="有效期："
-                android:textSize="18sp" />
+                   <TableRow
+                       android:id="@+id/tableRow4"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/addpass_expireDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/addpass_expireDate_label"
-                android:editable="false"
-                android:ems="10"
-                android:drawableRight="@drawable/user_main_addpass"
-                 />
-        </RelativeLayout>
-        
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_grey"
-            android:paddingTop="5dp"
-			android:paddingRight="10dp"
-             >
+                       <TextView
+                           android:id="@+id/addpass_expireDate_label"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_weight="0.001"
+                           android:gravity="center|left"
+                           android:text="有效期：" />
 
-            <TextView
-                android:id="@+id/addpass_sex_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="性别："
-                android:textSize="18sp" />
+                       <EditText
+                           android:id="@+id/addpass_expireDate"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_weight="1"
+                           android:drawableRight="@drawable/user_main_addpass"
+                           android:editable="false" />
 
-            <RadioGroup
-                android:id="@+id/addpass_sex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/addpass_sex_label"
-                android:ems="10"
-                android:orientation="horizontal" >
+                   </TableRow>
 
-                <RadioButton
-                    android:id="@+id/addpass_male"
-                    android:layout_height="30dp"
-                    android:text="男" />
+                   <TableRow
+                       android:id="@+id/tableRow5"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" >
 
-                <RadioButton
-                    android:id="@+id/addpass_female"
-                    android:layout_height="30dp"
-                    android:text="女"
-                    />
-            </RadioGroup>
-        </RelativeLayout>
+                       <TextView
+                           android:id="@+id/addpass_sex_label"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_weight="0.001"
+                           android:gravity="center|left"
+                           android:text="性别：" />
 
+                       <RadioGroup
+                           android:id="@+id/addpass_sex"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_weight="1"
+                           
+                           android:orientation="horizontal" >
 
-       
+                           <RadioButton
+                               android:id="@+id/addpass_male"
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent"
+                               android:layout_weight="1"
+                               android:checked="true"
+                               android:gravity="center|left"
+                               android:text="男" />
 
+                           <RadioButton
+                               android:id="@+id/addpass_female"
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent"
+                               android:layout_weight="1"
+                               android:gravity="center|left"
+                               android:text="女" />
 
+                       </RadioGroup>
+                   </TableRow>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_grey"
-            android:paddingTop="10dp"
-			android:paddingRight="10dp"
-             >
+                   <TableRow
+                       android:id="@+id/tableRow6"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/addpass_pob_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="出生地："
-                android:textSize="18sp" />
+                       <TextView
+                           android:id="@+id/addpass_pob_label"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_weight="0.001"
+                           android:gravity="center|left"
+                           android:text="出生地：" />
 
-            <EditText
-                android:id="@+id/addpass_pob"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/addpass_pob_label"
-                android:ems="10"
-                android:text="广东" />
-        </RelativeLayout>
+                       <EditText
+                           android:id="@+id/addpass_pob"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_weight="1"
+                           android:text="广东" />
 
-        
+                   </TableRow>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_grey"
-            android:paddingTop="10dp"
-			android:paddingRight="10dp"
-             >
+                   <TableRow
+                       android:id="@+id/tableRow7"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/addpass_issueDate_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="签发日期："
-                android:textSize="18sp" />
+                       <TextView
+                           android:id="@+id/addpass_issueDate_label"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_weight="0.001"
+                           android:gravity="center|left"
+                           android:text="签发日期：" />
 
-            <EditText
-                android:id="@+id/addpass_issueDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/addpass_issueDate_label"
-                android:editable="false"
-                android:ems="10"
-                android:drawableRight="@drawable/user_main_addpass"
-                 />
-        </RelativeLayout>
+                       <EditText
+                           android:id="@+id/addpass_issueDate"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_weight="1"
+                           android:drawableRight="@drawable/user_main_addpass"
+                           android:editable="false" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_grey"
-            android:paddingTop="10dp"
-			android:paddingRight="10dp"
-             >
+                   </TableRow>
 
-            <TextView
-                android:id="@+id/addpass_issueArea_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="签发地："
-                android:textSize="18sp" />
+                   <TableRow
+                       android:id="@+id/tableRow8"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/addpass_issueArea"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/addpass_issueArea_label"
-                android:editable="false"
-                android:ems="10"
-                android:text="广东" />
-        </RelativeLayout>
+                       <TextView
+                           android:id="@+id/addpass_issueArea_label"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_weight="0.001"
+                           android:gravity="center|left"
+                           android:text="签发地：" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border_grey"
-            android:paddingTop="10dp"
-			android:paddingRight="10dp"
-             >
+                       <EditText
+                           android:id="@+id/addpass_issueArea"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_weight="1"
+                           android:editable="false"
+                           android:text="广东" />
 
-            <TextView
-                android:id="@+id/addpass_area_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="户口所在地："
-                android:textSize="18sp" />
+                   </TableRow>
 
-            <EditText
-                android:id="@+id/addpass_area"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/addpass_area_label"
-                android:ems="10"
-                android:visibility="gone" />
+                   <TableRow
+                       android:id="@+id/tableRow9"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" >
 
-            <Spinner
-                android:id="@+id/addpass_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/addpass_area"
-                android:background="@drawable/bg_transparent" />
-        </RelativeLayout>
+                       <TextView
+                           android:id="@+id/addpass_area_label"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_weight="0.001"
+                           android:gravity="center|left"
+                           android:text="户口所在地：" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-             >
+                       <Spinner
+                           android:id="@+id/addpass_spinner"
+                           android:layout_width="wrap_content"
+                           android:layout_height="match_parent"
+                           android:layout_weight="1"
+                           android:background="@drawable/bg_transparent"
+                           android:gravity="center|left" />
 
-            <Button
-                android:id="@+id/addpass_bundle_btn"
-                android:layout_width="250dp"
-                android:layout_height="35dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/button_orange"
-                android:text="确定"
-                android:textColor="#FFF"
-                android:gravity="center"
-                android:textSize="20sp" />
+                   </TableRow>
+               </TableLayout>
 
-        </RelativeLayout>
-    </LinearLayout>
+               <EditText
+                   android:id="@+id/addpass_area"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   
+                   android:visibility="gone" />
 
+               <Button
+                   android:id="@+id/addpass_bundle_btn"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="20dp"
+                   android:background="@drawable/button_orange"
+                   android:gravity="center"
+                   android:text="确定"
+                   android:textColor="#FFF"
+                   android:textSize="20sp" />
 
-</RelativeLayout>
+           </LinearLayout>
+
 
      
         
         
-    </LinearLayout>
 </ScrollView>
 

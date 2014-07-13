@@ -161,7 +161,7 @@ public  class BookingFragment extends Fragment {
 	
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
-    	sp = getActivity().getSharedPreferences(getActivity().getApplication().toString(),Context.MODE_PRIVATE);
+    	sp = getActivity().getSharedPreferences("sp",Context.MODE_PRIVATE);
 		editor = sp.edit();
 //		editor.putString("username", "pangu");
 //		editor.commit();
@@ -338,8 +338,10 @@ public void asyncJson(String id){
                         		i++;
                         	}
                         	
-                        	ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, allday);
+                        	ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),R.layout.dropdowntext, allday);
+                        	adapter.setDropDownViewResource(R.layout.drop_down_item);
                         	choosedatetxt.setAdapter(adapter);
+                        	
                         	selttime();
                         	
                         	choosedatetxt.setOnItemSelectedListener(new OnItemSelectedListener(){								@Override
@@ -372,15 +374,18 @@ public void asyncJson(String id){
 public void selttime(){
 	String dayselected=choosedatetxt.getSelectedItem().toString();
 	List<String> times=ax.get(dayselected);
-	String[] alltimes=new String[times.size()];
-	int j=0;
-	for(String time:times){
-		alltimes[j]=time;
-		j++;
+	if(times!=null){
+		String[] alltimes=new String[times.size()];
+		int j=0;
+		for(String time:times){
+			alltimes[j]=time;
+			j++;
+		}
+		
+		ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),R.layout.dropdowntext, alltimes);
+		adapter.setDropDownViewResource(R.layout.drop_down_item);
+		selectTime.setAdapter(adapter);
 	}
-	
-	ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, alltimes);
-	selectTime.setAdapter(adapter);
 }
 
     //使用快递
@@ -655,9 +660,11 @@ public void getPlace(){
 		i++;
 	}
 	
-	ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, mItems);
+	ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),R.layout.dropdowntext, mItems);
 	//绑定 Adapter到控件
+	adapter.setDropDownViewResource(R.layout.drop_down_item);
 	placeselecter.setAdapter(adapter);
+
 	placeselecter.setOnItemSelectedListener(new OnItemSelectedListener(){
 
 		@Override

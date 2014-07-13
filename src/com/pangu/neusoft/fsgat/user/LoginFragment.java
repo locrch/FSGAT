@@ -1,8 +1,12 @@
 package com.pangu.neusoft.fsgat.user;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
+
+
 
 
 
@@ -47,7 +51,7 @@ public class LoginFragment extends Fragment
 	Button login_btn;
 	
 	TextView login_forget_password, reg_btn;
-	CheckBox login_member_CheckBox;
+	CheckBox login_member_CheckBox,autoCheckBox;
 	JSONObject joget;
 	HashMap<String, Object> GetParamsMap;
 	SharedPreferences sp;
@@ -68,9 +72,10 @@ public class LoginFragment extends Fragment
 		reg_btn = (TextView) getActivity().findViewById(R.id.reg_btn);
 		login_forget_password = (TextView) getActivity().findViewById(R.id.login_forget_password);
 		login_member_CheckBox = (CheckBox)getActivity().findViewById(R.id.login_member_CheckBox);
+		autoCheckBox= (CheckBox)getActivity().findViewById(R.id.auto_CheckBox);
 		GetParamsMap = new HashMap<String, Object>();
 		joget = new JSONObject();
-		sp = getActivity().getSharedPreferences(getActivity().getApplication().toString(),Context.MODE_PRIVATE);
+		sp = getActivity().getSharedPreferences("sp",Context.MODE_PRIVATE);
 		editor = sp.edit();
 		
 		reg_btn.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
@@ -80,6 +85,23 @@ public class LoginFragment extends Fragment
 		registerFragment = new RegisterFragment();
 		changepasswordFragment = new ChangePasswordFragment();
 		loginFragment = this;
+		/*
+		 * editor.putBoolean("remberpassword", true);
+									editor.putString("tempusername",username.getText().toString());
+									editor.putString("temppassword",password.getText().toString());*/
+		if(sp.getBoolean("remberpassword", false)){
+			username.setText(sp.getString("tempusername", ""));
+			password.setText(sp.getString("temppassword", ""));
+			login_member_CheckBox.setChecked(true);
+		}else{
+			login_member_CheckBox.setChecked(false);
+		}
+		if(sp.getBoolean("autologin", false)){
+			autoCheckBox.setChecked(true);
+		}else{
+			autoCheckBox.setChecked(false);
+		}
+		
 	}
 	
 	@Override
@@ -103,9 +125,9 @@ public class LoginFragment extends Fragment
 				{
 		
 					@Override
-					public void onClick(View v)
-					{
+					public void onClick(View v){
 						
+						if(checkdata()){
 						new CustomAsynTask(getActivity())
 						{
 							@Override
@@ -113,11 +135,14 @@ public class LoginFragment extends Fragment
 							{
 								// TODO Auto-generated method stub
 								// 收起键盘
+								try{
 								((InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE))
 								.hideSoftInputFromWindow(getActivity()
 										.getCurrentFocus().getWindowToken(),
 										InputMethodManager.HIDE_NOT_ALWAYS);
-								
+								}catch(Exception ex){
+									ex.printStackTrace();
+								}
 								String[] keys = new String[]
 								{ "username", "password" };
 		
@@ -164,31 +189,52 @@ public class LoginFragment extends Fragment
 								Toast.makeText(getActivity().getApplicationContext(),
 										(String) GetParamsMap.get("msg"),
 										Toast.LENGTH_LONG).show();
-								if (result)
-								{
-									GrzxFragment um = new GrzxFragment();
-								fragmentManager.beginTransaction().replace(R.id.content,um).commit();
-								//fragmentManager.beginTransaction().remove(LoginFragment.this).commit();
 								
-								}
 								
 								if (login_member_CheckBox.isChecked()&&result) {
-									editor.putString("username", username.getText().toString());
-									editor.putString("switchstatus1", "off");
-									editor.putString("switchstatus2", "off");
-									editor.putString("switchstatus3", "off");
-									editor.putString("switchstatus4", "off");
-									editor.putString("switchstatus5", "off");
+									editor.putBoolean("remberpassword", true);
+									editor.putString("tempusername",username.getText().toString());
+									editor.putString("temppassword",password.getText().toString());
 									editor.commit();
+								}else if (!login_member_CheckBox.isChecked()) {
+									editor.putBoolean("remberpassword", false);
+									editor.remove("tempusername");
+									editor.remove("temppassword");
+									editor.commit();
+								}
+								if (autoCheckBox.isChecked()&&result) {
+									editor.putBoolean("autologin", true);
+									editor.commit();
+								}else if(!autoCheckBox.isChecked()){
+									editor.putBoolean("autologin", false);
+								}
+								
+								if (result)
+								{
+									//fragmentManager.beginTransaction().remove(LoginFragment.this).commit();
+									editor.putString("username", username.getText().toString());
+									editor.putString("switchstatus1", sp.getString("switchstatus1", "off"));
+									editor.putString("switchstatus2", sp.getString("switchstatus2", "off"));
+									editor.putString("switchstatus3", sp.getString("switchstatus3", "off"));
+									editor.putString("switchstatus4", sp.getString("switchstatus4", "off"));
+									editor.putString("switchstatus5", sp.getString("switchstatus5", "off"));
+									editor.commit();
+									GrzxFragment um = new GrzxFragment();
+									fragmentManager.beginTransaction().replace(R.id.content,um).commit();
+									
 								}
 							}
 						}.execute();
 						
 						
-		
+						}
 					}
+					
+					
 				});
 		
+				
+				
 				reg_btn.setOnClickListener(new OnClickListener()
 				{
 		
@@ -197,7 +243,7 @@ public class LoginFragment extends Fragment
 					{
 						// TODO Auto-generated method stub
 						transaction = getFragmentManager().beginTransaction();
-						transaction.replace(R.id.content,registerFragment);
+						transaction.add(R.id.content,registerFragment);
 						
 						transaction.addToBackStack(null); 
 						
@@ -213,8 +259,8 @@ public class LoginFragment extends Fragment
 					{
 						// TODO Auto-generated method stub
 						transaction = getFragmentManager().beginTransaction();
-						
-						fragmentManager.popBackStack();
+						transaction.add(R.id.content,changepasswordFragment);
+						transaction.addToBackStack(null); 
 						transaction.commit();
 					}
 				});
@@ -222,5 +268,26 @@ public class LoginFragment extends Fragment
     	  }
 		
 	}
-	
+	public boolean checkdata(){
+		boolean res=true;
+		if(username.getText().toString().equals("")||password.getText().toString().equals("")){
+			res=false;
+			Toast.makeText(getActivity(), "请输入用户名和密码！", Toast.LENGTH_SHORT).show();
+		}
+		else if(!isMobile(username.getText().toString())){
+			res=false;
+			Toast.makeText(getActivity(), "用户名必须为11位手机号码！", Toast.LENGTH_SHORT).show();
+		}
+		
+		return res;
+	}
+	public static boolean isMobile(String str) {   
+        Pattern p = null;  
+        Matcher m = null;  
+        boolean b = false;   
+        p = Pattern.compile("^[1][3,4,5,8][0-9]{9}$"); // 验证手机号  
+        m = p.matcher(str);  
+        b = m.matches();   
+        return b;  
+    }  
 }

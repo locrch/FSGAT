@@ -2,69 +2,67 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="10dp"
     android:paddingBottom="10dp"
     android:paddingLeft="3dp"
-     >
+    android:paddingTop="10dp" >
 
-        <TextView
-            android:id="@+id/listaddress_content_receiver_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="收件人："
-            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/listaddress_content_receiver_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="收件人："
+        android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/listaddress_content_receiver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/listaddress_content_receiver_label"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/listadress_change_btn"
-            android:layout_toRightOf="@+id/listaddress_content_receiver_label"
-            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/listaddress_content_receiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/listaddress_content_receiver_label"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/listaddress_content_receiver_label"
+        android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/listaddress_content_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/listaddress_content_address_label"
-            android:layout_below="@+id/listaddress_content_receiver_label"
-            android:layout_toLeftOf="@+id/listadress_change_btn"
-            android:layout_toRightOf="@+id/listaddress_content_address_label"
-            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/listaddress_content_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/listaddress_content_address_label"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/listaddress_content_address_label"
+        android:layout_toRightOf="@+id/listaddress_content_address_label"
+        android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/listaddress_content_address_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/listaddress_content_receiver_label"
-            android:text="地址："
-            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/listaddress_content_postcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignLeft="@+id/listaddress_content_address"
+        android:layout_alignParentRight="true"
+        android:text="528000" />
 
-        <Button
-            android:id="@+id/listaddress_delete_btn"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignBaseline="@+id/listadress_change_btn"
-            android:layout_alignBottom="@+id/listadress_change_btn"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="14dp"
-            android:background="@drawable/listpass_content_del_btn_img" />
+    <TextView
+        android:id="@+id/listaddress_content_address_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/listaddress_content_receiver_label"
+        android:layout_marginTop="10dp"
+        android:text="地址："
+        android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/listadress_change_btn"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:layout_alignTop="@+id/listaddress_content_receiver"
-            android:layout_marginRight="14dp"
-            android:layout_toLeftOf="@+id/listaddress_delete_btn"
-            android:background="@drawable/button_orange"
-            android:text="修改"
-            android:gravity="center"
-            android:textSize="16sp" />
-        
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/listaddress_content_address_label"
+        android:layout_marginTop="10dp"
+        android:text="邮编："
+        android:textSize="16sp" />
+
 </RelativeLayout>

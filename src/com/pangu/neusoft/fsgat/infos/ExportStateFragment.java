@@ -113,8 +113,9 @@ public  class ExportStateFragment extends Fragment {
 	    	spinner=(Spinner)view.findViewById(R.id.spinner1);
 	    	String[] mItems=new String[]{"深圳","珠海"};
 	    	
-	    	ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, mItems);
+	    	ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),R.layout.dropdowntext, mItems);
 	    	//绑定 Adapter到控件
+	    	adapter.setDropDownViewResource(R.layout.drop_down_item);
 	    	spinner.setAdapter(adapter);
 	    	spinner.setOnItemSelectedListener(new OnItemSelectedListener(){
 	    		@Override

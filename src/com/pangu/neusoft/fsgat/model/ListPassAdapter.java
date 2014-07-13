@@ -42,8 +42,7 @@ public class ListPassAdapter extends SimpleAdapter {
 
 		context1 = context;
 
-		sp = context1.getSharedPreferences(((Activity) context).getApplication().toString(),
-				Context.MODE_PRIVATE);
+		sp = context1.getSharedPreferences("sp",Context.MODE_PRIVATE);
 		editor = sp.edit();
 		GetParamsMap = new HashMap<String, Object>();
 		joget = new JSONObject();

@@ -98,7 +98,7 @@ public class AddpassFragment extends Fragment
 
 		sp = getActivity()
 				.getSharedPreferences(
-						getActivity().getApplication().toString(),
+						"sp",
 						Context.MODE_PRIVATE);
 		editor = sp.edit();
 		
@@ -110,8 +110,8 @@ public class AddpassFragment extends Fragment
 		joget = new JSONObject();
 
 		adapter = new ArrayAdapter<String>(getActivity(),
-				android.R.layout.simple_spinner_item, m);
-
+				R.layout.dropdowntext, m);
+		adapter.setDropDownViewResource(R.layout.drop_down_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		addpass_spinner.setAdapter(adapter);
 		addpass_spinner.setOnItemSelectedListener(new OnItemSelectedListener()

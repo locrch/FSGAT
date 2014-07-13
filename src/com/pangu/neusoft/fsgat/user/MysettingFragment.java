@@ -34,7 +34,7 @@ public class MysettingFragment extends Fragment
 		
 		sp = getActivity()
 				.getSharedPreferences(
-						getActivity().getApplication().toString(),
+						"sp",
 						Context.MODE_PRIVATE);
 		editor = sp.edit();
 		
@@ -113,6 +113,8 @@ public class MysettingFragment extends Fragment
 					
 					
 				}
+				editor.putString("switchstatus1", switchstatus1);
+				editor.commit();
 				
 			}
 		});

@@ -103,7 +103,7 @@ public  class ShowHistoryFragment extends Fragment {
 	
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
-    	sp = getActivity().getSharedPreferences(getActivity().getApplication().toString(),Context.MODE_PRIVATE);
+    	sp = getActivity().getSharedPreferences("sp",Context.MODE_PRIVATE);
 		editor = sp.edit();
 //		editor.putString("username", "pangu");
 //		editor.commit();

@@ -2,14 +2,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#FFFFFF"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:clickable="true" >
 
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:background="@drawable/border_grey_four" >
+        android:layout_margin="10dp" >
 
     </ListView>
 

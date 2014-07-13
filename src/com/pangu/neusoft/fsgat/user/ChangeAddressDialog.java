@@ -6,9 +6,11 @@ import org.json.JSONObject;
 
 
 
+
 import com.fspangu.fsgat.R;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.core.PostJson;
+import com.pangu.neusoft.fsgat.model.Address;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -37,22 +39,22 @@ public class ChangeAddressDialog extends Dialog
 	String sex;
 	JSONObject joget;
 	HashMap<String, Object> GetParamsMap;
-	String id;
+	
 
-	public ChangeAddressDialog(final String id, final Activity activity,
-			Context context, boolean cancelable, OnCancelListener cancelListener)
+	public ChangeAddressDialog(final Address address, final Activity activity,
+			final ListAddressFragment fragment, boolean cancelable, OnCancelListener cancelListener)
 	{
-		super(context);
+		super(activity);
 		//super.setContentView(R.layout.activity_change_address);
 		
 		// TODO Auto-generated constructor stub
 		sp = activity.getSharedPreferences(
-				activity.getApplication().toString(), Context.MODE_PRIVATE);
+				"sp", Context.MODE_PRIVATE);
 		editor = sp.edit();
 		GetParamsMap = new HashMap<String, Object>();
 		joget = new JSONObject();
 
-		LayoutInflater inflater = LayoutInflater.from(context);
+		LayoutInflater inflater = LayoutInflater.from(activity);
 		final View textEntryView = inflater.inflate(
 				R.layout.activity_change_address, null);
 		setContentView(textEntryView);
@@ -61,6 +63,11 @@ public class ChangeAddressDialog extends Dialog
 		final EditText changeaddress_postcode = (EditText) textEntryView.findViewById(R.id.changeaddress_postcode);
 		final Button changeaddress_change_btn = (Button)textEntryView.findViewById(R.id.changeaddress_change_btn);
 
+		changeaddress_receiver.setText(address.getReceiver());
+		changeaddress_address.setText(address.getAddress());
+		changeaddress_postcode.setText(address.getPostcode());
+		
+		
 		changeaddress_change_btn.setOnClickListener(new android.view.View.OnClickListener() {
 
 			@Override
@@ -76,7 +83,7 @@ public class ChangeAddressDialog extends Dialog
 						{ "username", "id", "receiver", "address", "postcode" };
 
 						String[] values = new String[]
-						{ sp.getString("username", ""), id,
+						{ sp.getString("username", ""), address.getId(),
 								changeaddress_receiver.getText().toString(),
 								changeaddress_address.getText().toString(),
 								changeaddress_postcode.getText().toString() };
@@ -108,6 +115,7 @@ public class ChangeAddressDialog extends Dialog
 									(String) GetParamsMap.get("msg"),
 									Toast.LENGTH_LONG).show();
 						}
+						fragment.updateList();
 						if (isShowing())
 						{
 							dismiss();
@@ -120,7 +128,7 @@ public class ChangeAddressDialog extends Dialog
 		});
 		
 		
-		final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setCancelable(false);
 		//builder.setIcon(R.drawable.ic_launcher);
 		builder.setTitle("修改地址");

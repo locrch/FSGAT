@@ -62,7 +62,7 @@ public class ChangePasswordFragment extends Fragment
 		
 		sp = getActivity()
 				.getSharedPreferences(
-						getActivity().getApplication().toString(),
+						"sp",
 						Context.MODE_PRIVATE);
 		editor = sp.edit();
 		

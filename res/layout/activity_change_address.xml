@@ -5,7 +5,8 @@
     android:layout_margin="10dp"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="10dp" 
+    android:clickable="true" >
 
     <TableLayout
         android:layout_width="match_parent"
@@ -30,7 +31,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:text="盘古"
                 android:textColor="#000000" />
         </TableRow>
 
@@ -51,7 +51,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:text="软件园123456"
                 android:textColor="#000000" >
 
                 <requestFocus />
@@ -96,7 +95,7 @@
             android:background="@drawable/button_orange"
             android:gravity="center"
             android:text="修改"
-            android:textColor="#000000" />
+            android:textColor="#FFFFFF" />
 
     </RelativeLayout>
 

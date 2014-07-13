@@ -72,7 +72,7 @@ public class ListPassFragment extends Fragment
 
 		sp = getActivity()
 				.getSharedPreferences(
-						getActivity().getApplication().toString(),
+						"sp",
 						Context.MODE_PRIVATE);
 		editor = sp.edit();
 		GetParamsMap = new HashMap<String, Object>();

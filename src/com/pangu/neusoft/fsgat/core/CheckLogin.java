@@ -16,7 +16,7 @@ import com.pangu.neusoft.fsgat.user.LoginFragment;
 public class CheckLogin {
 	
 	public static boolean logined(Fragment fragment){
-		SharedPreferences sp = fragment.getActivity().getSharedPreferences(fragment.getActivity().getApplication().toString(),Context.MODE_PRIVATE);
+		SharedPreferences sp = fragment.getActivity().getSharedPreferences("sp",Context.MODE_PRIVATE);
 		Editor editor = sp.edit();;
 		 
 		if (sp.getString("username", "").equals(""))

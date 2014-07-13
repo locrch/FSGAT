@@ -221,8 +221,9 @@ public void getSpinnerPlace(){
 		i++;
 	}
 	
-	ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, mItems);
+	ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),R.layout.dropdowntext, mItems);
 	//绑定 Adapter到控件
+	adapter.setDropDownViewResource(R.layout.drop_down_item);
 	spinner1.setAdapter(adapter);
 	spinner1.setOnItemSelectedListener(new OnItemSelectedListener(){
 

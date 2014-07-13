@@ -32,20 +32,19 @@
          >
         <meta-data  
         android:name="com.baidu.lbsapi.API_KEY"  
-        android:value="zGbBBw6fCxzxGkGB4yGhNOzi" />
+        android:value="kRessRFUXo4cvKeIMDwWyGBa" />
         <activity
             android:name="com.fspangu.fsgat.MainActivity"
             android:label="@string/app_name" 
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            
->
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
     </application>
 
 </manifest>

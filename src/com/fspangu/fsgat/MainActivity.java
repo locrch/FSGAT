@@ -66,7 +66,7 @@ public class MainActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}		
-		sp = getSharedPreferences(getApplication().toString(),Context.MODE_PRIVATE);
+		sp = getSharedPreferences("sp",Context.MODE_PRIVATE);
 		editor = sp.edit();
 	}
 	
@@ -206,7 +206,7 @@ public class MainActivity extends ActionBarActivity {
 		
 		public void showFragment(int checkedId){
 			try{
-				Log.e("count: ", ""+fragmentManager.getBackStackEntryCount());
+				//Log.e("count: ", ""+fragmentManager.getBackStackEntryCount());
 				if(fragmentManager.getBackStackEntryCount()>=1){
         			int len = fragmentManager.getBackStackEntryCount();
         		    for (int i = 0; i < len; i++) {
@@ -258,6 +258,10 @@ public class MainActivity extends ActionBarActivity {
             switch (which)  
             {  
             case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序  
+            	if(!sp.getBoolean("autologin", false)){
+            		editor.remove("username");
+            		editor.commit();
+            	}
                 finish();  
                 break;  
             case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框  

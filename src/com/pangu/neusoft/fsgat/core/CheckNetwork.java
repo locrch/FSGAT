@@ -25,12 +25,18 @@ public class CheckNetwork {
 		    	builder.setPositiveButton("确认", new OnClickListener() {
 		    		@Override
 		    		public void onClick(DialogInterface dialog, int which) {
-		    			if(android.os.Build.VERSION.SDK_INT > 10 ){
-		    			     //3.0以上打开设置界面，也可以直接用ACTION_WIRELESS_SETTINGS打开到wifi界面
-		    			    fragment.getActivity().startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
-		    			} else {
-		    				fragment.getActivity().startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+		    			try{
+			    			if(android.os.Build.VERSION.SDK_INT > 10 ){
+			    			     //3.0以上打开设置界面，也可以直接用ACTION_WIRELESS_SETTINGS打开到wifi界面
+			    				
+			    			    fragment.getActivity().startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
+			    			} else {
+			    				fragment.getActivity().startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+			    			}
+		    			}catch(Exception ex){
+		    				ex.printStackTrace();
 		    			}
+		    			
 		    		}
 		    	});
 		    	builder.setNegativeButton("取消", new OnClickListener() {

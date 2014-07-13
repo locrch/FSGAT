@@ -45,6 +45,8 @@ import com.pangu.neusoft.fsgat.model.Pass;
 
 
 
+import com.pangu.neusoft.fsgat.user.AddpassFragment;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -144,7 +146,7 @@ public  class ApplyVisaFragment extends Fragment {
 	
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
-    	sp = getActivity().getSharedPreferences(getActivity().getApplication().toString(),Context.MODE_PRIVATE);
+    	sp = getActivity().getSharedPreferences("sp",Context.MODE_PRIVATE);
 		editor = sp.edit();
 //		editor.putString("username", "pangu");
 //		editor.commit();
@@ -515,8 +517,9 @@ public void getPass(){
 							i++;
 						}
 						try{
-							ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, mItems);
+							ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),R.layout.dropdowntext, mItems);
 							//绑定 Adapter到控件
+							adapter.setDropDownViewResource(R.layout.drop_down_item);
 							passselecter.setAdapter(adapter);
 						}catch(Exception ex){
 							ex.printStackTrace();
@@ -554,7 +557,7 @@ public void getPass(){
 	                    @Override 
 	                    public void onClick(DialogInterface dialog, int which) { 
 	                    	FragmentTransaction transaction = getFragmentManager().beginTransaction();
-	       				 	YwblFragment fragment=new YwblFragment();
+	       				 	AddpassFragment fragment=new AddpassFragment();
 	                    	transaction.add(R.id.content, fragment);
 	                    	transaction.addToBackStack(null);
 	                        transaction.commit();
@@ -573,7 +576,7 @@ public void getPass(){
 	                    @Override 
 	                    public void onClick(DialogInterface dialog, int which) { 
 	                    	FragmentTransaction transaction = getFragmentManager().beginTransaction();
-	       				 	YwblFragment fragment=new YwblFragment();
+	       				 	BookingFragment fragment=new BookingFragment();
 	                    	transaction.add(R.id.content, fragment);
 	                    	transaction.addToBackStack(null);
 	                        transaction.commit(); 

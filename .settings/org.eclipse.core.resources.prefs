@@ -1,8 +1,4 @@
 eclipse.preferences.version=1
-encoding//gen/android/support/v7/appcompat/R.java=UTF-8
-encoding//gen/android/support/v7/gridlayout/R.java=UTF-8
-encoding//gen/com/fspangu/fsgat/BuildConfig.java=UTF-8
-encoding//gen/com/fspangu/fsgat/R.java=UTF-8
 encoding//src/com/fspangu/fsgat/BmfwFragment.java=UTF-8
 encoding//src/com/fspangu/fsgat/FragmentFactory.java=UTF-8
 encoding//src/com/fspangu/fsgat/GrzxFragment.java=UTF-8
@@ -37,7 +33,6 @@ encoding//src/com/pangu/neusoft/fsgat/model/Pass.java=UTF-8
 encoding//src/com/pangu/neusoft/fsgat/model/user.java=UTF-8
 encoding//src/com/pangu/neusoft/fsgat/user/AddAddressFragment.java=UTF-8
 encoding//src/com/pangu/neusoft/fsgat/user/AddpassFragment.java=UTF-8
-encoding//src/com/pangu/neusoft/fsgat/user/ChangeAddressActivity.java=UTF-8
 encoding//src/com/pangu/neusoft/fsgat/user/ChangeAddressDialog.java=UTF-8
 encoding//src/com/pangu/neusoft/fsgat/user/ChangePassFragment.java=UTF-8
 encoding//src/com/pangu/neusoft/fsgat/user/ChangePasswordFragment.java=UTF-8

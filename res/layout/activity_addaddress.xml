@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:layout_margin="10dp"
     android:background="#FFFFFF"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:clickable="true" >
 
     <TableLayout
         android:layout_width="match_parent"
@@ -21,14 +22,17 @@
                 android:id="@+id/addaddress_receiver_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="收件人:" />
 
             <EditText
                 android:id="@+id/addaddress_receiver"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:ems="10"
-                android:text="盘古" />
+                android:hint="请输入收件人姓名" />
+
         </TableRow>
 
         <TableRow
@@ -40,14 +44,16 @@
                 android:id="@+id/addaddress_address_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="地址:" />
 
             <EditText
                 android:id="@+id/addaddress_address"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:ems="10"
-                android:text="软件园123456" >
+                android:hint="请输入详细地址" >
 
                 <requestFocus />
             </EditText>
@@ -62,21 +68,17 @@
                 android:id="@+id/addaddress_postcode_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="邮编:" />
 
             <EditText
                 android:id="@+id/addaddress_postcode"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:ems="10"
-                android:text="528000" />
+                android:hint="528000" />
 
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
         </TableRow>
     </TableLayout>
 
@@ -94,7 +96,8 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/button_orange"
             android:gravity="center"
-            android:text="添加地址" />
+            android:text="添加地址"
+            android:textColor="#FFFFFF" />
 
     </RelativeLayout>
 

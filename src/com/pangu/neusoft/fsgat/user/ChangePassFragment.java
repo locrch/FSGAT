@@ -47,7 +47,7 @@ public class ChangePassFragment extends Fragment
 		
 		changeaddress_change_btn = (Button) getActivity().findViewById(R.id.changeaddress_change_btn);
 
-		sp = getActivity().getSharedPreferences(getActivity().getApplication().toString(),
+		sp = getActivity().getSharedPreferences("sp",
 				Context.MODE_PRIVATE);
 		editor = sp.edit();
 		GetParamsMap = new HashMap<String, Object>();

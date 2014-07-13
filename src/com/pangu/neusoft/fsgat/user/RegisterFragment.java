@@ -4,12 +4,17 @@ import java.util.HashMap;
 
 import org.json.JSONObject;
 
+import com.fspangu.fsgat.FragmentFactory;
+import com.fspangu.fsgat.GrzxFragment;
 import com.fspangu.fsgat.R;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.core.CheckNetwork;
 import com.pangu.neusoft.fsgat.core.PostJson;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -23,6 +28,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fspangu.fsgat.*;
 @SuppressLint("NewApi")
 public class RegisterFragment extends Fragment
 {
@@ -31,9 +37,13 @@ public class RegisterFragment extends Fragment
 	TextView reg_getcaptacha;
 	JSONObject joget;
 	HashMap<String, Object> GetParamsMap;
-
+	SharedPreferences sp;
+	Editor editor;
 	private void init()
 	{
+		
+		sp = getActivity().getSharedPreferences("sp",Context.MODE_PRIVATE);
+		editor = sp.edit();
 		this.getActivity().setTitle("注册");
 		// TODO Auto-generated method stub
 		reg_username = (EditText) getActivity().findViewById(R.id.reg_username);
@@ -98,9 +108,26 @@ public class RegisterFragment extends Fragment
 						protected void onPostExecute(Boolean result)
 						{
 							super.onPostExecute(result);
-							Toast.makeText(getActivity().getApplicationContext(),
-									(String) GetParamsMap.get("msg"),
-									Toast.LENGTH_LONG).show();
+							
+							if(result){
+								editor.putString("username",reg_username.getText().toString());
+								editor.commit();
+								FragmentManager fragmentManager=getFragmentManager();
+								if(fragmentManager.getBackStackEntryCount()>=1){
+				        			int len = fragmentManager.getBackStackEntryCount();
+				        		    for (int i = 0; i < len; i++) {
+				        		    	fragmentManager.popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+				        		    }
+				        		}
+				        		    FragmentTransaction transaction = fragmentManager.beginTransaction();
+				            		Fragment fragment = new LoginFragment();  
+				            		transaction.replace(R.id.content, fragment);  
+				            		transaction.commit();
+							}
+									Toast.makeText(getActivity().getApplicationContext(),
+											(String) GetParamsMap.get("msg"),
+											Toast.LENGTH_LONG).show();
+								
 	
 						}
 					}.execute();
@@ -146,9 +173,11 @@ public class RegisterFragment extends Fragment
 						protected void onPostExecute(Boolean result)
 						{
 	
-							Toast.makeText(getActivity().getApplicationContext(),
-									(String) GetParamsMap.get("msg"),
-									Toast.LENGTH_LONG).show();
+							
+			            		Toast.makeText(getActivity().getApplicationContext(),
+										(String) GetParamsMap.get("msg"),
+										Toast.LENGTH_LONG).show();
+							
 						};
 	
 					}.execute();

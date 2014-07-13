@@ -17,7 +17,6 @@ import com.fspangu.fsgat.R;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.core.PostJson;
 import com.pangu.neusoft.fsgat.user.ChangeAddressDialog;
-import com.pangu.neusoft.fsgat.user.ChangeAddressActivity;
 import com.pangu.neusoft.fsgat.user.LoginFragment;
 
 import android.annotation.SuppressLint;
@@ -47,7 +46,7 @@ public class ListAddressAdapter extends SimpleAdapter
 	Editor editor;
 	JSONObject joget;
 	HashMap<String, Object> GetParamsMap;
-	TextView listaddress_content_receiver, istaddress_content_address;
+	TextView listaddress_content_receiver, istaddress_content_address,listaddress_content_postcode;
 	Button listadress_change_btn, listaddress_delete_btn;
 	View myView;
 	ListAddress listAddress;
@@ -58,15 +57,9 @@ public class ListAddressAdapter extends SimpleAdapter
 			int[] to)
 	{
 		super(context, data, resource, from, to);
-		
-		
-		context1 = context;
-		
-		activity1 = activity;
-		
-		
-		sp = context1.getSharedPreferences(((Activity) context)
-				.getApplication().toString(), Context.MODE_PRIVATE);
+		context1 = context;		
+		activity1 = activity;	
+		sp = context1.getSharedPreferences("sp", Context.MODE_PRIVATE);
 		editor = sp.edit();
 		GetParamsMap = new HashMap<String, Object>();
 		joget = new JSONObject();
@@ -89,101 +82,47 @@ public class ListAddressAdapter extends SimpleAdapter
 		}
 		listaddress_content_receiver = (TextView) myView
 				.findViewById(R.id.listaddress_content_receiver);
-
-		Button listadress_change_btn = (Button) myView
-				.findViewById(R.id.listadress_change_btn);
-		Button listaddress_delete_btn = (Button) myView
-				.findViewById(R.id.listaddress_delete_btn);
-
-		final int p = position;
-
-		listaddress_delete_btn.setOnClickListener(new OnClickListener()
-		{
-
-			@Override
-			public void onClick(View v)
-			{
-				// TODO Auto-generated method stub
-				new CustomAsynTask(context1)
-				{
-					@Override
-					protected Boolean doInBackground(Void... params)
-					{
-						// TODO Auto-generated method stub
-						String[] keys = new String[]
-						{ "username", "id" };
-
-						ListAddress lA = (ListAddress) listAddress
-								.getListAddresses();
-
-						Address address = lA.get(p);
-
-						String[] values = new String[]
-						{ sp.getString("username", ""),
-								address.getId().toString() };
-
-						PostJson postJson = new PostJson();
-
-						GetParamsMap = postJson.Post(keys, values,
-								"deleteAddress");
-
-						Boolean success = false;
-
-						success = (Boolean) GetParamsMap.get("success");
-
-						if (success)
-						{
-
-						}
-
-						return success;
-					}
-
-					protected void onPostExecute(Boolean result)
-					{
-						super.onPostExecute(result);
-
-						Toast.makeText(context1.getApplicationContext(),
-								(String) GetParamsMap.get("msg"),
-								Toast.LENGTH_LONG).show();
-
-					}
-				}.execute();
-
-			}
-		});
-
-		listadress_change_btn.setOnClickListener(new OnClickListener()
-		{
-
-			@Override
-			public void onClick(View v)
-			{
-				// TODO Auto-generated method stub
-				ListAddress lA = (ListAddress) listAddress.getListAddresses();
-
-				Address address = lA.get(p);
-
-				/*
-				Intent intent = new Intent(context1,
-						ChangeAddressActivity.class);
-				Bundle bundle = new Bundle();
-				bundle.putString("id", address.getId().toString());
-				intent.putExtras(bundle);
-				context1.startActivity(intent);*/
-				
-				new ChangeAddressDialog(address
-						.getId().toString(), activity1, context1, true, null).show();
-				
-				/*Dialog dialog = new Dialog(context1, R.style.Dialog);
-				dialog.setContentView(R.layout.activity_change_address);
-				dialog.setCancelable(true);
-				dialog.show();*/
-			}
-		});
-
+		listaddress_content_postcode = (TextView) myView
+				.findViewById(R.id.listaddress_content_postcode);
+		
+//		Button listadress_change_btn = (Button) myView
+//				.findViewById(R.id.listadress_change_btn);
+//		Button listaddress_delete_btn = (Button) myView
+//				.findViewById(R.id.listaddress_delete_btn);
+//
+//		final int p = position;
+//
+//		listaddress_delete_btn.setOnClickListener(new OnClickListener()
+//		{
+//
+//			@Override
+//			public void onClick(View v)
+//			{
+//				// TODO Auto-generated method stub
+//				//deleteAddress(p);
+//
+//			}
+//		});
+//
+//		listadress_change_btn.setOnClickListener(new OnClickListener()
+//		{
+//
+//			@Override
+//			public void onClick(View v)
+//			{
+//				// TODO Auto-generated method stub
+//				ListAddress lA = (ListAddress) listAddress.getListAddresses();
+//				Address address = lA.get(p);
+//				new ChangeAddressDialog(address, activity1, context1, true, null).show();
+//			}
+//		});
+		
+		
 		return myView;
 	}
+	
+	
+	
 	
 	
 }

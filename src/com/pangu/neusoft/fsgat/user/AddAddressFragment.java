@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 
 
+
+
 import com.fspangu.fsgat.R;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.core.CheckNetwork;
@@ -20,6 +22,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +52,7 @@ public class AddAddressFragment extends Fragment
 		
 		addaddress_add_btn = (Button) getActivity().findViewById(R.id.addaddress_add_btn);
 
-		sp = getActivity().getSharedPreferences(getActivity().getApplication().toString(),
+		sp = getActivity().getSharedPreferences("sp",
 				Context.MODE_PRIVATE);
 		
 		editor = sp.edit();
@@ -113,6 +116,8 @@ public class AddAddressFragment extends Fragment
 						protected void onPostExecute(Boolean result) {
 							super.onPostExecute(result);
 							
+							
+							
 							if (GetParamsMap.get("msg").toString().length()>50)
 							{
 								Toast.makeText(getActivity().getApplicationContext(),
@@ -125,17 +130,38 @@ public class AddAddressFragment extends Fragment
 										Toast.LENGTH_LONG).show();
 							}
 								
-							FragmentManager fragmentManager = getFragmentManager();
-							FragmentTransaction transaction = fragmentManager.beginTransaction();
-							fragmentManager.popBackStack();
-							transaction.commit();
 							
+							
+							try{
 							// 收起键盘
 							((InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE))
 							.hideSoftInputFromWindow(getActivity()
 									.getCurrentFocus().getWindowToken(),
 									InputMethodManager.HIDE_NOT_ALWAYS);
+							}catch(Exception ex){
+								ex.printStackTrace();
+							}
+							
+							if(result){
+								ListAddressFragment alistAddressFragment = new ListAddressFragment();
+								FragmentManager fragmentManager = getFragmentManager();
+								Log.e("count add 1","count1:"+fragmentManager.getBackStackEntryCount()+"");
 								
+								if(fragmentManager.getBackStackEntryCount()>1){
+				        			int len = fragmentManager.getBackStackEntryCount();
+				        		    for (int i = 0; i < len-1; i++) {
+				        		    	fragmentManager.popBackStack();
+				        		    }
+				        		}
+								Log.e("count add 2","count2:"+fragmentManager.getBackStackEntryCount()+""); 
+								FragmentTransaction transaction = fragmentManager.beginTransaction();
+								transaction.add(R.id.content,alistAddressFragment);
+								transaction.addToBackStack(null); 
+								transaction.commit();
+								Log.e("count add 3 ","count3:"+fragmentManager.getBackStackEntryCount()+"");
+							}
+							
+							
 						};
 						
 					}.execute();
