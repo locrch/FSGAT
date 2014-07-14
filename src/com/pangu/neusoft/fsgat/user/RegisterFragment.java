@@ -116,7 +116,7 @@ public class RegisterFragment extends Fragment
 								if(fragmentManager.getBackStackEntryCount()>=1){
 				        			int len = fragmentManager.getBackStackEntryCount();
 				        		    for (int i = 0; i < len; i++) {
-				        		    	fragmentManager.popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+				        		    	fragmentManager.popBackStack();
 				        		    }
 				        		}
 				        		    FragmentTransaction transaction = fragmentManager.beginTransaction();

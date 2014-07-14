@@ -26,7 +26,7 @@ public class CheckLogin {
  			if(fragment.getFragmentManager().getBackStackEntryCount()>=1){
     			int len =fragment.getFragmentManager().getBackStackEntryCount();
     		    for (int i = 0; i < len; i++) {
-    		    	fragment.getFragmentManager().popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    		    	fragment.getFragmentManager().popBackStack();
     		    }
     		}
 			FragmentTransaction transaction = fragment.getFragmentManager().beginTransaction(); 
