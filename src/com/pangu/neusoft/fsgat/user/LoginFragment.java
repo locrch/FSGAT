@@ -90,7 +90,7 @@ public class LoginFragment extends Fragment
 									editor.putString("tempusername",username.getText().toString());
 									editor.putString("temppassword",password.getText().toString());*/
 		if(sp.getBoolean("remberpassword", false)){
-			username.setText(sp.getString("tempusername", ""));
+			//username.setText(sp.getString("tempusername", ""));
 			password.setText(sp.getString("temppassword", ""));
 			login_member_CheckBox.setChecked(true);
 		}else{
@@ -102,6 +102,7 @@ public class LoginFragment extends Fragment
 			autoCheckBox.setChecked(false);
 		}
 		
+		username.setText(sp.getString("tempusername", ""));
 	}
 	
 	@Override
@@ -190,15 +191,15 @@ public class LoginFragment extends Fragment
 										(String) GetParamsMap.get("msg"),
 										Toast.LENGTH_LONG).show();
 								
+								editor.putString("tempusername",username.getText().toString());
+								editor.commit();
 								
 								if (login_member_CheckBox.isChecked()&&result) {
-									editor.putBoolean("remberpassword", true);
-									editor.putString("tempusername",username.getText().toString());
+									editor.putBoolean("remberpassword", true);									
 									editor.putString("temppassword",password.getText().toString());
 									editor.commit();
 								}else if (!login_member_CheckBox.isChecked()) {
 									editor.putBoolean("remberpassword", false);
-									editor.remove("tempusername");
 									editor.remove("temppassword");
 									editor.commit();
 								}
