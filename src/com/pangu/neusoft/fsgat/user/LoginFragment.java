@@ -196,19 +196,19 @@ public class LoginFragment extends Fragment
 										(String) GetParamsMap.get("msg"),
 										Toast.LENGTH_LONG).show();
 								
+								editor.putString("tempusername",username.getText().toString());
+								editor.commit();
 								
 								Toast.makeText(getActivity().getApplicationContext(),
 										String.valueOf(usertype),
 										Toast.LENGTH_LONG).show();
 								
 								if (login_member_CheckBox.isChecked()&&result) {
-									editor.putBoolean("remberpassword", true);
-									editor.putString("tempusername",username.getText().toString());
+									editor.putBoolean("remberpassword", true);									
 									editor.putString("temppassword",password.getText().toString());
 									editor.commit();
 								}else if (!login_member_CheckBox.isChecked()) {
 									editor.putBoolean("remberpassword", false);
-									editor.remove("tempusername");
 									editor.remove("temppassword");
 									editor.commit();
 								}
