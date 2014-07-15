@@ -2,8 +2,7 @@
     android:id="@+id/scrollView1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFFFFF"
-    android:clickable="true"  >
+    android:background="#FFFFFF" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -24,7 +23,7 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/booking_confirm_contant_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
@@ -204,7 +203,7 @@
                     android:layout_weight="5"
                     android:ems="10" >
 
-                      <requestFocus />
+                    <requestFocus />
                 </EditText>
             </TableRow>
             
@@ -231,7 +230,7 @@
                     android:layout_weight="5"
                     android:ems="10" >
 
-                  
+                    <requestFocus />
                 </EditText>
             </TableRow>
             
@@ -256,7 +255,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
                     android:ems="10"
-                    android:inputType="phone" >                   
+                    android:inputType="phone" >
+
+                    <requestFocus />
                 </EditText>
             </TableRow>
 

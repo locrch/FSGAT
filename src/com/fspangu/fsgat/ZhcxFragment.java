@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.pangu.neusoft.fsgat.infos.ExportStateFragment;
+import com.pangu.neusoft.fsgat.infos.GuideFragment;
+import com.pangu.neusoft.fsgat.infos.KnowledgeFragment;
+import com.pangu.neusoft.fsgat.infos.LawsFragment;
 import com.pangu.neusoft.fsgat.infos.MapExportFragment;
 import com.pangu.neusoft.fsgat.infos.MapPlaceFragment;
 import com.pangu.neusoft.fsgat.infos.RealTimeApplyFragment;
@@ -36,6 +39,9 @@ public  class ZhcxFragment extends Fragment {
 	private static String text3="通关口岸分布及路线指引";
 	private static String text4="通关口岸状态查询";
 	private static String text5="办理进度查询";
+	private static String text6="办事指南";
+	private static String text7="法律法规";
+	private static String text8="证件知识";
 	
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
@@ -50,7 +56,7 @@ public  class ZhcxFragment extends Fragment {
         /**
          * 为每个格子添加内容
          */
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 8; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();// 建立hashmap对象
 
             if (i == 1) {
@@ -75,6 +81,18 @@ public  class ZhcxFragment extends Fragment {
             if (i == 5) {
             	map.put("ItemImage", R.drawable.apply_visa3);
             	map.put("ItemText", text5);
+            }
+            if (i == 6) {
+            	map.put("ItemImage", R.drawable.apply_visa1);
+            	map.put("ItemText", text6);
+            }
+            if (i == 7) {
+            	map.put("ItemImage", R.drawable.apply_visa2);
+            	map.put("ItemText", text7);
+            }
+            if (i == 8) {
+            	map.put("ItemImage", R.drawable.apply_visa1);
+            	map.put("ItemText", text8);
             }
             lstImageItem.add(map);
         }
@@ -123,6 +141,27 @@ public  class ZhcxFragment extends Fragment {
                 	
                 	FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 	SearchApplyFragment fragment=new SearchApplyFragment();
+                	transaction.add(R.id.content, fragment);
+                	transaction.addToBackStack(null);
+                    transaction.commit();
+                }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text6)){
+                	
+                	FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                	GuideFragment fragment=new GuideFragment();
+                	transaction.add(R.id.content, fragment);
+                	transaction.addToBackStack(null);
+                    transaction.commit();
+                }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text7)){
+                	
+                	FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                	LawsFragment fragment=new LawsFragment();
+                	transaction.add(R.id.content, fragment);
+                	transaction.addToBackStack(null);
+                    transaction.commit();
+                }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text8)){
+                	
+                	FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                	KnowledgeFragment fragment=new KnowledgeFragment();
                 	transaction.add(R.id.content, fragment);
                 	transaction.addToBackStack(null);
                     transaction.commit();

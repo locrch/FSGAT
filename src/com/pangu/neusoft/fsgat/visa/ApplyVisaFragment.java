@@ -411,7 +411,7 @@ public  class ApplyVisaFragment extends Fragment {
 						if(getFragmentManager().getBackStackEntryCount()>=1){
 		        			int len = getFragmentManager().getBackStackEntryCount();
 		        		    for (int i = 0; i < len; i++) {
-		        		    	getFragmentManager().popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+		        		    	getFragmentManager().popBackStack();
 		        		    }
 		        		}
 						FragmentTransaction transaction = getFragmentManager().beginTransaction(); 

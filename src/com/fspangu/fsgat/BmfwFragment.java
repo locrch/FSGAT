@@ -1,5 +1,6 @@
 package com.fspangu.fsgat;
 
+import com.fspangu.fsgat.ticket.TicketHistoryFragment;
 import com.fspangu.fsgat.ticket.TicketMainFragment;
 import com.pangu.neusoft.fsgat.user.LoginFragment;
 
@@ -21,7 +22,7 @@ public  class BmfwFragment extends Fragment {
     	View view = inflater.inflate(R.layout.bmfw_fragment, null);  
         this.getActivity().setTitle("便民服务");
         Button ticket_booking_btn = (Button)view.findViewById(R.id.ticket_booking_btn);
-        
+        Button ticket_history_btn = (Button)view.findViewById(R.id.ticket_history_btn);
         
         
     	ticket_booking_btn.setOnClickListener(new OnClickListener() {
@@ -29,13 +30,24 @@ public  class BmfwFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
 				FragmentTransaction transaction =getFragmentManager().beginTransaction(); 
 				TicketMainFragment tm = new TicketMainFragment();
 				transaction.replace(R.id.content, tm); 
 				transaction.addToBackStack(null);
 	            transaction.commit();
-	            
+	        }
+		});
+    	
+    	ticket_history_btn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				FragmentTransaction transaction =getFragmentManager().beginTransaction(); 
+				TicketHistoryFragment thf = new TicketHistoryFragment();
+				transaction.replace(R.id.content, thf); 
+				transaction.addToBackStack(null);
+	            transaction.commit();
 	            
 			}
 		});

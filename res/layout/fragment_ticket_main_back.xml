@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/ticket_main_fragment_layout"
+    android:id="@+id/ticket_main_back_fragment_layout"
      >
 
     <RelativeLayout

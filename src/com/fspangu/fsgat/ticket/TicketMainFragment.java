@@ -2,7 +2,9 @@ package com.fspangu.fsgat.ticket;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,15 +19,21 @@ import com.fspangu.fsgat.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
+import com.pangu.neusoft.fsgat.core.CheckLogin;
 import com.pangu.neusoft.fsgat.core.CheckNetwork;
 import com.pangu.neusoft.fsgat.core.PostJSONfromGson;
 import com.pangu.neusoft.fsgat.core.PostJson;
 import com.pangu.neusoft.fsgat.model.Address;
 import com.pangu.neusoft.fsgat.model.ListDepartureTime;
 import com.pangu.neusoft.fsgat.model.ListReturnUpstation;
+import com.pangu.neusoft.fsgat.model.ListSeatNumber;
 import com.pangu.neusoft.fsgat.model.ListdownStation;
+import com.pangu.neusoft.fsgat.model.PostbuyTicket;
 import com.pangu.neusoft.fsgat.model.PostgetDepartureTime;
 import com.pangu.neusoft.fsgat.model.PostgetReturnUpstation;
+import com.pangu.neusoft.fsgat.model.PostgetSeatNumber;
+import com.pangu.neusoft.fsgat.model.PutReturnseatNumbersList;
+import com.pangu.neusoft.fsgat.model.PutseatNumbersList;
 import com.pangu.neusoft.fsgat.model.ReturnDownStation;
 import com.pangu.neusoft.fsgat.model.ReturnUpStation;
 import com.pangu.neusoft.fsgat.model.departureTime;
@@ -34,24 +42,39 @@ import com.pangu.neusoft.fsgat.model.ListAddress;
 import com.pangu.neusoft.fsgat.model.ListupStation;
 import com.pangu.neusoft.fsgat.model.Upstation;
 import com.pangu.neusoft.fsgat.model.PostgetDownStation;
+import com.pangu.neusoft.fsgat.model.seatNumber;
 import com.pangu.neusoft.fsgat.model.user;
+import com.pangu.neusoft.fsgat.user.ConfirmInfo;
+import com.pangu.neusoft.fsgat.user.ListTicketLine;
 
+import android.R.array;
+import android.R.fraction;
+import android.R.integer;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -63,23 +86,27 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import com.pangu.neusoft.fsgat.core.CheckLogin;
 
 public class TicketMainFragment extends Fragment {
 	RadioGroup choose_place, choose_company, choose_monoway, sendway;
 	RadioButton place_hongkong, place_macao, company_yd, company_zgt,
 			monoway_single, monoway_double, sendway_onself, sendway_mail;
-	Spinner way_spinner, upplace_spinner, downplace_spinner, uptime_date,back_upplace,back_downplace,back_uptime_time;
-	EditText contact, tellphone, address, zipcode;
+	Spinner way_spinner, upplace_spinner, downplace_spinner, uptime_time,back_upplace,back_downplace,back_uptime_time;
+	EditText contact, tellphone, address, zipcode,back_uptime_update,uptime_update;
 	Button booking_btn;
 	RelativeLayout selection_layout, ticket_layout;
 	LinearLayout mail_layout, fragment_layout;
-	TextView selection;
+	TextView selection,back_selection;
 
 	FragmentManager fragmentManager;
 	FragmentTransaction fragmentTransaction;
 	TicketBackFragment tb;
-
-	int upwayID,downwayID,busCompanyID,upStationID,downStationID,ticketLineID;
+	Fragment thisfragment;
+	
+	Integer upwayID,downwayID,busCompanyID,upStationID,downStationID,ticketLineID,goDepartureTimeID;
+	Integer returnupwayID,returndownwayID,returnbusCompanyID,returnupStationID,returndownStationID,returnticketLineID,returnDepartureTimeID;
+	
 	JSONObject joget;
 	HashMap<String, Object> GetParamsMap;
 	Map<String, Object> adapterListMap;
@@ -98,14 +125,38 @@ public class TicketMainFragment extends Fragment {
 	departureTime departureTime;
 	ListDepartureTime listDepartureTime;
 	
+	ListSeatNumber listSeatNumber;
+	
+	
 	ArrayList<String> listReturnUpStationName;
 	ArrayList<Integer> listReturnUpStationID;
 	ReturnUpStation returnUpStation;
+	
+	ArrayList<String> listReturnDownStationName;
+	ArrayList<Integer> listReturnDownStationID;
+	ArrayList<Integer> listReturndepartureTimeID;
+	ReturnDownStation returnDownStation;
+	
+	
 	
 	SharedPreferences sp;
 	Editor editor;
 	ArrayAdapter adapter_upplace,adapter_downplace,adapter_uptimetime,adapter_returnupplace,adapter_returndownplace,adapter_returnuptimetime;
 
+	FragmentSelectSeat fss;
+	TicketBookingConfirmFragment tbcf;
+	static ArrayList<seatNumber> seatNumbersList;
+	static ArrayList<seatNumber> ReturnseatNumbersList;
+	
+	
+	static PostbuyTicket postbuyTicket;
+	ListTicketLine listTicketLine;
+	float oneWayPrice,doubleWayPrice;
+	
+	int ClickCount = 0;
+	
+	DatePickerDialog  dpd_uptime_update,dpd_back_uptime_update;
+	
 	private void init() {
 		// TODO Auto-generated method stub
 		choose_place = (RadioGroup) getActivity().findViewById(
@@ -137,8 +188,8 @@ public class TicketMainFragment extends Fragment {
 				R.id.ticket_main_upplace_spinner);
 		downplace_spinner = (Spinner) getActivity().findViewById(
 				R.id.ticket_main_downplace_spinner);
-		uptime_date = (Spinner) getActivity().findViewById(
-				R.id.ticket_main_uptime_date);
+		uptime_time = (Spinner) getActivity().findViewById(
+				R.id.ticket_main_uptime_uptime);
 		back_upplace = (Spinner) getActivity().findViewById(
 				R.id.ticket_main_back_upplace_spinner);
 		back_downplace = (Spinner) getActivity().findViewById(
@@ -153,8 +204,13 @@ public class TicketMainFragment extends Fragment {
 				R.id.ticket_main_mail_address);
 		zipcode = (EditText) getActivity().findViewById(
 				R.id.ticket_main_mail_zipcode);
+		back_uptime_update = (EditText)getActivity().findViewById(R.id.ticket_main_back_uptime_update);
+		uptime_update = (EditText)getActivity().findViewById(R.id.ticket_main_uptime_update);
+		
+		booking_btn = (Button)getActivity().findViewById(R.id.ticket_main_booking_btn);
+		
 		fragment_layout = (LinearLayout) getActivity().findViewById(
-				R.id.ticket_main_fragment_layout);
+				R.id.ticket_main_back_fragment_layout);
 		selection_layout = (RelativeLayout) getActivity().findViewById(
 				R.id.ticket_main_selection_layout);
 		ticket_layout = (RelativeLayout) getActivity().findViewById(
@@ -163,7 +219,8 @@ public class TicketMainFragment extends Fragment {
 				R.id.ticket_main_mail_layout);
 		selection = (TextView) getActivity().findViewById(
 				R.id.ticket_main_selection);
-
+		back_selection = (TextView)getActivity().findViewById(R.id.ticket_main_back_selection);
+		
 		fragmentManager = getFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -178,8 +235,181 @@ public class TicketMainFragment extends Fragment {
 		listupStationID = new ArrayList<Integer>();
 		
 		listdownStationID = new ArrayList<Integer>();
+		
+		fss = new FragmentSelectSeat();
+		
+		tbcf = new TicketBookingConfirmFragment();
+		
+		postbuyTicket = new PostbuyTicket();
+		
+		thisfragment = this;
+		
+		sp = getActivity()
+				.getSharedPreferences(
+						"sp",
+						Context.MODE_PRIVATE);
+		editor = sp.edit();
+		
+		DatePickerDialog.OnDateSetListener dateListener_uptime_update = new DatePickerDialog.OnDateSetListener()
+		{
+			@Override
+			public void onDateSet(DatePicker datePicker, int year, int month,
+					int dayOfMonth)
+			{
+
+				uptime_update
+						.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+			}
+		};
+		DatePickerDialog.OnDateSetListener dateListener_back_uptime_update = new DatePickerDialog.OnDateSetListener()
+		{
+			@Override
+			public void onDateSet(DatePicker datePicker, int year, int month,
+					int dayOfMonth)
+			{
+
+				back_uptime_update
+						.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+			}
+		};
+		
+		
+		Calendar calendar = Calendar.getInstance();
+
+		dpd_uptime_update = new DatePickerDialog(getActivity(), dateListener_uptime_update,
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH));
+		
+		dpd_back_uptime_update = new DatePickerDialog(getActivity(), dateListener_back_uptime_update,
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH));
+		
 	}
 
+	Map<String,Address> address_map=new LinkedHashMap<String,Address>();
+	private int selectedAddressIndex = 0;
+	AsyncTask<Void, Void, Boolean> loading3;
+	public void showAddressDialog(){
+		selectedAddressIndex=0;
+		loading3=new AsyncTask<Void, Void, Boolean>(){
+		    @SuppressWarnings("deprecation")
+			@Override  
+	        protected void onPreExecute() {   
+	            super.onPreExecute();   
+	            try{
+		    		getActivity().setProgressBarIndeterminateVisibility(true);// 执行前使进度条可见
+		    	}catch(Exception ex){
+		    		ex.printStackTrace();
+		    	}// 执行前使进度条可见
+	        }			
+			@Override
+			protected Boolean doInBackground(Void... params){
+				
+				String[] keys = new String[]{ "username"};
+				String[] values = new String[]{ sp.getString("username", "")};
+				PostJson postJson = new PostJson();
+				HashMap<String, Object>  GetParamsMap = postJson.Post(keys, values,"listAddress","addressList");
+				JSONArray addressList = (JSONArray)GetParamsMap.get("addressList");
+					if(addressList!=null)	
+						for (int i = 0; i < addressList.length(); i++)
+						{
+							try	{
+								JSONObject jo = (JSONObject) addressList.get(i);
+								Address address = new Address();	
+								address.setAddress(jo.getString("address"));
+								address.setReceiver(jo.getString("receiver"));
+								address.setPostcode(jo.getString("postcode"));
+								address.setId(""+(i+1));								
+								address_map.put(""+(i+1), address);
+								
+							} catch (JSONException e){
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+						}
+				Boolean success = (Boolean) GetParamsMap.get("success");
+				return success;
+			}
+			
+			@SuppressWarnings("deprecation")
+			@Override
+			protected void onPostExecute(Boolean result){
+				super.onPostExecute(result);
+				try{
+					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
+				if(result){
+					if(address_map.size()>0){
+						final String[] mItems = new String[address_map.size()];
+						int i=0;	
+						for(String key : address_map.keySet()){
+							Address address=address_map.get(key);
+							//mItems[i]=address.getId()+":"+address.getAddress()+"("+address.getReceiver()+")";
+							mItems[i]=address.getAddress()+"("+address.getReceiver()+")";
+							i++;
+						}
+						
+
+						 	Dialog alertDialog = new AlertDialog.Builder(getActivity()).
+						    setTitle("请选择已经添加的地址？").
+						    setIcon(R.drawable.ic_launcher)
+						    .setSingleChoiceItems(mItems, 0, new DialogInterface.OnClickListener() {
+						 
+						     @Override
+						     public void onClick(DialogInterface dialog, int which) {
+						    	 selectedAddressIndex = which;
+						     }
+						    }).
+						    setPositiveButton("确认", new DialogInterface.OnClickListener() {
+
+						     @Override
+						     public void onClick(DialogInterface dialog, int which) {
+						    	 //Toast.makeText(getActivity(), mItems[selectedFruitIndex], Toast.LENGTH_SHORT).show();
+						    	 
+						    	 Address getaddress=address_map.get(""+(selectedAddressIndex+1));
+						    	 contact.setText(getaddress.getReceiver());
+						    	 address.setText(getaddress.getAddress());
+						    	 zipcode.setText(getaddress.getPostcode());
+						     }
+						    }).
+						    setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+						     @Override
+						     public void onClick(DialogInterface dialog, int which) {
+						      // TODO Auto-generated method stub
+						     }
+						    }).
+						    create();
+						  alertDialog.show();
+					}else{
+						Toast.makeText(getActivity(), "没有地址数据！请输入收件人信息",Toast.LENGTH_SHORT).show();
+					}
+				}else{					
+					Toast.makeText(getActivity(), "没有地址数据！请输入收件人信息",Toast.LENGTH_SHORT).show();
+				}
+			}
+			@SuppressWarnings("deprecation")
+			@Override
+			protected void onCancelled()
+			{
+				super.onCancelled();
+				try{
+					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
+				
+			}
+			
+		};
+		loading3.execute(); 
+	}
+	
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -196,7 +426,6 @@ public class TicketMainFragment extends Fragment {
 		
 			busCompanyID = 1;
 			
-			
 			init();
 
 		company_zgt.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -212,7 +441,7 @@ public class TicketMainFragment extends Fragment {
 				}
 			}
 		});
-
+		
 		company_yd.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -252,40 +481,42 @@ public class TicketMainFragment extends Fragment {
 										
 										returnUpStation = new ReturnUpStation();
 										
+										returnDownStation = new ReturnDownStation();
+										
 										PostgetDepartureTime postgetDepartureTime = new PostgetDepartureTime();
+										PostgetReturnUpstation postgetReturnUpstation = new PostgetReturnUpstation();
 										
-										/*postgetDepartureTime.setBusCompanyID(busCompanyID);
-										
-										postgetDepartureTime.setTicketDirectionID(upwayID);
-										
-										postgetDepartureTime.setUpStationID(upStationID);
-										
-										postgetDepartureTime.setDownStationID(downStationID);
-										
-										String result1 = (String) postGson.GsonPost(postgetDepartureTime, "getDepartureTime");
-										
-										
-										ListDepartureTime listDepartureTime = gson.fromJson(result1,listType1);*/
 										
 										ticketLineID = listDepartureTime.getTicketLineID();
 										
-										postgetDepartureTime.setTicketLineID(ticketLineID);
+										if (ticketLineID == null)
+										return false;
+										
+										postgetReturnUpstation.setTicketLineID(ticketLineID);
 										
 										Type listType1=new TypeToken<ListDepartureTime>(){}.getType();
 										
-										
-										String result1 = (String) postGson.GsonPost(postgetDepartureTime, "getDepartureTime");
+										String result1 = (String) postGson.GsonPost(postgetReturnUpstation, "getDepartureTime");
 										
 										ListDepartureTime listDepartureTime1 = gson.fromJson(result1,listType1);
 										
-										
 										ArrayList<ReturnUpStation> returnUpStationList = new ArrayList<ReturnUpStation>();
 										
+										ArrayList<ReturnDownStation> returnDownStationList = new ArrayList<ReturnDownStation>();
+										
 										returnUpStationList = listDepartureTime1.getUpStationList();
+										
+										returnDownStationList = listDepartureTime1.getDownStationList();
+										
+										returnticketLineID = listDepartureTime1.getTicketLineID();
 										
 										listReturnUpStationName = new ArrayList<String>();
 										
 										listReturnUpStationID = new ArrayList<Integer>();
+										
+										listReturnDownStationName = new ArrayList<String>();
+										
+										listReturnDownStationID = new ArrayList<Integer>();
 										
 										if (!listReturnUpStationName.isEmpty()) {
 											listReturnUpStationName.clear();
@@ -302,21 +533,52 @@ public class TicketMainFragment extends Fragment {
 											listReturnUpStationName.add(returnUpStation.getStationName());
 											
 											listReturnUpStationID.add(returnUpStation.getStationID());
+											
 										}
-								
 										
-										return null;
+										Boolean success = listDepartureTime1.getSuccess();
+										
+										if (!listReturnDownStationName.isEmpty()) {
+											listReturnDownStationName.clear();
+										}
+										
+										if (returnDownStationList==null) {
+											return false;
+										}
+										
+										for (int j = 0; j < returnDownStationList.size(); j++) {
+											
+											returnDownStation = returnDownStationList.get(j);
+											
+											listReturnDownStationName.add(returnDownStation.getStationName());
+											
+											listReturnDownStationID.add(returnDownStation.getStationID());
+											
+										}
+									    
+										
+										return success;
 									}
 										
 										protected void onPostExecute(Boolean result)
 										{
 											super.onPostExecute(result);
 											
-											adapter_returnupplace=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listReturnUpStationName);
-											
-											back_upplace.setAdapter(adapter_returnupplace);
-											
+											if (result)
+											{
+												adapter_returnupplace=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listReturnUpStationName);
 												
+												back_upplace.setAdapter(adapter_returnupplace);
+												
+													
+												adapter_returndownplace=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listReturnDownStationName);
+												
+												back_downplace.setAdapter(adapter_returndownplace);
+											}
+											else {
+												Toast.makeText(getActivity(), R.string.toast_flase_msg, Toast.LENGTH_SHORT).show();
+											}
+											
 											
 										}
 									}.execute();
@@ -345,7 +607,7 @@ public class TicketMainFragment extends Fragment {
 						}
 					}
 				});
-
+		
 		sendway_mail.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -354,6 +616,21 @@ public class TicketMainFragment extends Fragment {
 				// TODO Auto-generated method stub
 				if (isChecked) {
 					mail_layout.setVisibility(View.VISIBLE);
+				}
+					
+				
+				
+				
+			}
+		});
+		
+		sendway_mail.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(CheckLogin.logined(thisfragment)){
+					showAddressDialog();
 				}
 			}
 		});
@@ -379,7 +656,6 @@ public class TicketMainFragment extends Fragment {
 
 			}
 		});
-
 		way_spinner
 				.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -389,28 +665,32 @@ public class TicketMainFragment extends Fragment {
 						switch (arg2) {
 						case 0:
 							upwayID= arg2+1;
-							downwayID = arg2+2;
+							downwayID = upwayID+1;
 							break;
 
 						case 1:
 							upwayID= arg2+1;
-							downwayID = arg2;
+							downwayID = upwayID-1;
 							break;
 							
 						case 2:
 							upwayID= arg2+1;
-							downwayID = arg2+2;
+							downwayID = upwayID+1;
 							break;
 							
 						case 3:
 							upwayID= arg2+1;
-							downwayID = arg2;
+							downwayID = upwayID-1;
 							break;
 							
 						default:
 							break;
 						}
 						
+						
+							
+						
+						if (ClickCount == 0)
 						new CustomAsynTask(getActivity())
 						{
 							@Override
@@ -421,6 +701,10 @@ public class TicketMainFragment extends Fragment {
 								String[] keys = new String[]
 								{ "ticketDirectionID","busCompanyID"};
 		
+								
+								if (upwayID==null|| busCompanyID==null)
+								return false;
+								
 								int[] values = new int[]
 								{upwayID,busCompanyID};
 		
@@ -491,6 +775,9 @@ public class TicketMainFragment extends Fragment {
 									PostgetDownStation postgetDownStation = new PostgetDownStation();
 									
 									downstation = new downStation();
+									
+									if (downwayID==null||busCompanyID==null)
+									return false;
 									
 									postgetDownStation.setTicketDirectionID(downwayID);
 									
@@ -565,7 +852,8 @@ public class TicketMainFragment extends Fragment {
 						// TODO Auto-generated method stub
 
 					}
-
+				
+					
 				});
 		
 		upplace_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -577,40 +865,95 @@ public class TicketMainFragment extends Fragment {
 				case 0:
 					upStationID = listupStationID.get(arg2);
 					break;
-				case 1:
-					upStationID = listupStationID.get(arg2);
-					break;
-				case 2:
-					upStationID = listupStationID.get(arg2);
-					break;
-				case 3:
-					upStationID = listupStationID.get(arg2);
-					break;
-				case 4:
-					upStationID = listupStationID.get(arg2);
-					break;
-				case 5:
-					upStationID = listupStationID.get(arg2);
-					break;
-				case 6:
-					upStationID = listupStationID.get(arg2);
-					break;
-				case 7:
-					upStationID = listupStationID.get(arg2);
-					break;
-				case 8:
-					upStationID = listupStationID.get(arg2);
-					break;
-				case 9:
-					upStationID = listupStationID.get(arg2);
-					break;
-					
 				default:
+					upStationID = listupStationID.get(arg2);
 					break;
-					
-					
-				}
+					}
 				
+				new CustomAsynTask(getActivity())
+				{
+					@Override
+					protected Boolean doInBackground(Void... params)
+					{
+						PostJSONfromGson postGson = new PostJSONfromGson();
+						
+						PostgetDepartureTime postgetDepartureTime = new PostgetDepartureTime();
+						
+						if (busCompanyID==null||upwayID==null||upStationID==null||downStationID==null)
+						return false;
+						
+						postgetDepartureTime.setBusCompanyID(busCompanyID);
+						
+						postgetDepartureTime.setTicketDirectionID(upwayID);
+						
+						postgetDepartureTime.setUpStationID(upStationID);
+						
+						postgetDepartureTime.setDownStationID(downStationID);
+						
+						listDepartureTime = new ListDepartureTime();
+						
+						String result = (String) postGson.GsonPost(postgetDepartureTime, "getDepartureTime");
+						
+						Type listType=new TypeToken<ListDepartureTime>(){}.getType();
+						
+						Gson gson = new Gson();
+						
+						listDepartureTime = gson.fromJson(result,listType);
+						
+						ArrayList<departureTime> departureTimesList = new ArrayList<departureTime>();
+						
+						if (listDepartureTime.getDepartureTimeList()==null) {
+							return false;
+						}
+						departureTimesList = listDepartureTime.getDepartureTimeList();
+						
+						listdepartureTimeName = new ArrayList<String>();
+						
+						listdepartureTimeID = new ArrayList<Integer>();
+						
+						if (!listdepartureTimeName.isEmpty()) {
+							listdepartureTimeName.clear();
+						}
+						
+							
+						for (int j = 0; j < departureTimesList.size(); j++) {
+							
+							departureTime = departureTimesList.get(j);
+							
+							listdepartureTimeName.add(departureTime.getDepartureTimeName());
+							
+							listdepartureTimeID.add(departureTime.getDepartureTimeID());
+							
+							
+						}
+						
+						ticketLineID = listDepartureTime.getTicketLineID();
+						
+						Boolean success = listDepartureTime.getSuccess();
+						
+						return success;
+						
+					}
+					
+					protected void onPostExecute(Boolean result)
+					{
+						super.onPostExecute(result);
+						
+						if (result) {
+							
+							adapter_uptimetime=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listdepartureTimeName);
+							
+							uptime_time.setAdapter(adapter_uptimetime);
+						}
+						else {
+							//adapter_uptimetime.clear();
+							uptime_time.setAdapter(adapter_uptimetime);
+							Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
+						}
+						
+					}
+					
+				}.execute();
 				
 				
 			}
@@ -631,36 +974,10 @@ public class TicketMainFragment extends Fragment {
 				switch (arg2) {
 				case 0:
 					downStationID = listdownStationID.get(arg2);
+					 
 					break;
-				case 1:
-					downStationID = listdownStationID.get(arg2);
-					break;
-				case 2:
-					downStationID = listdownStationID.get(arg2);
-					break;
-				case 3:
-					downStationID = listdownStationID.get(arg2);
-					break;
-				case 4:
-					downStationID = listdownStationID.get(arg2);
-					break;
-				case 5:
-					downStationID = listdownStationID.get(arg2);
-					break;
-				case 6:
-					downStationID = listdownStationID.get(arg2);
-					break;
-				case 7:
-					downStationID = listdownStationID.get(arg2);
-					break;
-				case 8:
-					downStationID = listdownStationID.get(arg2);
-					break;
-				case 9:
-					downStationID = listdownStationID.get(arg2);
-					break;
-					
 				default:
+					downStationID = listdownStationID.get(arg2);
 					break;
 					
 					
@@ -674,6 +991,10 @@ public class TicketMainFragment extends Fragment {
 						PostJSONfromGson postGson = new PostJSONfromGson();
 						
 						PostgetDepartureTime postgetDepartureTime = new PostgetDepartureTime();
+						
+						if (busCompanyID==null||upwayID==null||upStationID==null||downStationID==null)
+							return false;
+							
 						
 						postgetDepartureTime.setBusCompanyID(busCompanyID);
 						
@@ -724,6 +1045,8 @@ public class TicketMainFragment extends Fragment {
 							
 						}
 						
+						ticketLineID = listDepartureTime.getTicketLineID();
+						
 						Boolean success = listDepartureTime.getSuccess();
 						
 						return success;
@@ -735,20 +1058,137 @@ public class TicketMainFragment extends Fragment {
 						super.onPostExecute(result);
 						
 						if (result) {
-							
 							adapter_uptimetime=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listdepartureTimeName);
 							
-							uptime_date.setAdapter(adapter_uptimetime);
+							
+							uptime_time.setAdapter(adapter_uptimetime);
 						}
 						else {
-							adapter_uptimetime.clear();
-							uptime_date.setAdapter(adapter_uptimetime);
+							//adapter_uptimetime.clear();
+							uptime_time.setAdapter(adapter_uptimetime);
 							Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
 						}
 						
 					}
 					
 				}.execute();
+				
+				if (monoway_double.isChecked())
+				new CustomAsynTask(getActivity())
+				{
+					@Override
+					protected Boolean doInBackground(Void... params)
+					{
+						
+						/*获取返程上车点*/
+						PostJSONfromGson postGson = new PostJSONfromGson();
+						
+						Gson gson = new Gson();
+						
+						returnUpStation = new ReturnUpStation();
+						
+						returnDownStation = new ReturnDownStation();
+						
+						PostgetDepartureTime postgetDepartureTime = new PostgetDepartureTime();
+						PostgetReturnUpstation postgetReturnUpstation = new PostgetReturnUpstation();
+						
+						
+						ticketLineID = listDepartureTime.getTicketLineID();
+						
+						if (ticketLineID == null)
+						return false;
+						
+						postgetReturnUpstation.setTicketLineID(ticketLineID);
+						
+						Type listType1=new TypeToken<ListDepartureTime>(){}.getType();
+						
+						String result1 = (String) postGson.GsonPost(postgetReturnUpstation, "getDepartureTime");
+						
+						ListDepartureTime listDepartureTime1 = gson.fromJson(result1,listType1);
+						
+						ArrayList<ReturnUpStation> returnUpStationList = new ArrayList<ReturnUpStation>();
+						
+						ArrayList<ReturnDownStation> returnDownStationList = new ArrayList<ReturnDownStation>();
+						
+						returnUpStationList = listDepartureTime1.getUpStationList();
+						
+						returnDownStationList = listDepartureTime1.getDownStationList();
+						
+						returnticketLineID = listDepartureTime1.getTicketLineID();
+						
+						listReturnUpStationName = new ArrayList<String>();
+						
+						listReturnUpStationID = new ArrayList<Integer>();
+						
+						listReturnDownStationName = new ArrayList<String>();
+						
+						listReturnDownStationID = new ArrayList<Integer>();
+						
+						if (!listReturnUpStationName.isEmpty()) {
+							listReturnUpStationName.clear();
+						}
+						
+						if (returnUpStationList==null) {
+							return false;
+						}
+						
+						for (int j = 0; j < returnUpStationList.size(); j++) {
+							
+							returnUpStation = returnUpStationList.get(j);
+							
+							listReturnUpStationName.add(returnUpStation.getStationName());
+							
+							listReturnUpStationID.add(returnUpStation.getStationID());
+							
+						}
+						
+						Boolean success = listDepartureTime1.getSuccess();
+						
+						if (!listReturnDownStationName.isEmpty()) {
+							listReturnDownStationName.clear();
+						}
+						
+						if (returnDownStationList==null) {
+							return false;
+						}
+						
+						for (int j = 0; j < returnDownStationList.size(); j++) {
+							
+							returnDownStation = returnDownStationList.get(j);
+							
+							listReturnDownStationName.add(returnDownStation.getStationName());
+							
+							listReturnDownStationID.add(returnDownStation.getStationID());
+							
+						}
+					    
+						
+						return success;
+					}
+						
+						protected void onPostExecute(Boolean result)
+						{
+							super.onPostExecute(result);
+							
+							if (result)
+							{
+								adapter_returnupplace=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listReturnUpStationName);
+								
+								back_upplace.setAdapter(adapter_returnupplace);
+								
+									
+								adapter_returndownplace=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listReturnDownStationName);
+								
+								back_downplace.setAdapter(adapter_returndownplace);
+							}
+							else {
+								Toast.makeText(getActivity(), R.string.toast_flase_msg, Toast.LENGTH_SHORT).show();
+							}
+							
+							
+						}
+					}.execute();
+				
 				
 				
 			}
@@ -761,6 +1201,34 @@ public class TicketMainFragment extends Fragment {
 
 		});
 		
+		uptime_time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				switch (arg2) {
+				case 0:
+					goDepartureTimeID = listdepartureTimeID.get(arg2);
+					break;
+				default:
+					goDepartureTimeID = listdepartureTimeID.get(arg2);
+					break;
+					
+				}
+				
+				
+			}
+			
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
+		
+		
+		
 		back_upplace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
 			@Override
@@ -768,14 +1236,97 @@ public class TicketMainFragment extends Fragment {
 					int arg2, long arg3) {
 				switch (arg2) {
 				case 0:
-					upStationID = listupStationID.get(arg2);
+					returnupStationID = listReturnUpStationID.get(arg2);
 					break;
-				
-					
 				default:
+					returnupStationID = listReturnUpStationID.get(arg2);
 					break;
 					
 				}
+				
+				new CustomAsynTask(getActivity())
+				{
+					@Override
+					protected Boolean doInBackground(Void... params)
+					{
+						PostJSONfromGson postGson = new PostJSONfromGson();
+						
+						PostgetDepartureTime postgetDepartureTime = new PostgetDepartureTime();
+						
+						if (busCompanyID==null||downwayID==null||returnupStationID==null||returndownStationID==null)
+							return false;
+							
+						
+						postgetDepartureTime.setBusCompanyID(busCompanyID);
+						
+						postgetDepartureTime.setTicketDirectionID(downwayID);
+						
+						postgetDepartureTime.setUpStationID(returnupStationID);
+						
+						postgetDepartureTime.setDownStationID(returndownStationID);
+						
+						listDepartureTime = new ListDepartureTime();
+						
+						String result = (String) postGson.GsonPost(postgetDepartureTime, "getDepartureTime");
+						
+						Type listType=new TypeToken<ListDepartureTime>(){}.getType();
+						
+						Gson gson = new Gson();
+						
+						listDepartureTime = gson.fromJson(result,listType);
+						
+						ArrayList<departureTime> departureTimesList = new ArrayList<departureTime>();
+						
+						if (listDepartureTime.getDepartureTimeList()==null) {
+							return false;
+						}
+						departureTimesList = listDepartureTime.getDepartureTimeList();
+						
+						listdepartureTimeName = new ArrayList<String>();
+						
+						listReturndepartureTimeID = new ArrayList<Integer>();
+						
+						if (!listdepartureTimeName.isEmpty()) {
+							listdepartureTimeName.clear();
+						}
+						
+							
+						for (int j = 0; j < departureTimesList.size(); j++) {
+							
+							departureTime = departureTimesList.get(j);
+							
+							listdepartureTimeName.add(departureTime.getDepartureTimeName());
+							
+							listReturndepartureTimeID.add(departureTime.getDepartureTimeID());
+							
+							
+						}
+						
+						Boolean success = listDepartureTime.getSuccess();
+						
+						return success;
+						
+					}
+					
+					protected void onPostExecute(Boolean result)
+					{
+						super.onPostExecute(result);
+						
+						if (result) {
+							
+							adapter_returnuptimetime=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listdepartureTimeName);
+							
+							back_uptime_time.setAdapter(adapter_returnuptimetime);
+						}
+						else {
+							//adapter_uptimetime.clear();
+							back_uptime_time.setAdapter(adapter_returnuptimetime);
+							Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
+						}
+						
+					}
+					
+				}.execute();
 				
 				
 				
@@ -788,6 +1339,496 @@ public class TicketMainFragment extends Fragment {
 			}
 
 		});
+		
+		
+		back_downplace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				switch (arg2) {
+				case 0:
+					returndownStationID = listReturnDownStationID.get(arg2);
+					break;
+				default:
+					returndownStationID = listReturnDownStationID.get(arg2);
+					break;
+					
+				}
+				
+				new CustomAsynTask(getActivity())
+				{
+					@Override
+					protected Boolean doInBackground(Void... params)
+					{
+						PostJSONfromGson postGson = new PostJSONfromGson();
+						
+						PostgetDepartureTime postgetDepartureTime = new PostgetDepartureTime();
+						
+						if (busCompanyID==null||downwayID==null||returnupStationID==null||returndownStationID==null)
+							return false;
+						
+						postgetDepartureTime.setBusCompanyID(busCompanyID);
+						
+						postgetDepartureTime.setTicketDirectionID(downwayID);
+						
+						postgetDepartureTime.setUpStationID(returnupStationID);
+						
+						postgetDepartureTime.setDownStationID(returndownStationID);
+						
+						listDepartureTime = new ListDepartureTime();
+						
+						String result = (String) postGson.GsonPost(postgetDepartureTime, "getDepartureTime");
+						
+						Type listType=new TypeToken<ListDepartureTime>(){}.getType();
+						
+						Gson gson = new Gson();
+						
+						listDepartureTime = gson.fromJson(result,listType);
+						
+						ArrayList<departureTime> departureTimesList = new ArrayList<departureTime>();
+						
+						if (listDepartureTime.getDepartureTimeList()==null) {
+							return false;
+						}
+						departureTimesList = listDepartureTime.getDepartureTimeList();
+						
+						listdepartureTimeName = new ArrayList<String>();
+						
+						listdepartureTimeID = new ArrayList<Integer>();
+						
+						if (!listdepartureTimeName.isEmpty()) {
+							listdepartureTimeName.clear();
+						}
+						
+							
+						for (int j = 0; j < departureTimesList.size(); j++) {
+							
+							departureTime = departureTimesList.get(j);
+							
+							listdepartureTimeName.add(departureTime.getDepartureTimeName());
+							
+							listdepartureTimeID.add(departureTime.getDepartureTimeID());
+							
+							
+						}
+						
+						Boolean success = listDepartureTime.getSuccess();
+						
+						return success;
+						
+					}
+					
+					protected void onPostExecute(Boolean result)
+					{
+						super.onPostExecute(result);
+						
+						if (result) {
+							
+							adapter_returnuptimetime=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listdepartureTimeName);
+							
+							back_uptime_time.setAdapter(adapter_returnuptimetime);
+						}
+						else {
+							//adapter_uptimetime.clear();
+							back_uptime_time.setAdapter(adapter_returnuptimetime);
+							Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
+						}
+						
+					}
+					
+				}.execute();
+				
+				
+				
+			}
+			
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
+		
+		back_uptime_time.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				switch (arg2) {
+				case 0:
+					returnDepartureTimeID = listReturndepartureTimeID.get(arg2);
+					break;
+				default:
+					returnDepartureTimeID = listReturndepartureTimeID.get(arg2);
+					break;
+					
+				}
+				
+				
+			}
+			
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
+		
+		back_selection.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				new CustomAsynTask(getActivity())
+				{
+					@Override
+					protected Boolean doInBackground(Void... params)
+					{
+						PostJSONfromGson postGson = new PostJSONfromGson();
+						
+						PostgetSeatNumber postgetSeatNumber = new PostgetSeatNumber();
+						
+						if (returnticketLineID == null)
+							return false;
+						
+						postgetSeatNumber.setTicketLineID(returnticketLineID);
+						
+						listSeatNumber = new ListSeatNumber();
+						
+						String result = (String) postGson.GsonPost(postgetSeatNumber, "getSeatNumber");
+						
+						Type listType=new TypeToken<ListSeatNumber>(){}.getType();
+						
+						Gson gson = new Gson();
+						
+						listSeatNumber = gson.fromJson(result,listType);
+						
+						ReturnseatNumbersList = new ArrayList<seatNumber>();
+						
+						if (listSeatNumber.getSeatNumberList() == null) {
+							return false;
+						}
+						ReturnseatNumbersList = listSeatNumber.getSeatNumberList();
+						
+						Boolean success = listSeatNumber.getSuccess();
+						
+						return success;
+						
+					}
+					
+					protected void onPostExecute(Boolean result)
+					{
+						super.onPostExecute(result);
+						if (result)
+						{
+							 Bundle bundle = new Bundle();
+							 
+							 bundle.putString("key", "back"); 
+							 	
+							 fss.setArguments(bundle);	
+								
+							 fragmentTransaction = getFragmentManager().beginTransaction();
+								
+							 fragmentTransaction.add(R.id.content, fss);
+							 
+							 fragmentTransaction.addToBackStack(null);
+							 
+							 fragmentTransaction.hide(thisfragment);
+							 
+							 fragmentTransaction.show(fss);
+							 
+							 fragmentTransaction.commit();
+							 
+						}
+						else {
+							Toast.makeText(getActivity(), R.string.toast_flase_msg, Toast.LENGTH_SHORT).show();
+						}
+					
+					 
+					 	
+						
+					}
+					
+				}.execute();
+				
+			}
+		});
+		
+		selection.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				new CustomAsynTask(getActivity())
+				{
+					@Override
+					protected Boolean doInBackground(Void... params)
+					{
+						PostJSONfromGson postGson = new PostJSONfromGson();
+						
+						PostgetSeatNumber postgetSeatNumber = new PostgetSeatNumber();
+						
+						if (ticketLineID == null)
+						return false;
+						
+						postgetSeatNumber.setTicketLineID(ticketLineID);
+						
+						listSeatNumber = new ListSeatNumber();
+						
+						String result = (String) postGson.GsonPost(postgetSeatNumber, "getSeatNumber");
+						
+						Type listType=new TypeToken<ListSeatNumber>(){}.getType();
+						
+						Gson gson = new Gson();
+						
+						listSeatNumber = gson.fromJson(result,listType);
+						
+						seatNumbersList = new ArrayList<seatNumber>();
+						
+						if (listSeatNumber.getSeatNumberList() == null) {
+							return false;
+						}
+						seatNumbersList = listSeatNumber.getSeatNumberList();
+						
+						Boolean success = listSeatNumber.getSuccess();
+						
+						return success;
+						
+					}
+					
+					protected void onPostExecute(Boolean result)
+					{
+						super.onPostExecute(result);
+						
+						if (result)
+						{
+							Bundle bundle = new Bundle();
+							 
+							 bundle.putString("key", "def"); 
+							 	
+							 fss.setArguments(bundle);		
+							
+						 fragmentTransaction = getFragmentManager().beginTransaction();
+							
+						 fragmentTransaction.add(R.id.content, fss);
+						 
+						 fragmentTransaction.addToBackStack(null);
+						 
+						 fragmentTransaction.hide(thisfragment);
+						 
+						 fragmentTransaction.show(fss);
+						 
+						 fragmentTransaction.commit();
+						}
+						else {
+							Toast.makeText(getActivity(), R.string.toast_flase_msg, Toast.LENGTH_SHORT).show();
+						}
+						 
+					 
+					 
+					 	
+						
+					}
+					
+				}.execute();
+				
+			}
+		});
+		
+		uptime_update.setOnTouchListener(new OnTouchListener()
+		{
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event)
+			{
+				// TODO Auto-generated method stub
+				dpd_uptime_update.show();
+				return false;
+			}
+		});
+		back_uptime_update.setOnTouchListener(new OnTouchListener()
+		{
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event)
+			{
+				// TODO Auto-generated method stub
+				dpd_back_uptime_update.show();
+				return false;
+			}
+		});
+		
+	 booking_btn.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			
+			new CustomAsynTask(getActivity())
+			{
+				@Override
+				protected Boolean doInBackground(Void... params)
+				{
+					PostJSONfromGson postGson = new PostJSONfromGson();
+					
+					PostgetDepartureTime postgetDepartureTime = new PostgetDepartureTime();
+					
+					if (busCompanyID==null||upwayID==null||upStationID==null||downStationID==null)
+						return false;
+					
+					postgetDepartureTime.setBusCompanyID(busCompanyID);
+					
+					postgetDepartureTime.setTicketDirectionID(upwayID);
+					
+					postgetDepartureTime.setUpStationID(upStationID);
+					
+					postgetDepartureTime.setDownStationID(downStationID);
+					
+					listTicketLine = new ListTicketLine();
+					
+					String result = (String) postGson.GsonPost(postgetDepartureTime, "getTicketLine");
+					
+					Type listType=new TypeToken<ListTicketLine>(){}.getType();
+					
+					Gson gson = new Gson();
+					
+					listTicketLine = gson.fromJson(result,listType);
+					
+					
+					if (listTicketLine.getMsg()==null) {
+						return false;
+					}
+					
+					oneWayPrice = listTicketLine.getOneWayPrice();
+					
+					doubleWayPrice = listTicketLine.getDoubleWayPrice();
+					
+					Boolean success = listTicketLine.getSuccess();
+					
+					postbuyTicket.setUsername(sp.getString("username", null));
+					
+					postbuyTicket.setGoTicketLineID(ticketLineID);
+					
+					postbuyTicket.setGoDepartureTimeID(goDepartureTimeID);
+					
+					if (sendway_mail.isChecked())
+					{
+						postbuyTicket.setIsExpress(true);
+						
+						postbuyTicket.setReceiver(contact.getText().toString());
+						
+						postbuyTicket.setAddress(address.getText().toString());
+						
+						postbuyTicket.setPostcode("528000");
+					}
+					
+					
+					
+					postbuyTicket.setContacter(contact.getText().toString());
+					
+					postbuyTicket.setContactNumber(tellphone.getText().toString());
+					
+					postbuyTicket.setIsExpress(sendway_mail.isSelected());
+					
+					postbuyTicket.setIsDoubleWay(monoway_double.isSelected());
+					
+					postbuyTicket.setGoTicketDate(uptime_update.getText().toString());
+					
+					if (monoway_double.isChecked()) {
+						postbuyTicket.setIsDoubleWay(true);
+						
+						postbuyTicket.setReturnTicketLineID(returnticketLineID);
+						
+						postbuyTicket.setReturnDepartureTimeID(returnDepartureTimeID);
+						
+						postbuyTicket.setReturnTicketDate(back_uptime_update.getText().toString());
+						
+						postbuyTicket.setReturnSeatNumbers(PutReturnseatNumbersList.getSeatNumbersList());
+						
+					}
+					
+					if (PutseatNumbersList.getSeatNumbersList() == null)
+					{
+						return false;
+					}
+					postbuyTicket.setTicketCount(PutseatNumbersList.getSeatNumbersList().size());
+					
+					postbuyTicket.setGoSeatNumbers(PutseatNumbersList.getSeatNumbersList());
+					
+					
+					return success;
+					
+				}
+				
+				protected void onPostExecute(Boolean result)
+				{
+					super.onPostExecute(result);
+					
+					if (result) {
+						ConfirmInfo.setContant(contact.getText().toString());
+						ConfirmInfo.setTellphone(tellphone.getText().toString());
+						ConfirmInfo.setAddress(address.getText().toString());
+						ConfirmInfo.setUpplace(upplace_spinner.getSelectedItem()
+								.toString());
+						ConfirmInfo.setDownplace(downplace_spinner.getSelectedItem()
+								.toString());
+						ConfirmInfo.setUpdatetime(uptime_update.getText().toString()
+								+ "  "+uptime_time.getSelectedItem().toString());
+						ConfirmInfo
+								.setTicketcount(PutseatNumbersList.getSeatNumbersList().size());
+						
+						float allprice = PutseatNumbersList.getSeatNumbersList().size()* oneWayPrice;
+						
+						ConfirmInfo.setPrice(allprice);
+						
+						if (company_yd.isSelected()) {
+							ConfirmInfo.setCompany("永东巴士");
+							
+						}else if (company_zgt.isSelected()) {
+							ConfirmInfo.setCompany("中港通");
+						}
+						
+						
+						
+						fragmentTransaction = getFragmentManager().beginTransaction();
+						
+						 fragmentTransaction.replace(R.id.content, tbcf);
+						 
+						 fragmentTransaction.addToBackStack(null);
+						 
+						 fragmentTransaction.commit();
+					}
+					else {
+						
+						Toast.makeText(getActivity(), "请完整填写资料！", Toast.LENGTH_SHORT).show();
+					}
+					
+				}
+				
+			}.execute();
+			
+			
+				
+				
+			
+			
+			
+			
+		}
+	});
+	 
+	 
+		
 	}
 	}
+	
+	
+	
+	
+	
 }

@@ -6,23 +6,25 @@ public class user
 {
  private static String username,password;
 
-public String getUsername()
+public static String getUsername()
 {
 	return username;
 }
 
-public void setUsername(String username)
+public static void setUsername(String username)
 {
-	this.username = username;
+	user.username = username;
 }
 
-public String getPassword()
+public static String getPassword()
 {
 	return password;
 }
 
-public void setPassword(String password)
+public static void setPassword(String password)
 {
-	this.password = password;
+	user.password = password;
 }
+
+
 }

@@ -8,8 +8,8 @@
         android:id="@+id/ItemImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
         android:paddingTop="10dp"
         android:src="@drawable/ic_launcher" />
 
@@ -17,7 +17,16 @@
         android:id="@+id/ItemText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center|top"
-        android:text="TextView" />
+        android:gravity="center"
+        android:text="TextView"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/booking_confirm_contant_label"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:gravity="center"
+        android:text="     "
+        android:textAlignment="center" />
 
 </LinearLayout>

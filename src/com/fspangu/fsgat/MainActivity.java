@@ -60,8 +60,6 @@ public class MainActivity extends ActionBarActivity {
 		setTitle(this.getResources().getString(R.string.app_name));
 		
 		
-		
-		
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -181,7 +179,7 @@ public class MainActivity extends ActionBarActivity {
      			if(fragmentManager.getBackStackEntryCount()>=1){
         			int len = fragmentManager.getBackStackEntryCount();
         		    for (int i = 0; i < len; i++) {
-        		    	fragmentManager.popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        		    	fragmentManager.popBackStack();
         		    }
         		}
      			  FragmentTransaction transaction = fragmentManager.beginTransaction(); 
@@ -210,7 +208,7 @@ public class MainActivity extends ActionBarActivity {
 				if(fragmentManager.getBackStackEntryCount()>=1){
         			int len = fragmentManager.getBackStackEntryCount();
         		    for (int i = 0; i < len; i++) {
-        		    	fragmentManager.popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        		    	fragmentManager.popBackStack();
         		    }
         		}
         		    FragmentTransaction transaction = fragmentManager.beginTransaction();

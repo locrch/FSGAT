@@ -3,12 +3,16 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF" >
   
-    <TextView  
-        android:id="@+id/txt_content"  
-        android:layout_width="match_parent"  
-        android:layout_height="match_parent"  
-        android:gravity="center"  
-        android:padding="10dp"  
-        android:text="优惠活动"  
-        android:textSize="20sp" />  
+    <WebView 
+       android:id="@+id/yhhd_webview"
+       android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+        />
+    <ProgressBar
+        android:id="@+id/Progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:indeterminateOnly="false"
+        android:max="100" />
 </RelativeLayout> 

@@ -12,12 +12,12 @@
         android:layout_below="@+id/name"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="8dp"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_toRightOf="@+id/booking_confirm_contant_label"
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/booking_confirm_contant_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/applyid"
@@ -29,8 +29,8 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
+        android:layout_alignLeft="@+id/booking_confirm_contant_label"
+        android:layout_below="@+id/booking_confirm_contant_label"
         android:layout_marginTop="8dp"
         android:text="申请时间：" />
 

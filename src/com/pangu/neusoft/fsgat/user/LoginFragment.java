@@ -61,6 +61,7 @@ public class LoginFragment extends Fragment
 	FragmentManager fragmentManager;
 	Fragment registerFragment,changepasswordFragment;
 	LoginFragment loginFragment;
+	int usertype;
 	private void init()
 	{
 		this.getActivity().setTitle("登录");
@@ -90,7 +91,7 @@ public class LoginFragment extends Fragment
 									editor.putString("tempusername",username.getText().toString());
 									editor.putString("temppassword",password.getText().toString());*/
 		if(sp.getBoolean("remberpassword", false)){
-			username.setText(sp.getString("tempusername", ""));
+			//username.setText(sp.getString("tempusername", ""));
 			password.setText(sp.getString("temppassword", ""));
 			login_member_CheckBox.setChecked(true);
 		}else{
@@ -102,6 +103,7 @@ public class LoginFragment extends Fragment
 			autoCheckBox.setChecked(false);
 		}
 		
+		username.setText(sp.getString("tempusername", ""));
 	}
 	
 	@Override
@@ -154,18 +156,22 @@ public class LoginFragment extends Fragment
 		
 								GetParamsMap = postJson.Post(keys, values,
 										"loginmember");
-		
+								
 								Boolean success = false;
-		
+								
+								
+								
 								success = (Boolean) GetParamsMap.get("success");
 								
 								if (success ==null) {
 									return false;
 								}
 								
+								
+								
 								if (success)
 								{
-									
+									//usertype = (Integer)GetParamsMap.get("type");
 									
 									user user = new user();
 									
@@ -173,7 +179,7 @@ public class LoginFragment extends Fragment
 									
 									user.setPassword(values[1]);
 									
-									editor.putString(keys[0], values[0]);
+									editor.putString("username", username.getText().toString());
 									
 									editor.commit();
 								}
@@ -190,6 +196,10 @@ public class LoginFragment extends Fragment
 										(String) GetParamsMap.get("msg"),
 										Toast.LENGTH_LONG).show();
 								
+								
+								Toast.makeText(getActivity().getApplicationContext(),
+										String.valueOf(usertype),
+										Toast.LENGTH_LONG).show();
 								
 								if (login_member_CheckBox.isChecked()&&result) {
 									editor.putBoolean("remberpassword", true);

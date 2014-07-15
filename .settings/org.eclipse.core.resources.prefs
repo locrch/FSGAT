@@ -29,6 +29,7 @@ encoding//src/com/pangu/neusoft/fsgat/model/ListAddress.java=UTF-8
 encoding//src/com/pangu/neusoft/fsgat/model/ListAddressAdapter.java=UTF-8
 encoding//src/com/pangu/neusoft/fsgat/model/ListPass.java=UTF-8
 encoding//src/com/pangu/neusoft/fsgat/model/ListPassAdapter.java=UTF-8
+encoding//src/com/pangu/neusoft/fsgat/model/ListticketOrderAdapter.java=UTF-8
 encoding//src/com/pangu/neusoft/fsgat/model/Pass.java=UTF-8
 encoding//src/com/pangu/neusoft/fsgat/model/user.java=UTF-8
 encoding//src/com/pangu/neusoft/fsgat/user/AddAddressFragment.java=UTF-8
