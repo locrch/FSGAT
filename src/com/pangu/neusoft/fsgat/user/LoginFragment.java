@@ -5,14 +5,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.json.JSONObject;
-
-
-
-
-
-
-
-
 import com.fspangu.fsgat.GrzxFragment;
 import com.fspangu.fsgat.R;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;

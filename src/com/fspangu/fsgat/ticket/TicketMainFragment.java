@@ -654,9 +654,9 @@ public class TicketMainFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(CheckLogin.logined(thisfragment)){
+				if(CheckLogin.logined(thisfragment))
 					showAddressDialog();
-				}
+				
 			}
 		});
 
@@ -1791,6 +1791,9 @@ public class TicketMainFragment extends Fragment {
 					
 					if (sendway_mail.isChecked())
 					{
+						if (contact.getText().toString()==null||address.getText().toString()==null)
+						return false;
+						
 						postbuyTicket.setIsExpress(true);
 						
 						postbuyTicket.setReceiver(contact.getText().toString());
@@ -1813,6 +1816,10 @@ public class TicketMainFragment extends Fragment {
 					postbuyTicket.setGoTicketDate(uptime_update.getText().toString());
 					
 					if (monoway_double.isChecked()) {
+						
+						if (returnticketLineID==null||returnDepartureTimeID==null||back_uptime_update.getText().toString()==null)
+						return false;
+						
 						postbuyTicket.setIsDoubleWay(true);
 						
 						postbuyTicket.setReturnTicketLineID(returnticketLineID);
@@ -1836,9 +1843,8 @@ public class TicketMainFragment extends Fragment {
 					if (company_yd.isChecked())
 					{
 						if (PutseatNumbersList.getSeatNumbersList() == null)
-						{
-							return false;
-						}
+						return false;
+						
 						
 						postbuyTicket.setTicketCount(PutseatNumbersList.getSeatNumbersList().size());
 						
@@ -1864,6 +1870,7 @@ public class TicketMainFragment extends Fragment {
 					super.onPostExecute(result);
 					
 					if (result) {
+						
 						ConfirmInfo.setContant(contact.getText().toString());
 						ConfirmInfo.setTellphone(tellphone.getText().toString());
 						ConfirmInfo.setAddress(address.getText().toString());

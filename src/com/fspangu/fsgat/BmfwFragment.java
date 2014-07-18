@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.fspangu.fsgat.ticket.TicketHistoryFragment;
 import com.fspangu.fsgat.ticket.TicketMainFragment;
+import com.pangu.neusoft.fsgat.core.CheckLogin;
 import com.pangu.neusoft.fsgat.infos.ExportStateFragment;
 import com.pangu.neusoft.fsgat.infos.GuideFragment;
 import com.pangu.neusoft.fsgat.infos.KnowledgeFragment;
@@ -100,11 +101,15 @@ public  class BmfwFragment extends Fragment {
     				transaction.addToBackStack(null);
     	            transaction.commit();
                 }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text2)){
-                	FragmentTransaction transaction =getFragmentManager().beginTransaction(); 
-    				TicketHistoryFragment thf = new TicketHistoryFragment();
-    				transaction.replace(R.id.content, thf); 
-    				transaction.addToBackStack(null);
-    	            transaction.commit();
+                	
+                	
+                		FragmentTransaction transaction =getFragmentManager().beginTransaction(); 
+                		TicketHistoryFragment thf = new TicketHistoryFragment();
+        				transaction.replace(R.id.content, thf); 
+        				transaction.addToBackStack(null);
+        				transaction.commit();
+					
+                	
                 }
                
             }

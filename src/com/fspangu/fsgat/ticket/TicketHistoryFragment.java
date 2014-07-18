@@ -10,6 +10,7 @@ import com.fspangu.fsgat.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
+import com.pangu.neusoft.fsgat.core.CheckLogin;
 import com.pangu.neusoft.fsgat.core.PostJSONfromGson;
 import com.pangu.neusoft.fsgat.model.ListAddressAdapter;
 import com.pangu.neusoft.fsgat.model.ListTicketOrder;
@@ -73,7 +74,7 @@ public class TicketHistoryFragment extends Fragment
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		init();
-		
+		if(CheckLogin.logined(this))
 		new CustomAsynTask(getActivity())
 		{
 			@Override
