@@ -64,6 +64,13 @@ public class LoginFragment extends Fragment
 	int usertype;
 	private void init()
 	{
+//		android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("登录");
 		this.getActivity().setTitle("登录");
 		// TODO Auto-generated method stub
 		username = (EditText) getActivity().findViewById(R.id.username);

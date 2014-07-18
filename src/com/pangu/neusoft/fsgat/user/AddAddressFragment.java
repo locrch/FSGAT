@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 
 
+
 import com.fspangu.fsgat.R;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.core.CheckNetwork;
@@ -30,6 +31,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
@@ -44,6 +46,13 @@ public class AddAddressFragment extends Fragment
 	HashMap<String, Object> GetParamsMap;
 	private void init()
 	{
+//		android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("添加地址");
 		this.getActivity().setTitle("添加地址");
 		// TODO Auto-generated method stub
 		addaddress_receiver = (EditText)getActivity().findViewById(R.id.addaddress_receiver);

@@ -1390,34 +1390,37 @@ containing a value of this type.
         public static final int shape_bottom_corner_no_top_line=0x7f02008b;
         public static final int shape_no_corner_without_bottom=0x7f02008c;
         public static final int shape_top_corner_no_bottom_line=0x7f02008d;
-        public static final int switch_thumb=0x7f02008e;
-        public static final int timer=0x7f02008f;
-        public static final int user_main_addpass=0x7f020090;
-        public static final int user_main_changepassword_btn_img=0x7f020091;
-        public static final int user_main_changeusername_btn_img=0x7f020092;
-        public static final int user_main_history_btn_img=0x7f020093;
-        public static final int user_main_info_btn_img=0x7f020094;
-        public static final int user_main_listaddress_btn_img=0x7f020095;
-        public static final int user_main_listpass_btn_img=0x7f020096;
-        public static final int user_main_logo=0x7f020097;
-        public static final int user_main_mysetting_btn_img=0x7f020098;
-        public static final int user_main_opinion_btn_img=0x7f020099;
-        public static final int user_main_update_btn_img=0x7f02009a;
-        public static final int yhhd_attention_off=0x7f02009b;
-        public static final int yhhd_attention_on=0x7f02009c;
-        public static final int yhhd_selector=0x7f02009d;
-        public static final int ywbl_attention_off=0x7f02009e;
-        public static final int ywbl_attention_on=0x7f02009f;
-        public static final int ywbl_logo=0x7f0200a0;
-        public static final int ywbl_selector=0x7f0200a1;
-        public static final int zhcx_attention_off=0x7f0200a2;
-        public static final int zhcx_attention_on=0x7f0200a3;
-        public static final int zhcx_selector=0x7f0200a4;
+        public static final int simple_notification_icon=0x7f02008e;
+        public static final int switch_thumb=0x7f02008f;
+        public static final int timer=0x7f020090;
+        public static final int title_background=0x7f020091;
+        public static final int user_main_addpass=0x7f020092;
+        public static final int user_main_changepassword_btn_img=0x7f020093;
+        public static final int user_main_changeusername_btn_img=0x7f020094;
+        public static final int user_main_history_btn_img=0x7f020095;
+        public static final int user_main_info_btn_img=0x7f020096;
+        public static final int user_main_listaddress_btn_img=0x7f020097;
+        public static final int user_main_listpass_btn_img=0x7f020098;
+        public static final int user_main_logo=0x7f020099;
+        public static final int user_main_mysetting_btn_img=0x7f02009a;
+        public static final int user_main_opinion_btn_img=0x7f02009b;
+        public static final int user_main_update_btn_img=0x7f02009c;
+        public static final int yhhd_attention_off=0x7f02009d;
+        public static final int yhhd_attention_on=0x7f02009e;
+        public static final int yhhd_selector=0x7f02009f;
+        public static final int ywbl_attention_off=0x7f0200a0;
+        public static final int ywbl_attention_on=0x7f0200a1;
+        public static final int ywbl_logo=0x7f0200a2;
+        public static final int ywbl_selector=0x7f0200a3;
+        public static final int zhcx_attention_off=0x7f0200a4;
+        public static final int zhcx_attention_on=0x7f0200a5;
+        public static final int zhcx_selector=0x7f0200a6;
     }
     public static final class id {
         public static final int ItemImage=0x7f05013c;
         public static final int ItemText=0x7f05013d;
         public static final int Progress=0x7f050165;
+        public static final int action_add=0x7f050169;
         public static final int action_bar=0x7f05002d;
         public static final int action_bar_activity_content=0x7f050026;
         public static final int action_bar_container=0x7f05002c;
@@ -1426,10 +1429,15 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f050034;
         public static final int action_bar_title=0x7f050033;
         public static final int action_context_bar=0x7f05002e;
+        public static final int action_edit=0x7f05016a;
         public static final int action_menu_divider=0x7f050027;
         public static final int action_menu_presenter=0x7f050028;
         public static final int action_mode_close_button=0x7f050035;
-        public static final int action_settings=0x7f050168;
+        public static final int action_search=0x7f050168;
+        public static final int action_share=0x7f05016b;
+        public static final int action_sort=0x7f05016c;
+        public static final int action_sort_alpha=0x7f05016e;
+        public static final int action_sort_size=0x7f05016d;
         public static final int activity_chooser_view_content=0x7f050036;
         public static final int addaddress_add_btn=0x7f050056;
         public static final int addaddress_address=0x7f050052;
@@ -1865,10 +1873,11 @@ containing a value of this type.
         public static final int realtimeapply=0x7f03003b;
         public static final int support_simple_spinner_dropdown_item=0x7f03003c;
         public static final int ticket_history_content=0x7f03003d;
-        public static final int viewmap=0x7f03003e;
-        public static final int yhhd_fragment=0x7f03003f;
-        public static final int ywbl_fragment=0x7f030040;
-        public static final int zhcx_fragment=0x7f030041;
+        public static final int title_bar=0x7f03003e;
+        public static final int viewmap=0x7f03003f;
+        public static final int yhhd_fragment=0x7f030040;
+        public static final int ywbl_fragment=0x7f030041;
+        public static final int zhcx_fragment=0x7f030042;
     }
     public static final class menu {
         public static final int main=0x7f0d0000;
@@ -1916,13 +1925,14 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
         public static final int action_settings=0x7f0a000e;
         public static final int app_name=0x7f0a000d;
-        public static final int applystateurl=0x7f0a001e;
-        public static final int banzheng_place=0x7f0a0019;
-        public static final int export_place_hk=0x7f0a001a;
-        public static final int export_place_macau=0x7f0a001b;
-        public static final int getdatetime=0x7f0a0020;
-        public static final int realtimeapplystate=0x7f0a001f;
-        public static final int shenzhenexport=0x7f0a001d;
+        public static final int applystateurl=0x7f0a001f;
+        public static final int banzheng_place=0x7f0a001a;
+        public static final int export_place_hk=0x7f0a001b;
+        public static final int export_place_macau=0x7f0a001c;
+        public static final int getdatetime=0x7f0a0021;
+        public static final int realtimeapplystate=0x7f0a0020;
+        public static final int serverurl=0x7f0a0019;
+        public static final int shenzhenexport=0x7f0a001e;
         public static final int title_activity_add_passport=0x7f0a0013;
         public static final int title_activity_addaddress=0x7f0a0016;
         public static final int title_activity_addpass=0x7f0a0015;
@@ -1933,7 +1943,7 @@ containing a value of this type.
         public static final int title_activity_register=0x7f0a0010;
         public static final int title_activity_user_main=0x7f0a000f;
         public static final int toast_flase_msg=0x7f0a0018;
-        public static final int zhuhaiexport=0x7f0a001c;
+        public static final int zhuhaiexport=0x7f0a001d;
     }
     public static final class style {
         /** 

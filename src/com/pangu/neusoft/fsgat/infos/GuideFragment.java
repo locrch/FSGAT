@@ -12,6 +12,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class GuideFragment extends Fragment
 {
@@ -24,6 +25,13 @@ public class GuideFragment extends Fragment
 			Bundle savedInstanceState)
 	{
 		View view = inflater.inflate(R.layout.yhhd_fragment, null);  
+//		android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("办事指南");
 		this.getActivity().setTitle("办事指南");
         
 		errorHtml = "<html><body><h1>error</h1></body></html>"; 

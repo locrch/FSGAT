@@ -109,6 +109,13 @@ public  class ShowHistoryFragment extends Fragment {
 //		editor.commit();
 		
     	View view = inflater.inflate(R.layout.history_fragment, null);
+//    	android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("受理记录");
     	this.getActivity().setTitle("受理记录");
     	if (CheckNetwork.connected(this)){
 	    	list=(ListView)view.findViewById(R.id.listView1);

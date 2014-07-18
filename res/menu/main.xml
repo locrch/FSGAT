@@ -3,12 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.fspangu.fsgat.MainActivity" >
 
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
-	
- 
+    <item android:id="@+id/action_search"  
+          android:icon="@android:drawable/ic_menu_search"  
+          android:title="test1" 
+          android:showAsAction="always|withText" />  
+    <item android:id="@+id/action_add"  
+          android:icon="@android:drawable/ic_menu_add"  
+          android:title="test2" 
+          android:showAsAction="always|withText"/>  
+    <item android:id="@+id/action_edit"  
+          android:icon="@android:drawable/ic_menu_edit"   
+          android:title="test3"
+          android:showAsAction="always|withText" />  
+    <item android:id="@+id/action_share"  
+          android:icon="@android:drawable/ic_menu_share"  
+          android:title="test4"  
+          android:showAsAction="always|withText" />  
+    <item android:id="@+id/action_sort"  
+          android:icon="@android:drawable/ic_menu_sort_by_size"  
+          android:title="test5"  
+          android:showAsAction="always|withText" >  
+        <menu>  
+            <item android:id="@+id/action_sort_size"  
+                  android:icon="@android:drawable/ic_menu_sort_by_size"  
+                  android:title="test6" />  
+            <item android:id="@+id/action_sort_alpha"  
+                  android:icon="@android:drawable/ic_menu_sort_alphabetically"  
+                  android:title="test7"/>  
+        </menu>  
+    </item>  
     
 </menu>

@@ -51,7 +51,7 @@ public class TicketHistoryFragment extends Fragment
 						Context.MODE_PRIVATE);
 		editor = sp.edit();
 		
-		adapterListMap = new HashMap<String, Object>();
+		
 		
 		adapterList = new ArrayList<HashMap<String, Object>>();
 
@@ -99,11 +99,15 @@ public class TicketHistoryFragment extends Fragment
 				
 				ticketOrderList = listTicketOrder.getTicketOrderList();
 				
-				
-				if (ticketOrderList!= null)
+				if (ticketOrderList==null)
+				return false;
 				for (int i = 0; i < ticketOrderList.size(); i++)
 				{
 					ticketorder = new ticketOrder();
+					
+					ticketorder = ticketOrderList.get(i);
+				
+					adapterListMap = new HashMap<String, Object>();
 					
 					adapterListMap.put("id", ticketorder.getTicketOrderID());
 					
@@ -146,7 +150,7 @@ public class TicketHistoryFragment extends Fragment
 				}
 				
 				else {
-					Toast.makeText(getActivity(), "获取数据失败,请稍后重试！", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "暂无订票记录！", Toast.LENGTH_SHORT).show();
 				}
 			}
 			

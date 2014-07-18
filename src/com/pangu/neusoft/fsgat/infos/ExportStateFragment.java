@@ -107,6 +107,13 @@ public  class ExportStateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
     	
     	View view = inflater.inflate(R.layout.exportstate, null);
+//    	android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("通关口岸状态查询");
     	this.getActivity().setTitle("通过口岸状态查询");
     	if(CheckNetwork.connected(this)){
 	    	list=(ListView)view.findViewById(R.id.listView1);

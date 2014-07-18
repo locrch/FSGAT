@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.view.View.OnClickListener;
 
 public class MysettingFragment extends Fragment
@@ -24,6 +25,13 @@ public class MysettingFragment extends Fragment
 	
 	private void init()
 	{
+//		android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("我的设置");
 		this.getActivity().setTitle("我的设置");
 		// TODO Auto-generated method stub
 		switch1_btn = (Button)getActivity().findViewById(R.id.switch1_btn);

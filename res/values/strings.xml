@@ -13,6 +13,7 @@
     <string name="title_activity_addaddress">添加地址</string>
     <string name="title_activity_list_address">地址列表</string>
 	<string name="toast_flase_msg">连接失败！</string>
+	 <string name="serverurl">http://202.103.160.158:678/update.xml</string>
 	<string name="banzheng_place">
 	    1,佛山市公安局出入境管理支队,佛山市禅城区汾江中路215号创业大厦2层,113.114744,23.01971,(0757)82117172|
 	    2,佛山市公安局高明分局出入境管理大队,佛山市高明区荷城文明路283号,112.887484,22.904758,(0757)88828430|

@@ -20,6 +20,13 @@ public  class YhhdFragment extends Fragment {
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
         View view = inflater.inflate(R.layout.yhhd_fragment, null);  
+//        android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("优惠活动");
         this.getActivity().setTitle("优惠活动");
         
         errorHtml = "<html><body><h1>error</h1></body></html>"; 

@@ -16,6 +16,7 @@ import org.jsoup.nodes.Entities.EscapeMode;
 import com.baidu.platform.comapi.map.l;
 import com.fspangu.fsgat.GrzxFragment;
 import com.fspangu.fsgat.R;
+import com.fspangu.fsgat.R.color;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
@@ -78,6 +79,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -92,13 +94,15 @@ public class TicketMainFragment extends Fragment {
 	RadioGroup choose_place, choose_company, choose_monoway, sendway;
 	RadioButton place_hongkong, place_macao, company_yd, company_zgt,
 			monoway_single, monoway_double, sendway_onself, sendway_mail;
-	Spinner way_spinner, upplace_spinner, downplace_spinner, uptime_time,back_upplace,back_downplace,back_uptime_time;
+	Spinner way_spinner,upplace_spinner, downplace_spinner, uptime_time,back_upplace,back_downplace,back_uptime_time;
 	EditText contact, tellphone, address, zipcode,back_uptime_update,uptime_update;
 	Button booking_btn;
 	RelativeLayout selection_layout, ticket_layout;
 	LinearLayout mail_layout, fragment_layout;
 	TextView selection,back_selection;
-
+	NumberPicker zgt_ticket_count_np;
+	
+	
 	FragmentManager fragmentManager;
 	FragmentTransaction fragmentTransaction;
 	TicketBackFragment tb;
@@ -153,12 +157,15 @@ public class TicketMainFragment extends Fragment {
 	ListTicketLine listTicketLine;
 	float oneWayPrice,doubleWayPrice;
 	
-	int ClickCount = 0;
+	int zgt_ticket_count = 1;
+	float conf_allprice = 0;
 	
 	DatePickerDialog  dpd_uptime_update,dpd_back_uptime_update;
 	
 	private void init() {
 		// TODO Auto-generated method stub
+		this.getActivity().setTitle("车票预订");
+		
 		choose_place = (RadioGroup) getActivity().findViewById(
 				R.id.ticket_main_choose_place);
 		choose_company = (RadioGroup) getActivity().findViewById(
@@ -208,6 +215,8 @@ public class TicketMainFragment extends Fragment {
 		uptime_update = (EditText)getActivity().findViewById(R.id.ticket_main_uptime_update);
 		
 		booking_btn = (Button)getActivity().findViewById(R.id.ticket_main_booking_btn);
+		
+		zgt_ticket_count_np = (NumberPicker)getActivity().findViewById(R.id.ticket_main_ticket_np);
 		
 		fragment_layout = (LinearLayout) getActivity().findViewById(
 				R.id.ticket_main_back_fragment_layout);
@@ -283,6 +292,9 @@ public class TicketMainFragment extends Fragment {
 		dpd_back_uptime_update = new DatePickerDialog(getActivity(), dateListener_back_uptime_update,
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH));
+		
+		zgt_ticket_count_np.setMaxValue(99);
+		zgt_ticket_count_np.setMinValue(1);
 		
 	}
 
@@ -435,9 +447,12 @@ public class TicketMainFragment extends Fragment {
 					boolean isChecked) {
 				// TODO Auto-generated method stub
 				if (isChecked) {
-					selection_layout.setVisibility(View.GONE);
 					ticket_layout.setVisibility(View.VISIBLE);
 					busCompanyID = 2;
+					
+					back_selection.setVisibility(View.GONE);
+					selection.setVisibility(View.GONE);
+					ticket_layout.setVisibility(View.VISIBLE);
 				}
 			}
 		});
@@ -450,12 +465,18 @@ public class TicketMainFragment extends Fragment {
 				// TODO Auto-generated method stub
 				if (isChecked) {
 					ticket_layout.setVisibility(View.GONE);
-					selection_layout.setVisibility(View.VISIBLE);
+					selection.setVisibility(View.VISIBLE);
+					if (monoway_double.isChecked())
+					{
+						back_selection.setVisibility(View.VISIBLE);
+					}
 					busCompanyID = 1;
 				}
 			}
 		});
 
+		
+		
 		monoway_double
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -465,6 +486,11 @@ public class TicketMainFragment extends Fragment {
 						// TODO Auto-generated method stub
 						if (isChecked) {
 							fragment_layout.setVisibility(View.VISIBLE);
+							
+							if (company_zgt.isChecked())
+							{
+								back_selection.setVisibility(View.GONE);
+							}
 							
 							if(fragment_layout.getVisibility()==0||fragment_layout!=null){
 								
@@ -570,7 +596,6 @@ public class TicketMainFragment extends Fragment {
 												
 												back_upplace.setAdapter(adapter_returnupplace);
 												
-													
 												adapter_returndownplace=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listReturnDownStationName);
 												
 												back_downplace.setAdapter(adapter_returndownplace);
@@ -690,7 +715,7 @@ public class TicketMainFragment extends Fragment {
 						
 							
 						
-						if (ClickCount == 0)
+						
 						new CustomAsynTask(getActivity())
 						{
 							@Override
@@ -949,6 +974,16 @@ public class TicketMainFragment extends Fragment {
 							//adapter_uptimetime.clear();
 							uptime_time.setAdapter(adapter_uptimetime);
 							Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
+							
+							
+							 if (uptime_time.getSelectedItem() != null)  
+				                {  
+				                    adapter_uptimetime.clear();
+				                    
+				                    uptime_time.setAdapter(adapter_uptimetime);
+				                    
+				                    
+				                }
 						}
 						
 					}
@@ -1067,6 +1102,15 @@ public class TicketMainFragment extends Fragment {
 							//adapter_uptimetime.clear();
 							uptime_time.setAdapter(adapter_uptimetime);
 							Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
+						
+							if (uptime_time.getSelectedItem() != null)  
+			                {  
+			                    adapter_uptimetime.clear();
+			                    
+			                    uptime_time.setAdapter(adapter_uptimetime);
+			                    
+			                    
+			                }
 						}
 						
 					}
@@ -1182,7 +1226,16 @@ public class TicketMainFragment extends Fragment {
 								back_downplace.setAdapter(adapter_returndownplace);
 							}
 							else {
-								Toast.makeText(getActivity(), R.string.toast_flase_msg, Toast.LENGTH_SHORT).show();
+								Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
+							
+								if (back_uptime_time.getSelectedItem() != null)  
+				                {  
+				                    adapter_returnuptimetime.clear();
+				                    
+				                    back_uptime_time.setAdapter(adapter_returnuptimetime);
+				                    
+				                    
+				                }
 							}
 							
 							
@@ -1322,6 +1375,15 @@ public class TicketMainFragment extends Fragment {
 							//adapter_uptimetime.clear();
 							back_uptime_time.setAdapter(adapter_returnuptimetime);
 							Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
+						
+							if (back_uptime_time.getSelectedItem() != null)  
+			                {  
+			                    adapter_returnuptimetime.clear();
+			                    
+			                    back_uptime_time.setAdapter(adapter_returnuptimetime);
+			                    
+			                    
+			                }
 						}
 						
 					}
@@ -1433,6 +1495,15 @@ public class TicketMainFragment extends Fragment {
 							//adapter_uptimetime.clear();
 							back_uptime_time.setAdapter(adapter_returnuptimetime);
 							Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
+						
+							if (back_uptime_time.getSelectedItem() != null)  
+			                {  
+			                    adapter_returnuptimetime.clear();
+			                    
+			                    back_uptime_time.setAdapter(adapter_returnuptimetime);
+			                    
+			                    
+			                }
 						}
 						
 					}
@@ -1700,9 +1771,10 @@ public class TicketMainFragment extends Fragment {
 					listTicketLine = gson.fromJson(result,listType);
 					
 					
-					if (listTicketLine.getMsg()==null) {
+					if (listTicketLine.getMsg()==null||ticketLineID == null||listTicketLine.getSuccess()==null||contact.getText().toString()==null||tellphone.getText().toString()==null) {
 						return false;
 					}
+					
 					
 					oneWayPrice = listTicketLine.getOneWayPrice();
 					
@@ -1711,6 +1783,7 @@ public class TicketMainFragment extends Fragment {
 					Boolean success = listTicketLine.getSuccess();
 					
 					postbuyTicket.setUsername(sp.getString("username", null));
+					
 					
 					postbuyTicket.setGoTicketLineID(ticketLineID);
 					
@@ -1733,9 +1806,9 @@ public class TicketMainFragment extends Fragment {
 					
 					postbuyTicket.setContactNumber(tellphone.getText().toString());
 					
-					postbuyTicket.setIsExpress(sendway_mail.isSelected());
+					postbuyTicket.setIsExpress(sendway_mail.isChecked());
 					
-					postbuyTicket.setIsDoubleWay(monoway_double.isSelected());
+					postbuyTicket.setIsDoubleWay(monoway_double.isChecked());
 					
 					postbuyTicket.setGoTicketDate(uptime_update.getText().toString());
 					
@@ -1748,17 +1821,38 @@ public class TicketMainFragment extends Fragment {
 						
 						postbuyTicket.setReturnTicketDate(back_uptime_update.getText().toString());
 						
-						postbuyTicket.setReturnSeatNumbers(PutReturnseatNumbersList.getSeatNumbersList());
+						if (company_yd.isChecked())
+						{
+							postbuyTicket.setReturnSeatNumbers(PutReturnseatNumbersList.getSeatNumbersList());
+							
+						}
+						else if (company_zgt.isChecked())
+						{
+							
+						}
 						
 					}
 					
-					if (PutseatNumbersList.getSeatNumbersList() == null)
+					if (company_yd.isChecked())
 					{
-						return false;
+						if (PutseatNumbersList.getSeatNumbersList() == null)
+						{
+							return false;
+						}
+						
+						postbuyTicket.setTicketCount(PutseatNumbersList.getSeatNumbersList().size());
+						
+						postbuyTicket.setGoSeatNumbers(PutseatNumbersList.getSeatNumbersList());
+						
+						
+					}else if (company_zgt.isChecked()) {
+						
+						zgt_ticket_count = zgt_ticket_count_np.getValue();
+						
+						postbuyTicket.setTicketCount(zgt_ticket_count);
 					}
-					postbuyTicket.setTicketCount(PutseatNumbersList.getSeatNumbersList().size());
 					
-					postbuyTicket.setGoSeatNumbers(PutseatNumbersList.getSeatNumbersList());
+					
 					
 					
 					return success;
@@ -1779,21 +1873,32 @@ public class TicketMainFragment extends Fragment {
 								.toString());
 						ConfirmInfo.setUpdatetime(uptime_update.getText().toString()
 								+ "  "+uptime_time.getSelectedItem().toString());
-						ConfirmInfo
-								.setTicketcount(PutseatNumbersList.getSeatNumbersList().size());
 						
-						float allprice = PutseatNumbersList.getSeatNumbersList().size()* oneWayPrice;
-						
-						ConfirmInfo.setPrice(allprice);
-						
-						if (company_yd.isSelected()) {
-							ConfirmInfo.setCompany("永东巴士");
+						if (company_yd.isChecked())
+						{
+							ConfirmInfo
+							.setTicketcount(PutseatNumbersList.getSeatNumbersList().size());
 							
-						}else if (company_zgt.isSelected()) {
-							ConfirmInfo.setCompany("中港通");
+							conf_allprice = PutseatNumbersList.getSeatNumbersList().size()* oneWayPrice;
+							
+						}else if (company_zgt.isChecked()) {
+							
+							ConfirmInfo
+							.setTicketcount(zgt_ticket_count);
+							
+							conf_allprice = zgt_ticket_count* oneWayPrice;
+							
 						}
 						
 						
+						ConfirmInfo.setPrice(conf_allprice);
+						
+						if (company_yd.isChecked()) {
+							ConfirmInfo.setCompany("永东巴士");
+							
+						}else if (company_zgt.isChecked()) {
+							ConfirmInfo.setCompany("中港通");
+						}
 						
 						fragmentTransaction = getFragmentManager().beginTransaction();
 						
@@ -1805,30 +1910,17 @@ public class TicketMainFragment extends Fragment {
 					}
 					else {
 						
-						Toast.makeText(getActivity(), "请完整填写资料！", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getActivity(), "请完整输入订票信息！", Toast.LENGTH_SHORT).show();
 					}
 					
 				}
 				
 			}.execute();
-			
-			
 				
-				
-			
-			
-			
-			
 		}
 	});
-	 
-	 
-		
+	 	
 	}
 	}
-	
-	
-	
-	
 	
 }

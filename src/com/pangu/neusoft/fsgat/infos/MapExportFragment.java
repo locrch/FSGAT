@@ -117,7 +117,14 @@ public  class MapExportFragment extends Fragment {
     	SDKInitializer.initialize(getActivity().getApplicationContext());
     	this.inflaters=inflater;
     	View view = inflater.inflate(R.layout.viewmap, null);
-    	this.getActivity().setTitle("通过口岸分布及路线指引");
+//    	android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("通关口岸分布及路线指引");
+    	this.getActivity().setTitle("通关口岸分布及路线指引");
     	if(CheckNetwork.connected(this)){
 	    	textView1=(TextView)view.findViewById(R.id.textView1);
 	    	spinner1=(Spinner)view.findViewById(R.id.spinner1);

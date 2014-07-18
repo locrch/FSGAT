@@ -81,6 +81,13 @@ public  class RealTimeApplyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
     	
     	View view = inflater.inflate(R.layout.realtimeapply, null);
+//    	android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("受理大厅状态查询");
     	this.getActivity().setTitle("受理大厅状态查询");
     	if (CheckNetwork.connected(this)){
 	    	WebView webview=(WebView)view.findViewById(R.id.webView1);

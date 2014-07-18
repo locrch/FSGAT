@@ -81,6 +81,13 @@ public  class SearchApplyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
     	
     	View view = inflater.inflate(R.layout.applysearch, null);
+//    	android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("办证进度查询");
     	this.getActivity().setTitle("办证进度查询");
     	button1=(ImageButton)view.findViewById(R.id.imageButton1);
     	textview1=(TextView)view.findViewById(R.id.textView1);

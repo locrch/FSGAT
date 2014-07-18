@@ -168,7 +168,13 @@ public  class BookingFragment extends Fragment {
 		
     	View view = inflater.inflate(R.layout.booking_fragment, null);
     	aq = new AQuery(getActivity(), view);
-    	
+//    	android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("预约办证");
     	this.getActivity().setTitle("预约办证");
     	if (CheckNetwork.connected(this)){
 		    	placeselecter=(Spinner)view.findViewById(R.id.spinner1);

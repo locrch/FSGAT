@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fspangu.fsgat"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.00">
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -17,14 +17,21 @@
 <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />  
 <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />  
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />  
-<uses-permission android:name="android.permission.READ_PHONE_STATE" />  
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />  
 <uses-permission android:name="android.permission.BROADCAST_STICKY" />  
 <uses-permission android:name="android.permission.WRITE_SETTINGS" />  
 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> 
-	
-    <application
+<uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+         
+
+
+    <application android:name="com.baidu.frontia.FrontiaApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -35,6 +42,7 @@
         <activity
             android:name="com.fspangu.fsgat.MainActivity"
             android:label="@string/app_name" 
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/activityTitlebar" 
             android:windowSoftInputMode="adjustPan">
@@ -43,8 +51,56 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+              <intent-filter>
+			    <action android:name="android.intent.action.CREATE_SHORTCUT"></action>
+			</intent-filter>
         </activity>
         
+        
+        <!-- push应用定义消息receiver声明 -->
+        <receiver android:name="com.fspangu.fsgat.pushmessage.MyPushMessageReceiver">
+            <intent-filter>
+                <!-- 接收push消息 -->
+                <action android:name="com.baidu.android.pushservice.action.MESSAGE" />
+                <!-- 接收bind,unbind,fetch,delete等反馈消息 -->
+                <action android:name="com.baidu.android.pushservice.action.RECEIVE" />
+                <action android:name="com.baidu.android.pushservice.action.notification.CLICK" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- push必须的receviver和service声明 -->
+        <receiver android:name="com.baidu.android.pushservice.PushServiceReceiver"
+            android:process=":bdservice_v1">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="com.baidu.android.pushservice.action.notification.SHOW" />
+                <action android:name="com.baidu.android.pushservice.action.media.CLICK" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.baidu.android.pushservice.RegistrationReceiver"
+            android:process=":bdservice_v1">
+            <intent-filter>
+                <action android:name="com.baidu.android.pushservice.action.METHOD" />
+                <action android:name="com.baidu.android.pushservice.action.BIND_SYNC" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package" />
+            </intent-filter>                   
+        </receiver>
+        <service
+            android:name="com.baidu.android.pushservice.PushService"
+            android:exported="true"
+            android:process=":bdservice_v1"  >
+            <intent-filter>
+                <action android:name="com.baidu.android.pushservice.action.PUSH_SERVICE" />
+            </intent-filter>
+        </service>
+        <!-- push结束 -->
+        
+		<!-- 在百度开发者中心查询应用的API Key -->
+        <meta-data android:name="api_key" android:value="ujjgpGT9Q0WsUH63AI5uhobn" />
     </application>
 
 </manifest>

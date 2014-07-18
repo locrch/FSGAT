@@ -44,6 +44,14 @@ public class RegisterFragment extends Fragment
 		
 		sp = getActivity().getSharedPreferences("sp",Context.MODE_PRIVATE);
 		editor = sp.edit();
+		
+//		android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("注册");
 		this.getActivity().setTitle("注册");
 		// TODO Auto-generated method stub
 		reg_username = (EditText) getActivity().findViewById(R.id.reg_username);

@@ -1,10 +1,14 @@
 package com.fspangu.fsgat;
 
 
-
-import java.util.zip.Inflater;
-
+import com.baidu.android.pushservice.CustomPushNotificationBuilder;
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
+import com.fspangu.fsgat.pushmessage.*;
+import com.pangu.neusoft.fsgat.user.ChangeAddressDialog;
+import com.pangu.neusoft.fsgat.user.ListAddressFragment;
 import com.pangu.neusoft.fsgat.user.LoginFragment;
+import com.pangu.neusoft.tools.update.UpdateOperation;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -14,19 +18,30 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.Notification;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Intent.ShortcutIconResource;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.LayoutInflater.Factory;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,6 +53,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,31 +71,194 @@ public class MainActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); //设置为圆形旋转进度条
-		setContentView(R.layout.activity_main); 
 		
+//		android.app.ActionBar actionBar = this.getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText(this.getResources().getString(R.string.app_name));
+		Resources resource = this.getResources();
+	    String pkgName = this.getPackageName();
+	        
+		getActionBar().setBackgroundDrawable(this.getBaseContext().getResources().getDrawable(R.drawable.title_background));
+        getActionBar().show();
+		
+		setContentView(R.layout.activity_main); 
 		setTitle(this.getResources().getString(R.string.app_name));
+		
 		
 		
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
-		}		
+		}	
+		
 		sp = getSharedPreferences("sp",Context.MODE_PRIVATE);
 		editor = sp.edit();
-	}
 	
+		checkShortCut();
+		
+		UpdateOperation update = new UpdateOperation(MainActivity.this);
+		update.checkUpdate(false);
+		
+		 if (!Utils.hasBind(getApplicationContext())) {
+	            PushManager.startWork(getApplicationContext(),
+	                    PushConstants.LOGIN_TYPE_API_KEY,
+	                    Utils.getMetaValue(MainActivity.this, "api_key"));
+	     }
+
+	        // Push: 设置自定义的通知样式，具体API介绍见用户手册，如果想使用系统默认的可以不加这段代码
+	        // 请在通知推送界面中，高级设置->通知栏样式->自定义样式，选中并且填写值：1，
+	        // 与下方代码中 PushManager.setNotificationBuilder(this, 1, cBuilder)中的第二个参数对应
+	        CustomPushNotificationBuilder cBuilder = new CustomPushNotificationBuilder(
+	                getApplicationContext(), resource.getIdentifier(
+	                        "notification_custom_builder", "layout", pkgName),
+	                resource.getIdentifier("notification_icon", "id", pkgName),
+	                resource.getIdentifier("notification_title", "id", pkgName),
+	                resource.getIdentifier("notification_text", "id", pkgName));
+	        cBuilder.setNotificationFlags(Notification.FLAG_AUTO_CANCEL);
+	        cBuilder.setNotificationDefaults(Notification.DEFAULT_SOUND
+	                | Notification.DEFAULT_VIBRATE);
+	        cBuilder.setStatusbarIcon(this.getApplicationInfo().icon);
+	        cBuilder.setLayoutDrawable(resource.getIdentifier(
+	                "simple_notification_icon", "drawable", pkgName));
+	        PushManager.setNotificationBuilder(this, 1, cBuilder);
+	}	
 	
+
+    
+ // 更新界面显示内容
+    private void updateDisplay() {
+    	 if (!Utils.hasBind(getApplicationContext())) {
+    		 Log.d("", "updateDisplay, logText:" + Utils.logStringCache);
+    	 }
+    	 if(!sp.getString("pushuserid","").equals("")){
+			 Toast.makeText(MainActivity.this,"用于推送的用户id：" +sp.getString("pushuserid","")+"\n"+Utils.logStringCache, Toast.LENGTH_LONG).show();
+		 }
+    }
+    
+    @Override
+    protected void onNewIntent(Intent intent) {
+        String action = intent.getAction();
+        updateDisplay();
+    }
+	
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateDisplay();
+    }
+    
+    
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		
+		MenuItem item=menu.findItem(R.id.action_search);
+		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		/*MenuItem actionItem = menu.add("菜单");
 		
 		actionItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);*/
+		
 		return true;
 	}
+	
+	   
+	public void checkShortCut(){
+		  if(!isAddShortCut()&&sp.getBoolean("alertshoutcut", true)){
+			  Dialog alertDialog = new AlertDialog.Builder(MainActivity.this). 
+		                setTitle(""). 
+		                setMessage("是否添加到桌面快捷方式？"). 
+		                setIcon(R.drawable.ic_launcher). 
+		                setPositiveButton("不在提醒", new DialogInterface.OnClickListener() { 
+		                    @Override 
+		                    public void onClick(DialogInterface dialog, int which) { 
+		                    	editor.putBoolean("alertshoutcut", false);
+		        				editor.commit();
+		                    } 
+		                }). 
+		                setNeutralButton("确定", new DialogInterface.OnClickListener() { 
+		                     
+		                    @Override 
+		                    public void onClick(DialogInterface dialog, int which) { 
+		                        // TODO Auto-generated method stub
+		                    	addShortCut();	
+		                    	editor.putBoolean("alertshoutcut", false);
+		                    	editor.commit();
+		                    } 
+		                }).
+		                setNegativeButton("取消", new DialogInterface.OnClickListener() { 
+		                     
+		                    @Override 
+		                    public void onClick(DialogInterface dialog, int which) { 
+		                        // TODO Auto-generated method stub
+		                    	
+		                    } 
+		                }).
+		                create(); 
+		        alertDialog.show(); 
+			 
+		  }
+	}
+	
+	  public boolean isAddShortCut() {
+
+	        boolean isInstallShortcut = false;
+	        final ContentResolver cr = this.getContentResolver();
+
+	        int versionLevel = android.os.Build.VERSION.SDK_INT;
+	        String AUTHORITY = "com.android.launcher2.settings";
+	        
+	        //2.2以上的系统的文件文件名字是不一样的
+	        if (versionLevel >= 8) {
+	            AUTHORITY = "com.android.launcher2.settings";
+	        } else {
+	            AUTHORITY = "com.android.launcher.settings";
+	        }
+
+	        final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
+	                + "/favorites?notify=true");
+	        Cursor c = cr.query(CONTENT_URI,
+	                new String[] { "title", "iconResource" }, "title=?",
+	                new String[] { getString(R.string.app_name) }, null);
+
+	        if (c != null && c.getCount() > 0) {
+	            isInstallShortcut = true;
+	        }
+	        return isInstallShortcut;
+	    }
+
+	  public void addShortCut(){
+	        
+	        Intent shortcut = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
+	        // 设置属性
+	        shortcut.putExtra(Intent.EXTRA_SHORTCUT_NAME, getResources().getString(R.string.app_name));
+	        ShortcutIconResource iconRes = Intent.ShortcutIconResource.fromContext(this.getApplicationContext(), R.drawable.ic_launcher);
+	        shortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON,iconRes);
+	 
+	        // 是否允许重复创建
+	        shortcut.putExtra("duplicate", false);
+	        
+	        //设置桌面快捷方式的图标
+	        Parcelable icon = Intent.ShortcutIconResource.fromContext(this,R.drawable.ic_launcher);        
+	        shortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,icon);
+	        
+	        //点击快捷方式的操作
+	        Intent intent = new Intent(Intent.ACTION_MAIN);
+	        intent.setFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+	        intent.addFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
+	        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+	        intent.setClass(MainActivity.this, MainActivity.class);
+	        
+	        // 设置启动程序
+	        shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
+	        
+	        //广播通知桌面去创建
+	        this.sendBroadcast(shortcut);
+	    }
 	
 	@SuppressLint("NewApi")
 	private void showpop(View v) {
@@ -98,12 +277,13 @@ public class MainActivity extends ActionBarActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 
+	
+	
+	
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */

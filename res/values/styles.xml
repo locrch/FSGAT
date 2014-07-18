@@ -40,7 +40,7 @@
 	</style> 
 
   <style name="CustomWindowTitleBackground">  
-        <item name="android:background">#778899</item>  
+        <item name="android:background">#005299</item>  
     </style>  
     <style name="activityTitlebar" parent="@style/AppTheme">  
         <item name="android:windowTitleSize">32dp</item>  

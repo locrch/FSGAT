@@ -117,6 +117,13 @@ public  class MapPlaceFragment extends Fragment {
     	SDKInitializer.initialize(getActivity().getApplicationContext());
     	this.inflaters=inflater;
     	View view = inflater.inflate(R.layout.viewmap, null);
+//    	android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("附近办证地点查询");
     	this.getActivity().setTitle("附近办证地点查询");
     	if(CheckNetwork.connected(this)){
 	    	textView1=(TextView)view.findViewById(R.id.textView1);

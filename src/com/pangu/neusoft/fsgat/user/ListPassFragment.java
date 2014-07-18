@@ -34,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 @SuppressLint("NewApi")
@@ -57,6 +58,13 @@ public class ListPassFragment extends Fragment
 
 	private void init()
 	{
+//		android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("证件管理");
 		this.getActivity().setTitle("证件管理");
 		// TODO Auto-generated method stub
 		listpass_list = (ListView) getActivity().findViewById(

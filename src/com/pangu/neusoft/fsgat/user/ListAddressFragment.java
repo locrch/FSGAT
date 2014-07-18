@@ -38,6 +38,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 
@@ -61,6 +62,13 @@ public class ListAddressFragment extends Fragment
 	
 	private void init()
 	{
+//		android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("地址管理");
 		this.getActivity().setTitle("地址管理");
 		// TODO Auto-generated method stub
 		listaddress_addaddress_btn = (Button)getActivity().findViewById(R.id.listaddress_addaddress_btn);

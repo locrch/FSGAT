@@ -9,12 +9,6 @@
     android:orientation="vertical" 
     android:background="#FFFFFF"
     >
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:src="@drawable/ywbl_logo" />
     
       <GridView
           android:id="@+id/ywbl_grid"

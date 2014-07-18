@@ -33,6 +33,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -63,8 +64,14 @@ public class AddpassFragment extends Fragment
 	FragmentManager fragmentManager;
 	AddpassFragment addpassFragment;
 	
-	private void init()
-	{
+	private void init(){
+//	android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//	actionBar.setCustomView(R.layout.title_bar);
+//	actionBar.setDisplayShowCustomEnabled(true);
+//	actionBar.setDisplayShowHomeEnabled(false);
+//	actionBar.show();
+//	TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//	titleview.setText("添加通行证");
 		this.getActivity().setTitle("添加通行证");
 		// TODO Auto-generated method stub
 		addpass_passNumber = (EditText) getActivity().findViewById(

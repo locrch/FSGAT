@@ -46,6 +46,13 @@ public  class ZhcxFragment extends Fragment {
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
     	View view = inflater.inflate(R.layout.ywbl_fragment, null);
+//    	android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("综合查询");
     	this.getActivity().setTitle("综合查询");
     	
         GridView gridview = (GridView)view.findViewById(R.id.ywbl_grid);
@@ -103,7 +110,7 @@ public  class ZhcxFragment extends Fragment {
         // SimpleAdapter()中的五个参数分别是：第一个context，第二个数据资源，第三个每一个子项的布局文件，第四个每一个子项中的Key数组
         // 第五个每一个子项中的Value数组
         SimpleAdapter saImageItems = new SimpleAdapter(this.getActivity(), lstImageItem,
-                R.layout.grid_item, new String[] { "ItemImage", "ItemText" },
+                R.layout.grid_item_grzx, new String[] { "ItemImage", "ItemText" },
                 new int[] { R.id.ItemImage, R.id.ItemText });
         gridview.setAdapter(saImageItems);// 添加适配器
         gridview.setOnItemClickListener(new OnItemClickListener(){

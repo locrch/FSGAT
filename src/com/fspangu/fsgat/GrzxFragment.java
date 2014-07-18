@@ -10,6 +10,7 @@ import com.pangu.neusoft.fsgat.infos.MapPlaceFragment;
 import com.pangu.neusoft.fsgat.infos.RealTimeApplyFragment;
 import com.pangu.neusoft.fsgat.user.*;
 import com.pangu.neusoft.fsgat.visa.ShowHistoryFragment;
+import com.pangu.neusoft.tools.update.UpdateOperation;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -24,6 +25,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -43,7 +45,8 @@ public  class GrzxFragment extends Fragment {
 	private static String text7="检查更新";
 	private static String text8="意见反馈";
 	private static String text9="关于我们";
-	
+	public static int  updated=1;
+	public static boolean showupdate=true;
 	SharedPreferences sp;
 	Editor editor;
     @Override  
@@ -53,6 +56,16 @@ public  class GrzxFragment extends Fragment {
 		editor = sp.edit();
     	if(CheckLogin.logined(this)){
     	View view = inflater.inflate(R.layout.ywbl_fragment, null);
+    	
+//    	android.app.ActionBar actionBar = this.getActivity().getActionBar();
+//		actionBar.setCustomView(R.layout.title_bar);
+//		actionBar.setDisplayShowCustomEnabled(true);
+//		actionBar.setDisplayShowHomeEnabled(false);
+//		actionBar.show();
+//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
+//		titleview.setText("个人中心");
+    	
+    	
     	this.getActivity().setTitle("个人中心");
         GridView gridview = (GridView)view.findViewById(R.id.ywbl_grid);
         // 创建一个数组列表对象
@@ -166,7 +179,8 @@ public  class GrzxFragment extends Fragment {
                 	transaction.addToBackStack(null);
                     transaction.commit();
                 }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").toString().equals(text7)){
-                	Toast.makeText(getActivity(), "已经是最新版本！", Toast.LENGTH_SHORT).show();
+                	UpdateOperation update = new UpdateOperation(getActivity());
+            		update.checkUpdate(true);
                 }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").toString().equals(text8)){
 //                	FragmentTransaction transaction = getFragmentManager().beginTransaction();
 //                	OpinionFragment fragment=new OpinionFragment();
