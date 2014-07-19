@@ -470,10 +470,12 @@
 
         <Button
             android:id="@+id/ticket_main_booking_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="230dp"
+            android:layout_height="40dp"
             android:layout_centerHorizontal="true"
-            android:text="订票" />
+            android:background="@drawable/button_orange"
+            android:text="订票"
+            android:textColor="#ffffff" />
 
     </RelativeLayout>
 

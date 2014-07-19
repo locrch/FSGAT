@@ -59,17 +59,17 @@ public  class YwblFragment extends Fragment {
 		            HashMap<String, Object> map = new HashMap<String, Object>();// 建立hashmap对象
 		
 		            if (i == 1) {
-		            	map.put("ItemImage", R.drawable.apply_visa1);
+		            	map.put("ItemImage", R.drawable.ywbl_qianzhu_img);
 		                map.put("ItemText", text1);
 		            }
 		
 		            if (i == 2) {
-		            	map.put("ItemImage", R.drawable.apply_visa2);
+		            	map.put("ItemImage", R.drawable.ywbl_banzheng_img);
 		            	map.put("ItemText", text2);
 		            }
 		
 		            if (i == 3) {
-		            	map.put("ItemImage", R.drawable.apply_visa3);
+		            	map.put("ItemImage", R.drawable.ywbl_jilu_img);
 		            	map.put("ItemText", text3);
 		            }
 		

@@ -1,6 +1,9 @@
 package com.fspangu.fsgat;
 
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import com.baidu.android.pushservice.CustomPushNotificationBuilder;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
@@ -17,13 +20,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Notification;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ClipData.Item;
 import android.content.Intent.ShortcutIconResource;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -41,14 +50,21 @@ import android.util.Log;
 import android.view.InflateException;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater.Factory;
+import android.view.MenuItem.OnActionExpandListener;
+import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.ActionProvider;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -83,14 +99,18 @@ public class MainActivity extends ActionBarActivity {
 	    String pkgName = this.getPackageName();
 	        
 		getActionBar().setBackgroundDrawable(this.getBaseContext().getResources().getDrawable(R.drawable.title_background));
-        getActionBar().show();
+        getActionBar().show(); 
 		
 		setContentView(R.layout.activity_main); 
+		
 		setTitle(this.getResources().getString(R.string.app_name));
 		
-		
+		setOverflowShowingAlways();
 		
 		if (savedInstanceState == null) {
+			/*PlaceholderFragment phf = new PlaceholderFragment();
+			getFragmentManager().beginTransaction().replace(R.id.container, phf);
+			fragmentManager = getFragmentManager();*/
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}	
@@ -99,6 +119,8 @@ public class MainActivity extends ActionBarActivity {
 		editor = sp.edit();
 	
 		checkShortCut();
+		
+		
 		
 		UpdateOperation update = new UpdateOperation(MainActivity.this);
 		update.checkUpdate(false);
@@ -127,7 +149,13 @@ public class MainActivity extends ActionBarActivity {
 	        PushManager.setNotificationBuilder(this, 1, cBuilder);
 	}	
 	
-
+	@Override
+	protected void onStart()
+	{
+		// TODO Auto-generated method stub
+		super.onStart();
+		
+	}
     
  // 更新界面显示内容
     private void updateDisplay() {
@@ -152,21 +180,83 @@ public class MainActivity extends ActionBarActivity {
     }
     
     
+    
+    
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		MenuItem item=menu.findItem(R.id.action_search);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		/*MenuItem actionItem = menu.add("菜单");
 		
-		actionItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);*/
+		android.app.ActionBar actionBar = getActionBar();
+		
+		actionBar.setDisplayShowHomeEnabled(false);
+		
+		actionBar.setDisplayShowCustomEnabled(true);
+		
+		actionBar.setCustomView(R.layout.title_bar);
+		
+		
+		
+		Button actionbar_back_btn =(Button)findViewById(R.id.actionbar_back_btn);
+		
+		
+		
+		actionbar_back_btn.setOnClickListener(new OnClickListener()
+		{
+			
+			@Override
+			public void onClick(View v)
+			{
+				// TODO Auto-generated method stub
+				fragmentManager = getSupportFragmentManager();
+				FragmentTransaction transaction = fragmentManager.beginTransaction();
+				if (!(fragmentManager.getBackStackEntryCount()==0||fragmentManager.getBackStackEntryCount()==1))
+				{
+					fragmentManager.popBackStackImmediate();
+				}
+				
+			}
+		});
+		
 		
 		return true;
 	}
 	
-	   
+	
+	
+	@Override
+	public boolean onMenuOpened(int featureId, Menu menu)
+	{
+		// TODO Auto-generated method stub
+		if (featureId == Window.FEATURE_ACTION_BAR && menu != null) {
+			if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
+				try {
+					Method m = menu.getClass().getDeclaredMethod(
+							"setOptionalIconsVisible", Boolean.TYPE);
+					m.setAccessible(true);
+					m.invoke(menu, true);
+				} catch (Exception e) {
+				}
+			}
+		}
+		
+		
+		return super.onMenuOpened(featureId, menu);
+	}
+	
+	private void setOverflowShowingAlways() {
+		try {
+			ViewConfiguration config = ViewConfiguration.get(this);
+			Field menuKeyField = ViewConfiguration.class
+					.getDeclaredField("sHasPermanentMenuKey");
+			menuKeyField.setAccessible(true);
+			menuKeyField.setBoolean(config, false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	 
+	
 	public void checkShortCut(){
 		  if(!isAddShortCut()&&sp.getBoolean("alertshoutcut", true)){
 			  Dialog alertDialog = new AlertDialog.Builder(MainActivity.this). 
@@ -450,5 +540,5 @@ public class MainActivity extends ActionBarActivity {
         }  
     };   
 	
-
+   
 }

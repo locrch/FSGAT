@@ -36,7 +36,7 @@ public class PostJSONfromGson {
 
 			HttpClient hc = new DefaultHttpClient();
 			
-			HttpPost hp = new HttpPost("http://192.168.1.133:167/GetInfo.ashx?method="+methodname);
+			HttpPost hp = new HttpPost(PostJson.serverurl+methodname);
 			
 			Gson gson = new Gson();
 			

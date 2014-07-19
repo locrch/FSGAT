@@ -34,11 +34,11 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public  class ZhcxFragment extends Fragment {
-	private static String text1="受理大厅状态查询";
-	private static String text2="附近办证地点查询";
-	private static String text3="通关口岸分布及路线指引";
-	private static String text4="通关口岸状态查询";
-	private static String text5="办理进度查询";
+	private static String text1="受理大厅";
+	private static String text2="办证地点";
+	private static String text3="通关口岸";
+	private static String text4="口岸状态";
+	private static String text5="受理进度";
 	private static String text6="办事指南";
 	private static String text7="法律法规";
 	private static String text8="证件知识";
@@ -67,38 +67,38 @@ public  class ZhcxFragment extends Fragment {
             HashMap<String, Object> map = new HashMap<String, Object>();// 建立hashmap对象
 
             if (i == 1) {
-            	map.put("ItemImage", R.drawable.apply_visa1);
+            	map.put("ItemImage", R.drawable.zhcx_dating_img);
                 map.put("ItemText", text1);
             }
 
             if (i == 2) {
-            	map.put("ItemImage", R.drawable.apply_visa2);
+            	map.put("ItemImage", R.drawable.zhcx_didian_img);
             	map.put("ItemText", text2);
             }
 
             if (i == 3) {
-            	map.put("ItemImage", R.drawable.apply_visa3);
+            	map.put("ItemImage", R.drawable.zhcx_kouan_img);
             	map.put("ItemText", text3);
             }
 
             if (i == 4) {
-            	map.put("ItemImage", R.drawable.apply_visa4);
+            	map.put("ItemImage", R.drawable.zhcx_zhuangtai_img);
             	map.put("ItemText", text4);
             }
             if (i == 5) {
-            	map.put("ItemImage", R.drawable.apply_visa3);
+            	map.put("ItemImage", R.drawable.zhcx_jindu_img);
             	map.put("ItemText", text5);
             }
             if (i == 6) {
-            	map.put("ItemImage", R.drawable.apply_visa1);
+            	map.put("ItemImage", R.drawable.zhcx_zhinan_img);
             	map.put("ItemText", text6);
             }
             if (i == 7) {
-            	map.put("ItemImage", R.drawable.apply_visa2);
+            	map.put("ItemImage", R.drawable.zhcx_falv_img);
             	map.put("ItemText", text7);
             }
             if (i == 8) {
-            	map.put("ItemImage", R.drawable.apply_visa1);
+            	map.put("ItemImage", R.drawable.zhcx_zhishi_img);
             	map.put("ItemText", text8);
             }
             lstImageItem.add(map);

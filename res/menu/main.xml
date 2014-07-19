@@ -3,17 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.fspangu.fsgat.MainActivity" >
 
-    <item android:id="@+id/action_search"  
-          android:icon="@android:drawable/ic_menu_search"  
-          android:title="test1" 
-          android:showAsAction="always|withText" />  
-    <item android:id="@+id/action_add"  
-          android:icon="@android:drawable/ic_menu_add"  
-          android:title="test2" 
-          android:showAsAction="always|withText"/>  
+    <!-- <item android:id="@+id/action_search"  
+          android:icon="@drawable/more_menu"  
+          android:title="菜单" 
+          android:showAsAction="always|withText"
+          android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider" />   -->
+         
+          
+    <item android:id="@+id/action_logout"  
+          android:icon="@android:drawable/ic_menu_delete"  
+          android:title="注销" 
+          android:showAsAction="always|withText"
+          android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider"/>  
     <item android:id="@+id/action_edit"  
           android:icon="@android:drawable/ic_menu_edit"   
-          android:title="test3"
+          android:title="用户名修改"
           android:showAsAction="always|withText" />  
     <item android:id="@+id/action_share"  
           android:icon="@android:drawable/ic_menu_share"  
@@ -23,14 +27,7 @@
           android:icon="@android:drawable/ic_menu_sort_by_size"  
           android:title="test5"  
           android:showAsAction="always|withText" >  
-        <menu>  
-            <item android:id="@+id/action_sort_size"  
-                  android:icon="@android:drawable/ic_menu_sort_by_size"  
-                  android:title="test6" />  
-            <item android:id="@+id/action_sort_alpha"  
-                  android:icon="@android:drawable/ic_menu_sort_alphabetically"  
-                  android:title="test7"/>  
-        </menu>  
+         
     </item>  
     
 </menu>

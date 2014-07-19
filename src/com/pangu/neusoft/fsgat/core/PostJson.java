@@ -23,6 +23,9 @@ import android.util.Log;
 
 public class PostJson
 {
+	public static final String serverurl="http://202.103.160.153:1009/GetInfo.ashx?method=";
+	//public static final String serverurl="http://192.168.1.133:167/GetInfo.ashx?method=";
+	
 	private static final String TAG = "FSGAT";
 	JSONObject joget;
 	HashMap<String, Object> GetParamsMap;
@@ -35,7 +38,7 @@ public class PostJson
 		{
 
 			HttpClient hc = new DefaultHttpClient();
-			HttpPost hp = new HttpPost("http://192.168.1.133:167/GetInfo.ashx?method="+methodname);
+			HttpPost hp = new HttpPost(serverurl+methodname);
 			
 			
 			// 请求json报文
@@ -133,7 +136,7 @@ public class PostJson
 		{
 
 			HttpClient hc = new DefaultHttpClient();
-			HttpPost hp = new HttpPost("http://192.168.1.133:167/GetInfo.ashx?method="+methodname);
+			HttpPost hp = new HttpPost(serverurl+methodname);
 			
 			// 请求json报文
 			JSONObject joput = new JSONObject();
@@ -231,7 +234,7 @@ public class PostJson
 		{
 
 			HttpClient hc = new DefaultHttpClient();
-			HttpPost hp = new HttpPost("http://192.168.1.133:167/GetInfo.ashx?method="+methodname);
+			HttpPost hp = new HttpPost(serverurl+methodname);
 			
 			
 			// 请求json报文

@@ -61,12 +61,12 @@ public  class BmfwFragment extends Fragment {
             HashMap<String, Object> map = new HashMap<String, Object>();// 建立hashmap对象
 
             if (i == 1) {
-            	map.put("ItemImage", R.drawable.apply_visa1);
+            	map.put("ItemImage", R.drawable.bmfw_booking_ticket_img);
                 map.put("ItemText", text1);
             }
 
             if (i == 2) {
-            	map.put("ItemImage", R.drawable.apply_visa2);
+            	map.put("ItemImage", R.drawable.bmfw_history_ticket_img);
             	map.put("ItemText", text2);
             }
 

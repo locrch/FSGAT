@@ -165,6 +165,7 @@ public class TicketMainFragment extends Fragment {
 	float conf_allprice = 0;
 	
 	DatePickerDialog  dpd_uptime_update,dpd_back_uptime_update;
+	Calendar calendar;
 	
 	private void init() {
 		// TODO Auto-generated method stub
@@ -269,13 +270,16 @@ public class TicketMainFragment extends Fragment {
 						Context.MODE_PRIVATE);
 		editor = sp.edit();
 		
+		calendar = Calendar.getInstance();
+
+		
 		DatePickerDialog.OnDateSetListener dateListener_uptime_update = new DatePickerDialog.OnDateSetListener()
 		{
 			@Override
 			public void onDateSet(DatePicker datePicker, int year, int month,
 					int dayOfMonth)
 			{
-
+				
 				uptime_update
 						.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
 			}
@@ -293,8 +297,7 @@ public class TicketMainFragment extends Fragment {
 		};
 		
 		
-		Calendar calendar = Calendar.getInstance();
-
+		
 		dpd_uptime_update = new DatePickerDialog(getActivity(), dateListener_uptime_update,
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH));
@@ -302,6 +305,7 @@ public class TicketMainFragment extends Fragment {
 		dpd_back_uptime_update = new DatePickerDialog(getActivity(), dateListener_back_uptime_update,
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH));
+		
 		
 		zgt_ticket_count_np.setMaxValue(99);
 		zgt_ticket_count_np.setMinValue(1);
@@ -446,6 +450,8 @@ public class TicketMainFragment extends Fragment {
 		
 		if (CheckNetwork.connected(this)){
 		
+			
+			
 			busCompanyID = 1;
 			
 			init();
@@ -1814,7 +1820,8 @@ public class TicketMainFragment extends Fragment {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			
+			if (CheckLogin.logined(thisfragment))
+			{
 			new CustomAsynTask(getActivity())
 			{
 				@Override
@@ -1998,7 +2005,7 @@ public class TicketMainFragment extends Fragment {
 				}
 				
 			}.execute();
-				
+			}
 		}
 	});
 	 	

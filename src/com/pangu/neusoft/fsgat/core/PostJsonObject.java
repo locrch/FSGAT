@@ -40,7 +40,7 @@ public class PostJsonObject
 
 			HttpClient hc = new DefaultHttpClient();
 			HttpPost hp = new HttpPost(
-					"http://192.168.1.133:167/GetInfo.ashx?method="+methodname);
+					PostJson.serverurl+methodname);
 			
 			// 请求json报文
 			JSONObject joput = new JSONObject();
@@ -144,7 +144,7 @@ public class PostJsonObject
 		{
 
 			HttpClient hc = new DefaultHttpClient();
-			HttpPost hp = new HttpPost("http://192.168.1.133:167/GetInfo.ashx?method="+methodname);
+			HttpPost hp = new HttpPost(PostJson.serverurl+methodname);
 			
 			// 请求json报文
 			JSONObject joput = new JSONObject();
