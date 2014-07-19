@@ -47,6 +47,7 @@ import com.pangu.neusoft.fsgat.model.seatNumber;
 import com.pangu.neusoft.fsgat.model.user;
 import com.pangu.neusoft.fsgat.user.ConfirmInfo;
 import com.pangu.neusoft.fsgat.user.ListTicketLine;
+import com.pangu.neusoft.fsgat.user.LoginFragment;
 
 import android.R.array;
 import android.R.fraction;
@@ -115,6 +116,9 @@ public class TicketMainFragment extends Fragment {
 	HashMap<String, Object> GetParamsMap;
 	Map<String, Object> adapterListMap;
 	List<HashMap<String, Object>> adapterList;
+	
+	
+	
 	Upstation upstation;
 	ListupStation listupStation;
 	ArrayList<String> listupStationName;
@@ -141,11 +145,11 @@ public class TicketMainFragment extends Fragment {
 	ArrayList<Integer> listReturndepartureTimeID;
 	ReturnDownStation returnDownStation;
 	
-	
+	String[] way_hongkong,way_macao;
 	
 	SharedPreferences sp;
 	Editor editor;
-	ArrayAdapter adapter_upplace,adapter_downplace,adapter_uptimetime,adapter_returnupplace,adapter_returndownplace,adapter_returnuptimetime;
+	ArrayAdapter way_adapter,adapter_upplace,adapter_downplace,adapter_uptimetime,adapter_returnupplace,adapter_returndownplace,adapter_returnuptimetime;
 
 	FragmentSelectSeat fss;
 	TicketBookingConfirmFragment tbcf;
@@ -233,6 +237,12 @@ public class TicketMainFragment extends Fragment {
 		fragmentManager = getFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 
+
+		way_hongkong=new String[]{"佛山→香港","香港→佛山"};
+		
+		way_macao=new String[]{"佛山→澳门","澳门→佛山"};
+		
+		
 		listupStation = new ListupStation();
 
 		adapterListMap = new HashMap<String, Object>();
@@ -439,7 +449,46 @@ public class TicketMainFragment extends Fragment {
 			busCompanyID = 1;
 			
 			init();
-
+		
+			way_adapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.spinner_bg,way_hongkong);	
+			way_spinner.setAdapter(way_adapter);
+			
+		place_hongkong.setOnCheckedChangeListener(new OnCheckedChangeListener()
+		{
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+			{
+				// TODO Auto-generated method stub
+					if (isChecked)
+					{
+						way_adapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.spinner_bg,way_hongkong);	
+						way_spinner.setAdapter(way_adapter);
+						
+					}
+					
+			}
+		});
+			
+		place_macao.setOnCheckedChangeListener(new OnCheckedChangeListener()
+		{
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+			{
+				// TODO Auto-generated method stub
+				if (isChecked)
+				{	
+					way_adapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.spinner_bg,way_macao);	
+					way_spinner.setAdapter(way_adapter);
+						
+					
+				}
+					
+			}
+		});
+		
+		
 		company_zgt.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -654,8 +703,25 @@ public class TicketMainFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(CheckLogin.logined(thisfragment))
+				if (sp.getString("username", "").equals("")||sp.getString("username", null)==null){
+					Toast.makeText(getActivity(), "请先登录！", Toast.LENGTH_SHORT).show();
+		 			
+		 			if(getFragmentManager().getBackStackEntryCount()>=1){
+		    			int len =getFragmentManager().getBackStackEntryCount();
+		    		    for (int i = 0; i < len; i++) {
+		    		    	getFragmentManager().popBackStack();
+		    		    }
+		    		}
+					
+					FragmentTransaction transaction = getFragmentManager().beginTransaction(); 
+		     		Fragment loginFragment = new LoginFragment();  
+		            transaction.replace(R.id.content, loginFragment); 
+		            transaction.addToBackStack(null);
+		            
+		            transaction.commit();
+				}else {
 					showAddressDialog();
+				}
 				
 			}
 		});
@@ -687,30 +753,39 @@ public class TicketMainFragment extends Fragment {
 					@Override
 					public void onItemSelected(AdapterView<?> arg0, View arg1,
 							int arg2, long arg3) {
-						switch (arg2) {
-						case 0:
-							upwayID= arg2+1;
-							downwayID = upwayID+1;
-							break;
+						if (place_hongkong.isChecked())
+						{
+							switch (arg2) {
+							case 0:
+								upwayID= arg2+1;
+								downwayID = upwayID+1;
+								break;
 
-						case 1:
-							upwayID= arg2+1;
-							downwayID = upwayID-1;
-							break;
-							
-						case 2:
-							upwayID= arg2+1;
-							downwayID = upwayID+1;
-							break;
-							
-						case 3:
-							upwayID= arg2+1;
-							downwayID = upwayID-1;
-							break;
-							
-						default:
-							break;
+							case 1:
+								upwayID= arg2+1;
+								downwayID = upwayID-1;
+								break;
+								
+							default:
+								break;
+							}
+						}else if (place_macao.isChecked()) {
+							switch (arg2) {
+							case 0:
+								upwayID= arg2+3;
+								downwayID = upwayID+1;
+								break;
+
+							case 1:
+								upwayID= arg2+3;
+								downwayID = upwayID-1;
+								break;
+								
+							default:
+								break;
+							}
 						}
+						
 						
 						
 							

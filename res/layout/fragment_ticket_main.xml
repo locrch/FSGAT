@@ -103,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/ticket_main_way_label"
-            android:entries="@array/ticket_main_way_spinner_values" />
+             />
 
         <TextView
             android:id="@+id/ticket_main_way_label"

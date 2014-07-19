@@ -63,9 +63,10 @@ public class TicketHistoryFragment extends Fragment
 			Bundle savedInstanceState)
 	{
 		// TODO Auto-generated method stub
+		View view = inflater.inflate(R.layout.fragment_ticket_history, null);
 		
+		return view;
 		
-		return inflater.inflate(R.layout.fragment_ticket_history, null);
 	}
 	
 	@Override
@@ -73,8 +74,10 @@ public class TicketHistoryFragment extends Fragment
 	{
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		init();
 		if(CheckLogin.logined(this))
+		{	
+		init();
+		
 		new CustomAsynTask(getActivity())
 		{
 			@Override
@@ -156,5 +159,6 @@ public class TicketHistoryFragment extends Fragment
 			}
 			
 		}.execute();
+		}
 	}
 }

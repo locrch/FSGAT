@@ -18,6 +18,7 @@ import org.apache.http.util.EntityUtils;
 
 import android.util.Log;
 
+import com.fspangu.fsgat.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
@@ -34,9 +35,8 @@ public class PostJSONfromGson {
 		{
 
 			HttpClient hc = new DefaultHttpClient();
-			HttpPost hp = new HttpPost("http://202.103.160.153:1009/GetInfo.ashx?method="+methodname);
 			
-			//HttpPost hp = new HttpPost("http://192.168.1.133:167/GetInfo.ashx?method="+methodname);
+			HttpPost hp = new HttpPost("http://192.168.1.133:167/GetInfo.ashx?method="+methodname);
 			
 			Gson gson = new Gson();
 			

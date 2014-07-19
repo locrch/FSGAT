@@ -17,7 +17,8 @@ public final class R {
         public static final int abc_slide_out_top=0x7f040005;
     }
     public static final class array {
-        public static final int ticket_main_way_spinner_values=0x7f0c0000;
+        public static final int ticket_main_way_spinner_hk=0x7f0c0000;
+        public static final int ticket_main_way_spinner_macao=0x7f0c0001;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -1871,13 +1872,14 @@ containing a value of this type.
         public static final int listpass_content=0x7f030039;
         public static final int map_marker=0x7f03003a;
         public static final int realtimeapply=0x7f03003b;
-        public static final int support_simple_spinner_dropdown_item=0x7f03003c;
-        public static final int ticket_history_content=0x7f03003d;
-        public static final int title_bar=0x7f03003e;
-        public static final int viewmap=0x7f03003f;
-        public static final int yhhd_fragment=0x7f030040;
-        public static final int ywbl_fragment=0x7f030041;
-        public static final int zhcx_fragment=0x7f030042;
+        public static final int spinner_bg=0x7f03003c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03003d;
+        public static final int ticket_history_content=0x7f03003e;
+        public static final int title_bar=0x7f03003f;
+        public static final int viewmap=0x7f030040;
+        public static final int yhhd_fragment=0x7f030041;
+        public static final int ywbl_fragment=0x7f030042;
+        public static final int zhcx_fragment=0x7f030043;
     }
     public static final class menu {
         public static final int main=0x7f0d0000;
@@ -1925,14 +1927,16 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000b;
         public static final int action_settings=0x7f0a000e;
         public static final int app_name=0x7f0a000d;
-        public static final int applystateurl=0x7f0a001f;
-        public static final int banzheng_place=0x7f0a001a;
-        public static final int export_place_hk=0x7f0a001b;
-        public static final int export_place_macau=0x7f0a001c;
-        public static final int getdatetime=0x7f0a0021;
-        public static final int realtimeapplystate=0x7f0a0020;
-        public static final int serverurl=0x7f0a0019;
-        public static final int shenzhenexport=0x7f0a001e;
+        public static final int applystateurl=0x7f0a0020;
+        public static final int banzheng_place=0x7f0a001b;
+        public static final int export_place_hk=0x7f0a001c;
+        public static final int export_place_macau=0x7f0a001d;
+        public static final int getdatetime=0x7f0a0022;
+        public static final int realtimeapplystate=0x7f0a0021;
+        /**  <string name="serverurl">http://202.103.160.153:1009/GetInfo.ashx?method=</string> 
+         */
+        public static final int serverurl=0x7f0a001a;
+        public static final int shenzhenexport=0x7f0a001f;
         public static final int title_activity_add_passport=0x7f0a0013;
         public static final int title_activity_addaddress=0x7f0a0016;
         public static final int title_activity_addpass=0x7f0a0015;
@@ -1943,7 +1947,8 @@ containing a value of this type.
         public static final int title_activity_register=0x7f0a0010;
         public static final int title_activity_user_main=0x7f0a000f;
         public static final int toast_flase_msg=0x7f0a0018;
-        public static final int zhuhaiexport=0x7f0a001d;
+        public static final int updateserverurl=0x7f0a0019;
+        public static final int zhuhaiexport=0x7f0a001e;
     }
     public static final class style {
         /** 

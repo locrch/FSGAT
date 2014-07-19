@@ -16,6 +16,8 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.fspangu.fsgat.R;
+
 
 import android.util.Log;
 
@@ -33,8 +35,8 @@ public class PostJson
 		{
 
 			HttpClient hc = new DefaultHttpClient();
-			HttpPost hp = new HttpPost(
-					"http://202.103.160.153:1009/GetInfo.ashx?method="+methodname);
+			HttpPost hp = new HttpPost("http://192.168.1.133:167/GetInfo.ashx?method="+methodname);
+			
 			
 			// 请求json报文
 			JSONObject joput = new JSONObject();
@@ -131,7 +133,7 @@ public class PostJson
 		{
 
 			HttpClient hc = new DefaultHttpClient();
-			HttpPost hp = new HttpPost("http://202.103.160.153:1009/GetInfo.ashx?method="+methodname);
+			HttpPost hp = new HttpPost("http://192.168.1.133:167/GetInfo.ashx?method="+methodname);
 			
 			// 请求json报文
 			JSONObject joput = new JSONObject();
@@ -229,9 +231,8 @@ public class PostJson
 		{
 
 			HttpClient hc = new DefaultHttpClient();
-			HttpPost hp = new HttpPost("http://202.103.160.153:1009/GetInfo.ashx?method="+methodname);
+			HttpPost hp = new HttpPost("http://192.168.1.133:167/GetInfo.ashx?method="+methodname);
 			
-			//HttpPost hp = new HttpPost("http://192.168.1.133:167/GetInfo.ashx?method="+methodname);
 			
 			// 请求json报文
 			JSONObject joput = new JSONObject();

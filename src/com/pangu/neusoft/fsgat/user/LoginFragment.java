@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import org.json.JSONObject;
 import com.fspangu.fsgat.GrzxFragment;
 import com.fspangu.fsgat.R;
+import com.fspangu.fsgat.ticket.TicketHistoryFragment;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.core.CheckNetwork;
 import com.pangu.neusoft.fsgat.core.PostJson;
@@ -228,8 +229,10 @@ public class LoginFragment extends Fragment
 									editor.putString("switchstatus4", sp.getString("switchstatus4", "off"));
 									editor.putString("switchstatus5", sp.getString("switchstatus5", "off"));
 									editor.commit();
+									
 									GrzxFragment um = new GrzxFragment();
 									fragmentManager.beginTransaction().replace(R.id.content,um).commit();
+									
 									
 								}
 							}

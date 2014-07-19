@@ -102,7 +102,7 @@ public class UpdateOperation {
 	    public void run() {  
 	        try {  
 	            //从资源文件获取服务器 地址   
-	            String path = activity.getResources().getString(R.string.serverurl);  
+	            String path = activity.getResources().getString(R.string.updateserverurl);  
 	            //包装成url的对象   
 	            URL url = new URL(path);  
 	            HttpURLConnection conn =  (HttpURLConnection) url.openConnection();   

@@ -165,7 +165,7 @@ public class SeatView extends View {
 		    
 		    //服务器获取座位，已选变成红色
 		    if (!isSelect) {
-		    	unavaliableSeatList.add(toSeatListCount(row, col));
+		    	unavaliableSeatList.add(toSeatListCount(row-1, col));
 		    	canvas.drawBitmap(seat_selled, (col-1) * (box_size), (row-1) * (box_size), null);
 				
 			}
