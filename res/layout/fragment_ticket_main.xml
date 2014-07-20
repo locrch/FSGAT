@@ -2,7 +2,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#ffffff" >
+    android:background="#ffffff"
+    android:paddingLeft="@dimen/activity_padding_width"
+    android:paddingRight="@dimen/activity_padding_width" >
 
 <LinearLayout 
     android:layout_width="match_parent"
@@ -116,6 +118,19 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="去程"
+            android:background="@drawable/button_blue"
+            android:padding="5dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/relativelayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -182,11 +197,12 @@
 		        android:layout_width="100dp"
 		        android:layout_height="wrap_content"
 		        android:layout_alignParentRight="true"
-		        android:layout_alignParentTop="true" />
+		        android:layout_alignParentTop="true"
+		        android:layout_toRightOf="@+id/ticket_main_uptime_update" />
 
 		    <EditText
 		        android:id="@+id/ticket_main_uptime_update"
-		        android:layout_width="130dp"
+		        android:layout_width="110dp"
 		        android:layout_height="wrap_content"
 		        android:layout_alignParentLeft="true"
 		        android:layout_centerVertical="true"
@@ -205,13 +221,18 @@
 
         <TextView
             android:id="@+id/ticket_main_selection"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="点击选座" />
+            android:text="选择选座"
+            android:background="@drawable/frame_blue" />
 		 
     </RelativeLayout>
 	
@@ -247,7 +268,18 @@
     android:id="@+id/ticket_main_back_fragment_layout"
     android:visibility="gone"
      >
+	<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="回程"
+            android:background="@drawable/button_blue"
+            android:padding="5dp" />
+
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/relativelayout1"
         android:layout_width="match_parent"
@@ -314,7 +346,7 @@
 
 		<EditText
 		    android:id="@+id/ticket_main_back_uptime_update"
-		    android:layout_width="130dp"
+		    android:layout_width="110dp"
 		    android:layout_height="wrap_content"
 		    android:layout_centerHorizontal="true"
 		    android:layout_centerVertical="true"
@@ -331,13 +363,18 @@
 	     >
 	      <TextView
             android:id="@+id/ticket_main_back_selection"
-            android:layout_width="match_parent"
+            android:background="@drawable/frame_blue"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="点击返程选座" />
+            android:text="选择选座" />
 	     
 	 </RelativeLayout>
 </LinearLayout>

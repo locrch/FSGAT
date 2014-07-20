@@ -44,7 +44,8 @@
         <RadioButton
             android:id="@+id/rg_ta5"
             style="@style/tab_style"
-            android:background="@drawable/grzx_selector" />
+            android:background="@drawable/grzx_selector"
+            android:visibility="gone" />
   
     </RadioGroup>  
 </RelativeLayout>  

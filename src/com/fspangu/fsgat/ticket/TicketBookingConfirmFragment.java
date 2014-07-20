@@ -8,12 +8,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.core.PostJSONfromGson;
+import com.pangu.neusoft.fsgat.model.ConfirmInfo;
 import com.pangu.neusoft.fsgat.model.ListDepartureTime;
 import com.pangu.neusoft.fsgat.model.ListbuyTicket;
 import com.pangu.neusoft.fsgat.model.PostbuyTicket;
 import com.pangu.neusoft.fsgat.model.PostgetDepartureTime;
 import com.pangu.neusoft.fsgat.model.departureTime;
-import com.pangu.neusoft.fsgat.user.ConfirmInfo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

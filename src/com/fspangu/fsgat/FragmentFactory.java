@@ -18,9 +18,9 @@ public class FragmentFactory {
             case 4:  
                 fragment = new YhhdFragment();  
                 break;  
-            case 5:  
+            /*case 5:  
                 fragment = new GrzxFragment();  
-                break;  
+                break; */ 
         }  
         return fragment;  
     }  

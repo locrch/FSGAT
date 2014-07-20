@@ -25,6 +25,7 @@ import com.pangu.neusoft.fsgat.core.CheckNetwork;
 import com.pangu.neusoft.fsgat.core.PostJSONfromGson;
 import com.pangu.neusoft.fsgat.core.PostJson;
 import com.pangu.neusoft.fsgat.model.Address;
+import com.pangu.neusoft.fsgat.model.ConfirmInfo;
 import com.pangu.neusoft.fsgat.model.ListDepartureTime;
 import com.pangu.neusoft.fsgat.model.ListReturnUpstation;
 import com.pangu.neusoft.fsgat.model.ListSeatNumber;
@@ -45,7 +46,6 @@ import com.pangu.neusoft.fsgat.model.Upstation;
 import com.pangu.neusoft.fsgat.model.PostgetDownStation;
 import com.pangu.neusoft.fsgat.model.seatNumber;
 import com.pangu.neusoft.fsgat.model.user;
-import com.pangu.neusoft.fsgat.user.ConfirmInfo;
 import com.pangu.neusoft.fsgat.user.ListTicketLine;
 import com.pangu.neusoft.fsgat.user.LoginFragment;
 
@@ -549,7 +549,7 @@ public class TicketMainFragment extends Fragment {
 							
 							if(fragment_layout.getVisibility()==0||fragment_layout!=null){
 								
-								new CustomAsynTask(getActivity())
+								new CustomAsynTask(getActivity(),thisfragment)
 								{
 									@Override
 									protected Boolean doInBackground(Void... params)
@@ -645,18 +645,36 @@ public class TicketMainFragment extends Fragment {
 										{
 											super.onPostExecute(result);
 											
-											if (result)
+											try
 											{
-												adapter_returnupplace=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listReturnUpStationName);
-												
-												back_upplace.setAdapter(adapter_returnupplace);
-												
-												adapter_returndownplace=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listReturnDownStationName);
-												
-												back_downplace.setAdapter(adapter_returndownplace);
-											}
-											else {
-												Toast.makeText(getActivity(), R.string.toast_flase_msg, Toast.LENGTH_SHORT).show();
+												if (result)
+												{
+													adapter_returnupplace = new ArrayAdapter(
+															getActivity(),
+															R.layout.support_simple_spinner_dropdown_item,
+															listReturnUpStationName);
+
+													back_upplace
+															.setAdapter(adapter_returnupplace);
+
+													adapter_returndownplace = new ArrayAdapter(
+															getActivity(),
+															R.layout.support_simple_spinner_dropdown_item,
+															listReturnDownStationName);
+
+													back_downplace
+															.setAdapter(adapter_returndownplace);
+												} else
+												{
+													Toast.makeText(
+															getActivity(),
+															R.string.toast_flase_msg,
+															Toast.LENGTH_SHORT)
+															.show();
+												}
+											} catch (Exception e)
+											{
+												// TODO: handle exception
 											}
 											
 											
@@ -709,23 +727,8 @@ public class TicketMainFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (sp.getString("username", "").equals("")||sp.getString("username", null)==null){
-					Toast.makeText(getActivity(), "请先登录！", Toast.LENGTH_SHORT).show();
-		 			
-		 			if(getFragmentManager().getBackStackEntryCount()>=1){
-		    			int len =getFragmentManager().getBackStackEntryCount();
-		    		    for (int i = 0; i < len; i++) {
-		    		    	getFragmentManager().popBackStack();
-		    		    }
-		    		}
-					
-					FragmentTransaction transaction = getFragmentManager().beginTransaction(); 
-		     		Fragment loginFragment = new LoginFragment();  
-		            transaction.replace(R.id.content, loginFragment); 
-		            transaction.addToBackStack(null);
-		            
-		            transaction.commit();
-				}else {
+				if(CheckLogin.logined(thisfragment))
+				{
 					showAddressDialog();
 				}
 				
@@ -928,21 +931,38 @@ public class TicketMainFragment extends Fragment {
 							{
 								super.onPostExecute(result);
 								
-								if (result) {
-									
-								adapter_upplace=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listupStationName);
-								
-								upplace_spinner.setAdapter(adapter_upplace);
-								
-								adapter_downplace=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listdownStationName);
-								
-								downplace_spinner.setAdapter(adapter_downplace);
-								
-								
-								}else if (!result) {
-									Toast.makeText(getActivity().getApplicationContext(),
-											R.string.toast_flase_msg,
-											Toast.LENGTH_LONG).show();
+								try
+								{
+									if (result)
+									{
+
+										adapter_upplace = new ArrayAdapter(
+												getActivity(),
+												R.layout.support_simple_spinner_dropdown_item,
+												listupStationName);
+
+										upplace_spinner
+												.setAdapter(adapter_upplace);
+
+										adapter_downplace = new ArrayAdapter(
+												getActivity(),
+												R.layout.support_simple_spinner_dropdown_item,
+												listdownStationName);
+
+										downplace_spinner
+												.setAdapter(adapter_downplace);
+
+									} else if (!result)
+									{
+										Toast.makeText(
+												getActivity()
+														.getApplicationContext(),
+												R.string.toast_flase_msg,
+												Toast.LENGTH_LONG).show();
+									}
+								} catch (Exception e)
+								{
+									// TODO: handle exception
 								}
 									
 								
@@ -976,7 +996,7 @@ public class TicketMainFragment extends Fragment {
 					break;
 					}
 				
-				new CustomAsynTask(getActivity())
+				new CustomAsynTask(getActivity(),thisfragment)
 				{
 					@Override
 					protected Boolean doInBackground(Void... params)
@@ -1045,26 +1065,36 @@ public class TicketMainFragment extends Fragment {
 					{
 						super.onPostExecute(result);
 						
-						if (result) {
-							
-							adapter_uptimetime=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listdepartureTimeName);
-							
-							uptime_time.setAdapter(adapter_uptimetime);
-						}
-						else {
-							//adapter_uptimetime.clear();
-							uptime_time.setAdapter(adapter_uptimetime);
-							Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
-							
-							
-							 if (uptime_time.getSelectedItem() != null)  
-				                {  
-				                    adapter_uptimetime.clear();
-				                    
-				                    uptime_time.setAdapter(adapter_uptimetime);
-				                    
-				                    
-				                }
+						try
+						{
+							if (result)
+							{
+
+								adapter_uptimetime = new ArrayAdapter(
+										getActivity(),
+										R.layout.support_simple_spinner_dropdown_item,
+										listdepartureTimeName);
+
+								uptime_time.setAdapter(adapter_uptimetime);
+							} else
+							{
+								//adapter_uptimetime.clear();
+								uptime_time.setAdapter(adapter_uptimetime);
+								Toast.makeText(getActivity(),
+										"该线路暂无发车时间，请重新选择上车点或下车点！",
+										Toast.LENGTH_SHORT).show();
+
+								if (uptime_time.getSelectedItem() != null)
+								{
+									adapter_uptimetime.clear();
+
+									uptime_time.setAdapter(adapter_uptimetime);
+
+								}
+							}
+						} catch (Exception e)
+						{
+							// TODO: handle exception
 						}
 						
 					}
@@ -1099,7 +1129,7 @@ public class TicketMainFragment extends Fragment {
 					
 				}
 				
-				new CustomAsynTask(getActivity())
+				new CustomAsynTask(getActivity(),thisfragment)
 				{
 					@Override
 					protected Boolean doInBackground(Void... params)
@@ -1173,25 +1203,35 @@ public class TicketMainFragment extends Fragment {
 					{
 						super.onPostExecute(result);
 						
-						if (result) {
-							adapter_uptimetime=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listdepartureTimeName);
-							
-							
-							uptime_time.setAdapter(adapter_uptimetime);
-						}
-						else {
-							//adapter_uptimetime.clear();
-							uptime_time.setAdapter(adapter_uptimetime);
-							Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
-						
-							if (uptime_time.getSelectedItem() != null)  
-			                {  
-			                    adapter_uptimetime.clear();
-			                    
-			                    uptime_time.setAdapter(adapter_uptimetime);
-			                    
-			                    
-			                }
+						try
+						{
+							if (result)
+							{
+								adapter_uptimetime = new ArrayAdapter(
+										getActivity(),
+										R.layout.support_simple_spinner_dropdown_item,
+										listdepartureTimeName);
+
+								uptime_time.setAdapter(adapter_uptimetime);
+							} else
+							{
+								//adapter_uptimetime.clear();
+								uptime_time.setAdapter(adapter_uptimetime);
+								Toast.makeText(getActivity(),
+										"该线路暂无发车时间，请重新选择上车点或下车点！",
+										Toast.LENGTH_SHORT).show();
+
+								if (uptime_time.getSelectedItem() != null)
+								{
+									adapter_uptimetime.clear();
+
+									uptime_time.setAdapter(adapter_uptimetime);
+
+								}
+							}
+						} catch (Exception e)
+						{
+							// TODO: handle exception
 						}
 						
 					}
@@ -1199,7 +1239,7 @@ public class TicketMainFragment extends Fragment {
 				}.execute();
 				
 				if (monoway_double.isChecked())
-				new CustomAsynTask(getActivity())
+				new CustomAsynTask(getActivity(),thisfragment)
 				{
 					@Override
 					protected Boolean doInBackground(Void... params)
@@ -1295,28 +1335,43 @@ public class TicketMainFragment extends Fragment {
 						{
 							super.onPostExecute(result);
 							
-							if (result)
+							try
 							{
-								adapter_returnupplace=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listReturnUpStationName);
-								
-								back_upplace.setAdapter(adapter_returnupplace);
-								
-									
-								adapter_returndownplace=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listReturnDownStationName);
-								
-								back_downplace.setAdapter(adapter_returndownplace);
-							}
-							else {
-								Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
-							
-								if (back_uptime_time.getSelectedItem() != null)  
-				                {  
-				                    adapter_returnuptimetime.clear();
-				                    
-				                    back_uptime_time.setAdapter(adapter_returnuptimetime);
-				                    
-				                    
-				                }
+								if (result)
+								{
+									adapter_returnupplace = new ArrayAdapter(
+											getActivity(),
+											R.layout.support_simple_spinner_dropdown_item,
+											listReturnUpStationName);
+
+									back_upplace
+											.setAdapter(adapter_returnupplace);
+
+									adapter_returndownplace = new ArrayAdapter(
+											getActivity(),
+											R.layout.support_simple_spinner_dropdown_item,
+											listReturnDownStationName);
+
+									back_downplace
+											.setAdapter(adapter_returndownplace);
+								} else
+								{
+									Toast.makeText(getActivity(),
+											"该线路暂无发车时间，请重新选择上车点或下车点！",
+											Toast.LENGTH_SHORT).show();
+
+									if (back_uptime_time.getSelectedItem() != null)
+									{
+										adapter_returnuptimetime.clear();
+
+										back_uptime_time
+												.setAdapter(adapter_returnuptimetime);
+
+									}
+								}
+							} catch (Exception e)
+							{
+								// TODO: handle exception
 							}
 							
 							
@@ -1378,7 +1433,7 @@ public class TicketMainFragment extends Fragment {
 					
 				}
 				
-				new CustomAsynTask(getActivity())
+				new CustomAsynTask(getActivity(),thisfragment)
 				{
 					@Override
 					protected Boolean doInBackground(Void... params)
@@ -1446,25 +1501,39 @@ public class TicketMainFragment extends Fragment {
 					{
 						super.onPostExecute(result);
 						
-						if (result) {
-							
-							adapter_returnuptimetime=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listdepartureTimeName);
-							
-							back_uptime_time.setAdapter(adapter_returnuptimetime);
-						}
-						else {
-							//adapter_uptimetime.clear();
-							back_uptime_time.setAdapter(adapter_returnuptimetime);
-							Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
-						
-							if (back_uptime_time.getSelectedItem() != null)  
-			                {  
-			                    adapter_returnuptimetime.clear();
-			                    
-			                    back_uptime_time.setAdapter(adapter_returnuptimetime);
-			                    
-			                    
-			                }
+						try
+						{
+							if (result)
+							{
+
+								adapter_returnuptimetime = new ArrayAdapter(
+										getActivity(),
+										R.layout.support_simple_spinner_dropdown_item,
+										listdepartureTimeName);
+
+								back_uptime_time
+										.setAdapter(adapter_returnuptimetime);
+							} else
+							{
+								//adapter_uptimetime.clear();
+								back_uptime_time
+										.setAdapter(adapter_returnuptimetime);
+								Toast.makeText(getActivity(),
+										"该线路暂无发车时间，请重新选择上车点或下车点！",
+										Toast.LENGTH_SHORT).show();
+
+								if (back_uptime_time.getSelectedItem() != null)
+								{
+									adapter_returnuptimetime.clear();
+
+									back_uptime_time
+											.setAdapter(adapter_returnuptimetime);
+
+								}
+							}
+						} catch (Exception e)
+						{
+							// TODO: handle exception
 						}
 						
 					}
@@ -1499,7 +1568,7 @@ public class TicketMainFragment extends Fragment {
 					
 				}
 				
-				new CustomAsynTask(getActivity())
+				new CustomAsynTask(getActivity(),thisfragment)
 				{
 					@Override
 					protected Boolean doInBackground(Void... params)
@@ -1566,25 +1635,39 @@ public class TicketMainFragment extends Fragment {
 					{
 						super.onPostExecute(result);
 						
-						if (result) {
-							
-							adapter_returnuptimetime=new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,listdepartureTimeName);
-							
-							back_uptime_time.setAdapter(adapter_returnuptimetime);
-						}
-						else {
-							//adapter_uptimetime.clear();
-							back_uptime_time.setAdapter(adapter_returnuptimetime);
-							Toast.makeText(getActivity(), "该线路暂无发车时间，请重新选择上车点或下车点！", Toast.LENGTH_SHORT).show();
-						
-							if (back_uptime_time.getSelectedItem() != null)  
-			                {  
-			                    adapter_returnuptimetime.clear();
-			                    
-			                    back_uptime_time.setAdapter(adapter_returnuptimetime);
-			                    
-			                    
-			                }
+						try
+						{
+							if (result)
+							{
+
+								adapter_returnuptimetime = new ArrayAdapter(
+										getActivity(),
+										R.layout.support_simple_spinner_dropdown_item,
+										listdepartureTimeName);
+
+								back_uptime_time
+										.setAdapter(adapter_returnuptimetime);
+							} else
+							{
+								//adapter_uptimetime.clear();
+								back_uptime_time
+										.setAdapter(adapter_returnuptimetime);
+								Toast.makeText(getActivity(),
+										"该线路暂无发车时间，请重新选择上车点或下车点！",
+										Toast.LENGTH_SHORT).show();
+
+								if (back_uptime_time.getSelectedItem() != null)
+								{
+									adapter_returnuptimetime.clear();
+
+									back_uptime_time
+											.setAdapter(adapter_returnuptimetime);
+
+								}
+							}
+						} catch (Exception e)
+						{
+							// TODO: handle exception
 						}
 						
 					}
@@ -1635,7 +1718,7 @@ public class TicketMainFragment extends Fragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				new CustomAsynTask(getActivity())
+				new CustomAsynTask(getActivity(),thisfragment)
 				{
 					@Override
 					protected Boolean doInBackground(Void... params)
@@ -1675,29 +1758,38 @@ public class TicketMainFragment extends Fragment {
 					protected void onPostExecute(Boolean result)
 					{
 						super.onPostExecute(result);
-						if (result)
+						try
 						{
-							 Bundle bundle = new Bundle();
-							 
-							 bundle.putString("key", "back"); 
-							 	
-							 fss.setArguments(bundle);	
-								
-							 fragmentTransaction = getFragmentManager().beginTransaction();
-								
-							 fragmentTransaction.add(R.id.content, fss);
-							 
-							 fragmentTransaction.addToBackStack(null);
-							 
-							 fragmentTransaction.hide(thisfragment);
-							 
-							 fragmentTransaction.show(fss);
-							 
-							 fragmentTransaction.commit();
-							 
-						}
-						else {
-							Toast.makeText(getActivity(), R.string.toast_flase_msg, Toast.LENGTH_SHORT).show();
+							if (result)
+							{
+								Bundle bundle = new Bundle();
+
+								bundle.putString("key", "back");
+
+								fss.setArguments(bundle);
+
+								fragmentTransaction = getFragmentManager()
+										.beginTransaction();
+
+								fragmentTransaction.add(R.id.content, fss);
+
+								fragmentTransaction.addToBackStack(null);
+
+								fragmentTransaction.hide(thisfragment);
+
+								fragmentTransaction.show(fss);
+
+								fragmentTransaction.commit();
+
+							} else
+							{
+								Toast.makeText(getActivity(),
+										R.string.toast_flase_msg,
+										Toast.LENGTH_SHORT).show();
+							}
+						} catch (Exception e)
+						{
+							// TODO: handle exception
 						}
 					
 					 
@@ -1716,7 +1808,7 @@ public class TicketMainFragment extends Fragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				new CustomAsynTask(getActivity())
+				new CustomAsynTask(getActivity(),thisfragment)
 				{
 					@Override
 					protected Boolean doInBackground(Void... params)
@@ -1757,28 +1849,37 @@ public class TicketMainFragment extends Fragment {
 					{
 						super.onPostExecute(result);
 						
-						if (result)
+						try
 						{
-							Bundle bundle = new Bundle();
-							 
-							 bundle.putString("key", "def"); 
-							 	
-							 fss.setArguments(bundle);		
-							
-						 fragmentTransaction = getFragmentManager().beginTransaction();
-							
-						 fragmentTransaction.add(R.id.content, fss);
-						 
-						 fragmentTransaction.addToBackStack(null);
-						 
-						 fragmentTransaction.hide(thisfragment);
-						 
-						 fragmentTransaction.show(fss);
-						 
-						 fragmentTransaction.commit();
-						}
-						else {
-							Toast.makeText(getActivity(), R.string.toast_flase_msg, Toast.LENGTH_SHORT).show();
+							if (result)
+							{
+								Bundle bundle = new Bundle();
+
+								bundle.putString("key", "def");
+
+								fss.setArguments(bundle);
+
+								fragmentTransaction = getFragmentManager()
+										.beginTransaction();
+
+								fragmentTransaction.add(R.id.content, fss);
+
+								fragmentTransaction.addToBackStack(null);
+
+								fragmentTransaction.hide(thisfragment);
+
+								fragmentTransaction.show(fss);
+
+								fragmentTransaction.commit();
+							} else
+							{
+								Toast.makeText(getActivity(),
+										R.string.toast_flase_msg,
+										Toast.LENGTH_SHORT).show();
+							}
+						} catch (Exception e)
+						{
+							// TODO: handle exception
 						}
 						 
 					 
@@ -1951,55 +2052,72 @@ public class TicketMainFragment extends Fragment {
 				{
 					super.onPostExecute(result);
 					
-					if (result) {
-						
-						ConfirmInfo.setContant(contact.getText().toString());
-						ConfirmInfo.setTellphone(tellphone.getText().toString());
-						ConfirmInfo.setAddress(address.getText().toString());
-						ConfirmInfo.setUpplace(upplace_spinner.getSelectedItem()
-								.toString());
-						ConfirmInfo.setDownplace(downplace_spinner.getSelectedItem()
-								.toString());
-						ConfirmInfo.setUpdatetime(uptime_update.getText().toString()
-								+ "  "+uptime_time.getSelectedItem().toString());
-						
-						if (company_yd.isChecked())
+					try
+					{
+						if (result)
 						{
+
 							ConfirmInfo
-							.setTicketcount(PutseatNumbersList.getSeatNumbersList().size());
-							
-							conf_allprice = PutseatNumbersList.getSeatNumbersList().size()* oneWayPrice;
-							
-						}else if (company_zgt.isChecked()) {
-							
+									.setContant(contact.getText().toString());
+							ConfirmInfo.setTellphone(tellphone.getText()
+									.toString());
 							ConfirmInfo
-							.setTicketcount(zgt_ticket_count);
-							
-							conf_allprice = zgt_ticket_count* oneWayPrice;
-							
+									.setAddress(address.getText().toString());
+							ConfirmInfo.setUpplace(upplace_spinner
+									.getSelectedItem().toString());
+							ConfirmInfo.setDownplace(downplace_spinner
+									.getSelectedItem().toString());
+							ConfirmInfo.setUpdatetime(uptime_update.getText()
+									.toString()
+									+ "  "
+									+ uptime_time.getSelectedItem().toString());
+
+							if (company_yd.isChecked())
+							{
+								ConfirmInfo.setTicketcount(PutseatNumbersList
+										.getSeatNumbersList().size());
+
+								conf_allprice = PutseatNumbersList
+										.getSeatNumbersList().size()
+										* oneWayPrice;
+
+							} else if (company_zgt.isChecked())
+							{
+
+								ConfirmInfo.setTicketcount(zgt_ticket_count);
+
+								conf_allprice = zgt_ticket_count * oneWayPrice;
+
+							}
+
+							ConfirmInfo.setPrice(conf_allprice);
+
+							if (company_yd.isChecked())
+							{
+								ConfirmInfo.setCompany("永东巴士");
+
+							} else if (company_zgt.isChecked())
+							{
+								ConfirmInfo.setCompany("中港通");
+							}
+
+							fragmentTransaction = getFragmentManager()
+									.beginTransaction();
+
+							fragmentTransaction.replace(R.id.content, tbcf);
+
+							fragmentTransaction.addToBackStack(null);
+
+							fragmentTransaction.commit();
+						} else
+						{
+
+							Toast.makeText(getActivity(), "请完整输入订票信息！",
+									Toast.LENGTH_SHORT).show();
 						}
-						
-						
-						ConfirmInfo.setPrice(conf_allprice);
-						
-						if (company_yd.isChecked()) {
-							ConfirmInfo.setCompany("永东巴士");
-							
-						}else if (company_zgt.isChecked()) {
-							ConfirmInfo.setCompany("中港通");
-						}
-						
-						fragmentTransaction = getFragmentManager().beginTransaction();
-						
-						 fragmentTransaction.replace(R.id.content, tbcf);
-						 
-						 fragmentTransaction.addToBackStack(null);
-						 
-						 fragmentTransaction.commit();
-					}
-					else {
-						
-						Toast.makeText(getActivity(), "请完整输入订票信息！", Toast.LENGTH_SHORT).show();
+					} catch (Exception e)
+					{
+						// TODO: handle exception
 					}
 					
 				}

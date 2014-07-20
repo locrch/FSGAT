@@ -3,7 +3,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#ffffff"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_padding_width"
+    android:paddingRight="@dimen/activity_padding_width" >
 
     <RelativeLayout
         android:id="@+id/showseattext"
@@ -28,22 +30,11 @@
             android:paddingLeft="3dip"
             android:textColor="@android:color/black" />
 
-        <Button
-            android:id="@+id/submit_seat_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dip"
-            android:text="选座完成"
-            android:textColor="#ffffff" />
-
         <TextView
             android:id="@+id/seat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/submit_seat_btn"
             android:paddingLeft="3dip"
             android:textColor="@android:color/black" />
     </RelativeLayout>
@@ -109,14 +100,14 @@
             android:background="@android:color/darker_gray"
             android:gravity="center"
             android:padding="5dip"
-            android:text="前    车    窗"
+            android:text="前   车   窗"
             android:textColor="@android:color/black" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/seat3"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/seat2"
         android:orientation="horizontal"
         android:padding="20dip" >
@@ -131,31 +122,45 @@
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                     >
+                    android:layout_height="wrap_content" >
 
                     <LinearLayout
                         android:id="@+id/seatraw"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_toLeftOf="@+id/seatviewcont"
                         android:gravity="left"
-                        android:orientation="vertical"
-                        android:layout_toLeftOf="@+id/seatviewcont" >
+                        android:orientation="vertical" >
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/seatviewcont"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:orientation="vertical"
                         android:paddingBottom="10dip"
                         android:paddingLeft="10dip"
-                        android:paddingRight="10dip"
-                        android:layout_centerHorizontal="true" >
+                        android:paddingRight="10dip" >
                     </LinearLayout>
                 </RelativeLayout>
             </ScrollView>
         </RelativeLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/submit_seat_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:text="选座完成"
+        android:textColor="#ffffff"
+        android:background="@drawable/button_orange" />
 
 </RelativeLayout>

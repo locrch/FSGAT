@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import org.json.JSONObject;
 import com.fspangu.fsgat.GrzxFragment;
 import com.fspangu.fsgat.R;
+import com.fspangu.fsgat.YwblFragment;
 import com.fspangu.fsgat.ticket.TicketHistoryFragment;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.core.CheckNetwork;
@@ -26,6 +27,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -55,9 +59,29 @@ public class LoginFragment extends Fragment
 	Fragment registerFragment,changepasswordFragment;
 	LoginFragment loginFragment;
 	int usertype;
+	
+	MenuItem action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu, inflater);
+		
+		action_logout = menu.findItem(R.id.action_logout);
+		action_changepassword = menu.findItem(R.id.action_changepassword);
+		action_setting = menu.findItem(R.id.action_setting);
+		action_pass = menu.findItem(R.id.action_pass);
+		action_address = menu.findItem(R.id.action_address);
+		action_bookinghistory = menu.findItem(R.id.action_bookinghistory);
+		
+	}
+	
 	private void init()
 	{
-//		android.app.ActionBar actionBar = this.getActivity().getActionBar();
+		
+		android.app.ActionBar actionBar = this.getActivity().getActionBar();
+		
+		
 //		actionBar.setCustomView(R.layout.title_bar);
 //		actionBar.setDisplayShowCustomEnabled(true);
 //		actionBar.setDisplayShowHomeEnabled(false);
@@ -113,7 +137,7 @@ public class LoginFragment extends Fragment
 		// TODO Auto-generated method stub
 		
 		rootView = inflater.inflate(R.layout.activity_login, null);
-		
+		setHasOptionsMenu(true);
 		return inflater.inflate(R.layout.activity_login,container,false);
 	}
 	@Override
@@ -230,10 +254,33 @@ public class LoginFragment extends Fragment
 									editor.putString("switchstatus5", sp.getString("switchstatus5", "off"));
 									editor.commit();
 									
-									GrzxFragment um = new GrzxFragment();
-									fragmentManager.beginTransaction().replace(R.id.content,um).commit();
+									//
+									
+									fragmentManager.popBackStackImmediate();
+									transaction.commit();
+									/*YwblFragment ywbl = new YwblFragment();
+									switch (fragmentManager.getBackStackEntryCount())
+									{
+									case 0:
+										transaction.replace(R.id.content, ywbl).commit();
+										
+										break;
+									case 1:
+										transaction.replace(R.id.content, ywbl).commit();
+										
+										break;
+									default:
+										
+										break;
+									}*/
 									
 									
+									action_logout.setVisible(true);
+									action_changepassword.setVisible(true);
+									action_setting.setVisible(true);
+									action_pass.setVisible(true);
+									action_address.setVisible(true);
+									action_bookinghistory.setVisible(true);
 								}
 							}
 						}.execute();
@@ -302,4 +349,6 @@ public class LoginFragment extends Fragment
         b = m.matches();   
         return b;  
     }  
+	
+	
 }

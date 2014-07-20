@@ -23,14 +23,15 @@ public class CheckLogin {
  		{
  			Toast.makeText(fragment.getActivity(), "请先登录！", Toast.LENGTH_SHORT).show();
  			
- 			if(fragment.getFragmentManager().getBackStackEntryCount()>=1){
+ 			/*if(fragment.getFragmentManager().getBackStackEntryCount()>=1){
     			int len =fragment.getFragmentManager().getBackStackEntryCount();
     		    for (int i = 0; i < len; i++) {
     		    	fragment.getFragmentManager().popBackStack();
     		    }
-    		}
+    		}*/
 			FragmentTransaction transaction = fragment.getFragmentManager().beginTransaction(); 
-     		Fragment loginFragment = new LoginFragment();  
+     		Fragment loginFragment = new LoginFragment();
+     		transaction.addToBackStack(null);
             transaction.replace(R.id.content, loginFragment); 
             transaction.commit();
  			

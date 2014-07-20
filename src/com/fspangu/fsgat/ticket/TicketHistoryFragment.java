@@ -140,21 +140,30 @@ public class TicketHistoryFragment extends Fragment
 			{
 				super.onPostExecute(result);
 				
-				Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
 				
-				if (result)
+				try
 				{
-					adapter = new ListticketOrderAdapter(getActivity(),getActivity(), adapterList,
-							R.layout.ticket_history_content, new String[]
-							{ "id", "way","count","date","price" }, new int[]
-							{ R.id.ticket_history_id,
-									R.id.ticket_history_way,R.id.ticket_history_count,R.id.ticket_history_date,R.id.ticket_history_price});
+					if (result)
+					{
+						Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+						
+						adapter = new ListticketOrderAdapter(getActivity(),getActivity(), adapterList,
+								R.layout.ticket_history_content, new String[]
+								{ "id", "way","count","date","price" }, new int[]
+								{ R.id.ticket_history_id,
+										R.id.ticket_history_way,R.id.ticket_history_count,R.id.ticket_history_date,R.id.ticket_history_price});
+						
+						ticket_history_listview.setAdapter(adapter);
+					}
 					
-					ticket_history_listview.setAdapter(adapter);
-				}
-				
-				else {
-					Toast.makeText(getActivity(), "暂无订票记录！", Toast.LENGTH_SHORT).show();
+					else {
+						Toast.makeText(getActivity(), "暂无订票记录！", Toast.LENGTH_SHORT).show();
+					}
+				} catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					super.onCancelled();
+					e.printStackTrace();
 				}
 			}
 			

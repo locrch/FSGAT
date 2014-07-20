@@ -1,33 +1,67 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.fspangu.fsgat.MainActivity" >
+    tools:context="com.fspangu.fsgat.MainActivity"
+     >
 
-    <!-- <item android:id="@+id/action_search"  
+    <!--
+         <item android:id="@+id/action_search"  
           android:icon="@drawable/more_menu"  
           android:title="菜单" 
           android:showAsAction="always|withText"
-          android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider" />   -->
-         
-          
-    <item android:id="@+id/action_logout"  
-          android:icon="@android:drawable/ic_menu_delete"  
-          android:title="注销" 
-          android:showAsAction="always|withText"
-          android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider"/>  
-    <item android:id="@+id/action_edit"  
-          android:icon="@android:drawable/ic_menu_edit"   
-          android:title="用户名修改"
-          android:showAsAction="always|withText" />  
-    <item android:id="@+id/action_share"  
-          android:icon="@android:drawable/ic_menu_share"  
-          android:title="test4"  
-          android:showAsAction="always|withText" />  
-    <item android:id="@+id/action_sort"  
-          android:icon="@android:drawable/ic_menu_sort_by_size"  
-          android:title="test5"  
-          android:showAsAction="always|withText" >  
-         
-    </item>  
-    
+          android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider" />
+    -->
+
+    <item
+        android:id="@+id/action_logout"
+        android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:showAsAction="always|withText"
+        android:title="注销"/>
+    <!-- <item
+        android:id="@+id/action_changeusername"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:showAsAction="always|withText"
+        android:title="用户名修改"/> -->
+    <item
+        android:id="@+id/action_changepassword"
+        android:icon="@android:drawable/ic_menu_share"
+        android:showAsAction="always|withText"
+        android:title="密码修改"/>
+    <item
+        android:id="@+id/action_setting"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:showAsAction="always|withText"
+        android:title="我的设置"/>
+    <item
+        android:id="@+id/action_address"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:showAsAction="always|withText"
+        android:title="地址管理"/>
+    <item
+        android:id="@+id/action_pass"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:showAsAction="always|withText"
+        android:title="证件管理"/>
+    <item
+        android:id="@+id/action_bookinghistory"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:showAsAction="always|withText"
+        android:title="签注记录"/>
+    <item
+        android:id="@+id/action_update"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:showAsAction="always|withText"
+        android:title="检查更新"/>
+    <item
+        android:id="@+id/action_opinion"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:showAsAction="always|withText"
+        android:title="意见反馈"/>
+    <item
+        android:id="@+id/action_versioninfo"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:showAsAction="always|withText"
+        android:title="关于我们"/>
+
 </menu>

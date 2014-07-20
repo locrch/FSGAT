@@ -11,8 +11,10 @@ public class CustomProgressDialog extends ProgressDialog
 		super(context);
 		// TODO Auto-generated constructor stub
 		super.setMessage("正在加载数据....");
-		super.setCancelable(true);
 		super.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		super.setCancelable(false);
+		super.setCanceledOnTouchOutside(false);
+		
 		
 	}
 
