@@ -29,6 +29,7 @@ import com.pangu.neusoft.fsgat.model.ConfirmInfo;
 import com.pangu.neusoft.fsgat.model.ListDepartureTime;
 import com.pangu.neusoft.fsgat.model.ListReturnUpstation;
 import com.pangu.neusoft.fsgat.model.ListSeatNumber;
+import com.pangu.neusoft.fsgat.model.ListTicketLine;
 import com.pangu.neusoft.fsgat.model.ListdownStation;
 import com.pangu.neusoft.fsgat.model.PostbuyTicket;
 import com.pangu.neusoft.fsgat.model.PostgetDepartureTime;
@@ -46,7 +47,6 @@ import com.pangu.neusoft.fsgat.model.Upstation;
 import com.pangu.neusoft.fsgat.model.PostgetDownStation;
 import com.pangu.neusoft.fsgat.model.seatNumber;
 import com.pangu.neusoft.fsgat.model.user;
-import com.pangu.neusoft.fsgat.user.ListTicketLine;
 import com.pangu.neusoft.fsgat.user.LoginFragment;
 
 import android.R.array;
@@ -64,8 +64,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -103,6 +108,8 @@ public class TicketMainFragment extends Fragment {
 	TextView selection,back_selection;
 	NumberPicker zgt_ticket_count_np;
 	
+	EditText custom_np_num;
+	Button custom_np_down,custom_np_up;
 	
 	FragmentManager fragmentManager;
 	FragmentTransaction fragmentTransaction;
@@ -161,7 +168,7 @@ public class TicketMainFragment extends Fragment {
 	ListTicketLine listTicketLine;
 	float oneWayPrice,doubleWayPrice;
 	
-	int zgt_ticket_count = 1;
+	Integer zgt_ticket_count = 1;
 	float conf_allprice = 0;
 	
 	DatePickerDialog  dpd_uptime_update,dpd_back_uptime_update;
@@ -170,7 +177,7 @@ public class TicketMainFragment extends Fragment {
 	private void init() {
 		// TODO Auto-generated method stub
 		this.getActivity().setTitle("车票预订");
-		
+		adapter_uptimetime = new ArrayAdapter<ArrayList<String>>(getActivity(), R.layout.simple_spinner_item);
 		choose_place = (RadioGroup) getActivity().findViewById(
 				R.id.ticket_main_choose_place);
 		choose_company = (RadioGroup) getActivity().findViewById(
@@ -235,6 +242,10 @@ public class TicketMainFragment extends Fragment {
 				R.id.ticket_main_selection);
 		back_selection = (TextView)getActivity().findViewById(R.id.ticket_main_back_selection);
 		
+		custom_np_num = (EditText)getActivity().findViewById(R.id.custom_np_num);
+		custom_np_down = (Button)getActivity().findViewById(R.id.custom_np_down);
+		custom_np_up = (Button)getActivity().findViewById(R.id.custom_np_up);
+		
 		fragmentManager = getFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -271,7 +282,7 @@ public class TicketMainFragment extends Fragment {
 		editor = sp.edit();
 		
 		calendar = Calendar.getInstance();
-
+		
 		
 		DatePickerDialog.OnDateSetListener dateListener_uptime_update = new DatePickerDialog.OnDateSetListener()
 		{
@@ -307,7 +318,8 @@ public class TicketMainFragment extends Fragment {
 				calendar.get(Calendar.DAY_OF_MONTH));
 		
 		
-		zgt_ticket_count_np.setMaxValue(99);
+		
+		zgt_ticket_count_np.setMaxValue(10);
 		zgt_ticket_count_np.setMinValue(1);
 		
 	}
@@ -434,12 +446,26 @@ public class TicketMainFragment extends Fragment {
 		loading3.execute(); 
 	}
 	
-	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu, inflater);
+		
+		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
+		
+		actionbar_back_btn.setVisibility(View.VISIBLE);
+		
+		TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_title);
+		
+		actionbar_title.setText("车票预订");
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		setHasOptionsMenu(true);
 		return inflater.inflate(R.layout.fragment_ticket_main, null);
 	}
 
@@ -456,7 +482,7 @@ public class TicketMainFragment extends Fragment {
 			
 			init();
 		
-			way_adapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.spinner_bg,way_hongkong);	
+			way_adapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.simple_spinner_item,way_hongkong);	
 			way_spinner.setAdapter(way_adapter);
 			
 		place_hongkong.setOnCheckedChangeListener(new OnCheckedChangeListener()
@@ -468,7 +494,7 @@ public class TicketMainFragment extends Fragment {
 				// TODO Auto-generated method stub
 					if (isChecked)
 					{
-						way_adapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.spinner_bg,way_hongkong);	
+						way_adapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.simple_spinner_item,way_hongkong);	
 						way_spinner.setAdapter(way_adapter);
 						
 					}
@@ -485,7 +511,7 @@ public class TicketMainFragment extends Fragment {
 				// TODO Auto-generated method stub
 				if (isChecked)
 				{	
-					way_adapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.spinner_bg,way_macao);	
+					way_adapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.simple_spinner_item,way_macao);	
 					way_spinner.setAdapter(way_adapter);
 						
 					
@@ -651,7 +677,7 @@ public class TicketMainFragment extends Fragment {
 												{
 													adapter_returnupplace = new ArrayAdapter(
 															getActivity(),
-															R.layout.support_simple_spinner_dropdown_item,
+															R.layout.simple_spinner_item,
 															listReturnUpStationName);
 
 													back_upplace
@@ -659,7 +685,7 @@ public class TicketMainFragment extends Fragment {
 
 													adapter_returndownplace = new ArrayAdapter(
 															getActivity(),
-															R.layout.support_simple_spinner_dropdown_item,
+															R.layout.simple_spinner_item,
 															listReturnDownStationName);
 
 													back_downplace
@@ -938,7 +964,7 @@ public class TicketMainFragment extends Fragment {
 
 										adapter_upplace = new ArrayAdapter(
 												getActivity(),
-												R.layout.support_simple_spinner_dropdown_item,
+												R.layout.simple_spinner_item,
 												listupStationName);
 
 										upplace_spinner
@@ -946,7 +972,7 @@ public class TicketMainFragment extends Fragment {
 
 										adapter_downplace = new ArrayAdapter(
 												getActivity(),
-												R.layout.support_simple_spinner_dropdown_item,
+												R.layout.simple_spinner_item,
 												listdownStationName);
 
 										downplace_spinner
@@ -1072,7 +1098,7 @@ public class TicketMainFragment extends Fragment {
 
 								adapter_uptimetime = new ArrayAdapter(
 										getActivity(),
-										R.layout.support_simple_spinner_dropdown_item,
+										R.layout.simple_spinner_item,
 										listdepartureTimeName);
 
 								uptime_time.setAdapter(adapter_uptimetime);
@@ -1209,7 +1235,7 @@ public class TicketMainFragment extends Fragment {
 							{
 								adapter_uptimetime = new ArrayAdapter(
 										getActivity(),
-										R.layout.support_simple_spinner_dropdown_item,
+										R.layout.simple_spinner_item,
 										listdepartureTimeName);
 
 								uptime_time.setAdapter(adapter_uptimetime);
@@ -1227,6 +1253,18 @@ public class TicketMainFragment extends Fragment {
 
 									uptime_time.setAdapter(adapter_uptimetime);
 
+								}
+								
+								if (monoway_double.isChecked())
+								{
+									adapter_returnupplace.clear();
+									adapter_returndownplace.clear();
+									
+									back_upplace.setAdapter(adapter_returnupplace);
+									back_downplace.setAdapter(adapter_returndownplace);
+									
+									adapter_returnuptimetime.clear();
+									back_uptime_time.setAdapter(adapter_returnuptimetime);
 								}
 							}
 						} catch (Exception e)
@@ -1341,7 +1379,7 @@ public class TicketMainFragment extends Fragment {
 								{
 									adapter_returnupplace = new ArrayAdapter(
 											getActivity(),
-											R.layout.support_simple_spinner_dropdown_item,
+											R.layout.simple_spinner_item,
 											listReturnUpStationName);
 
 									back_upplace
@@ -1349,7 +1387,7 @@ public class TicketMainFragment extends Fragment {
 
 									adapter_returndownplace = new ArrayAdapter(
 											getActivity(),
-											R.layout.support_simple_spinner_dropdown_item,
+											R.layout.simple_spinner_item,
 											listReturnDownStationName);
 
 									back_downplace
@@ -1508,7 +1546,7 @@ public class TicketMainFragment extends Fragment {
 
 								adapter_returnuptimetime = new ArrayAdapter(
 										getActivity(),
-										R.layout.support_simple_spinner_dropdown_item,
+										R.layout.simple_spinner_item,
 										listdepartureTimeName);
 
 								back_uptime_time
@@ -1642,7 +1680,7 @@ public class TicketMainFragment extends Fragment {
 
 								adapter_returnuptimetime = new ArrayAdapter(
 										getActivity(),
-										R.layout.support_simple_spinner_dropdown_item,
+										R.layout.simple_spinner_item,
 										listdepartureTimeName);
 
 								back_uptime_time
@@ -2036,7 +2074,7 @@ public class TicketMainFragment extends Fragment {
 						
 					}else if (company_zgt.isChecked()) {
 						
-						zgt_ticket_count = zgt_ticket_count_np.getValue();
+						zgt_ticket_count =Integer.valueOf(custom_np_num.getText().toString());
 						
 						postbuyTicket.setTicketCount(zgt_ticket_count);
 					}
@@ -2126,7 +2164,93 @@ public class TicketMainFragment extends Fragment {
 			}
 		}
 	});
-	 	
+	 
+	 custom_np_down.setOnClickListener(new OnClickListener()
+	{
+		
+		@Override
+		public void onClick(View v)
+		{
+			// TODO Auto-generated method stub
+			Integer count;
+			if (custom_np_num.getText().toString() == null||custom_np_num.getText().toString().equals(null)||custom_np_num.getText().toString().equals(""))
+			{
+				count = 0;
+			}
+			
+			count =Integer.valueOf(custom_np_num.getText().toString()) ;
+			
+			if (count>1)
+			{
+				count -=1;
+				
+				custom_np_num.setText(String.valueOf(count));
+			}
+			
+			
+		}
+	});
+	
+	 
+	 
+	 custom_np_num.addTextChangedListener(new TextWatcher()
+	{
+		
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count)
+		{
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after)
+		{
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void afterTextChanged(Editable s)
+		{
+			// TODO Auto-generated method stub
+			if (s.length()==0)
+			{
+				custom_np_num.setText("0");
+			}
+		}
+	});
+	 
+	 custom_np_up.setOnClickListener(new OnClickListener()
+		{
+			
+			@Override
+			public void onClick(View v)
+			{
+				// TODO Auto-generated method stub
+				Integer count;
+				if (custom_np_num.getText().toString() == null||custom_np_num.getText().toString().equals(null)||custom_np_num.getText().toString().equals(""))
+				{
+					count = 0;
+				}
+				
+				count =Integer.valueOf(custom_np_num.getText().toString()) ;
+				
+				if (count<100)
+				{
+					count +=1;
+					
+					custom_np_num.setText(String.valueOf(count));
+				}
+				
+				
+				
+				
+			}
+		});
+		 
+	 
 	}
 	}
 	

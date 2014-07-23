@@ -24,9 +24,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -43,9 +46,25 @@ public  class ZhcxFragment extends Fragment {
 	private static String text7="法律法规";
 	private static String text8="证件知识";
 	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu, inflater);
+		
+		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
+		
+		actionbar_back_btn.setVisibility(View.INVISIBLE);
+		
+		TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_title);
+		
+		actionbar_title.setText("综合查询");	
+	}
+	
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
     	View view = inflater.inflate(R.layout.ywbl_fragment, null);
+    	setHasOptionsMenu(true);
 //    	android.app.ActionBar actionBar = this.getActivity().getActionBar();
 //		actionBar.setCustomView(R.layout.title_bar);
 //		actionBar.setDisplayShowCustomEnabled(true);
@@ -59,7 +78,9 @@ public  class ZhcxFragment extends Fragment {
         // 创建一个数组列表对象
         ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
         gridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
-
+        
+        
+        
         /**
          * 为每个格子添加内容
          */

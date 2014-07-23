@@ -2,278 +2,304 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     android:orientation="vertical"
-    android:background="#ffffff" >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/booking_confirm_contant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/booking_confirm_contant_label"
-            />
-
-        <TextView
-            android:id="@+id/booking_confirm_contant_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="联系人：" />
-
-    </RelativeLayout>
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/booking_confirm_tellphone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/booking_confirm_tellphone_label"
-            />
-
-        <TextView
-            android:id="@+id/booking_confirm_tellphone_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="联系电话：" />
-
-    </RelativeLayout>
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/booking_confirm_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/booking_confirm_address_label"
-            />
-
-        <TextView
-            android:id="@+id/booking_confirm_address_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="收件地址：" />
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/booking_confirm_upplace"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/booking_confirm_upplace_label"
-            />
-
-        <TextView
-            android:id="@+id/booking_confirm_upplace_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="上车点：" />
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/booking_confirm_downplace"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/booking_confirm_downplace_label"
-            />
-
-        <TextView
-            android:id="@+id/booking_confirm_downplace_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="下车点：" />
-
-    </RelativeLayout>
+    android:padding="5dp" >
 
     <LinearLayout
-        android:id="@+id/booking_confirm_return_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/border_grey_four"
         android:orientation="vertical"
-        android:visibility="gone"  >
-        
+        android:padding="5dp" >
+
         <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/booking_confirm_return_upplace"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/booking_confirm_return_upplace_label"
-            />
+            android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
 
-        <TextView
-            android:id="@+id/booking_confirm_return_upplace_label"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/booking_confirm_contant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/booking_confirm_contant_label"
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+
+            <TextView
+                android:id="@+id/booking_confirm_contant_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="联系人："
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="返程上车点：" />
+            android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
 
-    </RelativeLayout>
-<RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+            <TextView
+                android:id="@+id/booking_confirm_tellphone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/booking_confirm_tellphone_label"
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
 
-        <TextView
-            android:id="@+id/booking_confirm_return_downplace"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/booking_confirm_tellphone_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="联系电话："
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/booking_confirm_return_downplace_label"
-            />
+            android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
 
-        <TextView
-            android:id="@+id/booking_confirm_return_downplace_label"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/booking_confirm_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/booking_confirm_address_label"
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+
+            <TextView
+                android:id="@+id/booking_confirm_address_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="收件地址："
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="返程下车点：" />
+            android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
 
-    </RelativeLayout>
-<RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+            <TextView
+                android:id="@+id/booking_confirm_upplace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/booking_confirm_upplace_label"
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
 
-        <TextView
-            android:id="@+id/booking_confirm_return_updatetime"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/booking_confirm_upplace_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="上车点："
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/booking_confirm_return_updatetime_label"
-            />
+            android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
 
-        <TextView
-            android:id="@+id/booking_confirm_return_updatetime_label"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/booking_confirm_downplace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/booking_confirm_downplace_label"
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+
+            <TextView
+                android:id="@+id/booking_confirm_downplace_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="下车点："
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/booking_confirm_return_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="返程发车时间：" />
+            android:orientation="vertical"
+            android:visibility="gone" >
 
-    </RelativeLayout>
-        
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
+
+                <TextView
+                    android:id="@+id/booking_confirm_return_upplace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/booking_confirm_return_upplace_label"
+                    android:textSize="@dimen/ticket_booking_confirm_textsize" />
+
+                <TextView
+                    android:id="@+id/booking_confirm_return_upplace_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="返程上车点："
+                    android:textSize="@dimen/ticket_booking_confirm_textsize" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
+
+                <TextView
+                    android:id="@+id/booking_confirm_return_downplace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/booking_confirm_return_downplace_label"
+                    android:textSize="@dimen/ticket_booking_confirm_textsize" />
+
+                <TextView
+                    android:id="@+id/booking_confirm_return_downplace_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="返程下车点："
+                    android:textSize="@dimen/ticket_booking_confirm_textsize" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
+
+                <TextView
+                    android:id="@+id/booking_confirm_return_updatetime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/booking_confirm_return_updatetime_label"
+                    android:textSize="@dimen/ticket_booking_confirm_textsize" />
+
+                <TextView
+                    android:id="@+id/booking_confirm_return_updatetime_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="返程发车时间："
+                    android:textSize="@dimen/ticket_booking_confirm_textsize" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
+
+            <TextView
+                android:id="@+id/booking_confirm_updatetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/booking_confirm_updatetime_label"
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+
+            <TextView
+                android:id="@+id/booking_confirm_updatetime_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="发车时间："
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
+
+            <TextView
+                android:id="@+id/booking_confirm_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/booking_confirm_company_label"
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+
+            <TextView
+                android:id="@+id/booking_confirm_company_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="客运公司："
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
+
+            <TextView
+                android:id="@+id/booking_confirm_ticketcount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/booking_confirm_ticketcount_label"
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+
+            <TextView
+                android:id="@+id/booking_confirm_ticketcount_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="购票数量："
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
+
+            <TextView
+                android:id="@+id/booking_confirm_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/booking_confirm_price_label"
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+
+            <TextView
+                android:id="@+id/booking_confirm_price_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="总价："
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+        </RelativeLayout>
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/booking_confirm_updatetime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/booking_confirm_updatetime_label"
-            />
-
-        <TextView
-            android:id="@+id/booking_confirm_updatetime_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="发车时间：" />
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/booking_confirm_company"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/booking_confirm_company_label"
-            />
-
-        <TextView
-            android:id="@+id/booking_confirm_company_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="客运公司：" />
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/booking_confirm_ticketcount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/booking_confirm_ticketcount_label"
-            />
-
-        <TextView
-            android:id="@+id/booking_confirm_ticketcount_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="购票数量：" />
-
-        
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/booking_confirm_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/booking_confirm_price_label"
-            />
-
-        <TextView
-            android:id="@+id/booking_confirm_price_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="总价：" />
-
-    </RelativeLayout>
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            
-             >
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
 
         <Button
             android:id="@+id/booking_confirm_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
             android:layout_centerHorizontal="true"
-            android:text="确认购买" />
-
-        </RelativeLayout>
+            android:background="@drawable/button_orange"
+            android:text="确认购买"
+            android:textColor="#ffffff" />
+    </RelativeLayout>
 
 </LinearLayout>

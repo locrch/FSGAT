@@ -22,6 +22,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -35,9 +37,24 @@ import android.widget.AdapterView.OnItemClickListener;
 public  class BmfwFragment extends Fragment {
 	private static String text1="车票预订";
 	private static String text2="订票记录";
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu, inflater);
+		
+		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
+		
+		actionbar_back_btn.setVisibility(View.INVISIBLE);
+		
+		TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_title);
+		
+		actionbar_title.setText("便民服务");
+	}
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
-    	
+    	setHasOptionsMenu(true);
     	
     	View view = inflater.inflate(R.layout.ywbl_fragment, null); 
 //    	android.app.ActionBar actionBar = this.getActivity().getActionBar();

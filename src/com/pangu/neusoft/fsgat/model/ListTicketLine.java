@@ -1,4 +1,4 @@
-package com.pangu.neusoft.fsgat.user;
+package com.pangu.neusoft.fsgat.model;
 
 public class ListTicketLine {
 	Boolean success;

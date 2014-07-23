@@ -31,7 +31,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:ems="10"
-                android:hint="请输入收件人姓名" />
+                android:hint="请输入收件人姓名" >
+                
+                <requestFocus />
+            </EditText>
 
         </TableRow>
 
@@ -55,7 +58,7 @@
                 android:ems="10"
                 android:hint="请输入详细地址" >
 
-                <requestFocus />
+                
             </EditText>
         </TableRow>
 

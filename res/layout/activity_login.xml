@@ -39,7 +39,7 @@
             android:layout_alignBottom="@+id/infos_text"
             android:layout_toRightOf="@+id/infos_text"
             android:ems="10"
-            android:hint="请输入本人手机号码"
+            android:hint="请输入手机号码"
             android:paddingLeft="5dp" />
         <!-- android:inputType="phone" -->
 

@@ -30,37 +30,37 @@
         android:title="密码修改"/>
     <item
         android:id="@+id/action_setting"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:icon="@android:drawable/ic_menu_preferences"
         android:showAsAction="always|withText"
         android:title="我的设置"/>
     <item
         android:id="@+id/action_address"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:icon="@android:drawable/ic_menu_rotate"
         android:showAsAction="always|withText"
         android:title="地址管理"/>
     <item
         android:id="@+id/action_pass"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:icon="@android:drawable/ic_menu_my_calendar"
         android:showAsAction="always|withText"
         android:title="证件管理"/>
     <item
         android:id="@+id/action_bookinghistory"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:icon="@android:drawable/ic_menu_info_details"
         android:showAsAction="always|withText"
         android:title="签注记录"/>
     <item
         android:id="@+id/action_update"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:icon="@android:drawable/ic_menu_upload"
         android:showAsAction="always|withText"
         android:title="检查更新"/>
     <item
         android:id="@+id/action_opinion"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:icon="@android:drawable/ic_menu_send"
         android:showAsAction="always|withText"
         android:title="意见反馈"/>
     <item
         android:id="@+id/action_versioninfo"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:icon="@android:drawable/ic_menu_compass"
         android:showAsAction="always|withText"
         android:title="关于我们"/>
 

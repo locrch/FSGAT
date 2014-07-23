@@ -75,6 +75,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -103,9 +105,23 @@ public  class ExportStateFragment extends Fragment {
 	
 	ListView list;
 	Spinner spinner;
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu, inflater);
+		
+		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
+		
+		actionbar_back_btn.setVisibility(View.VISIBLE);
+		
+		TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_title);
+		
+		actionbar_title.setText("口岸状态");
+	}
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
-    	
+    	setHasOptionsMenu(true);
     	View view = inflater.inflate(R.layout.exportstate, null);
 //    	android.app.ActionBar actionBar = this.getActivity().getActionBar();
 //		actionBar.setCustomView(R.layout.title_bar);
@@ -120,7 +136,7 @@ public  class ExportStateFragment extends Fragment {
 	    	spinner=(Spinner)view.findViewById(R.id.spinner1);
 	    	String[] mItems=new String[]{"深圳","珠海"};
 	    	
-	    	ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),R.layout.dropdowntext, mItems);
+	    	ArrayAdapter adapter=new ArrayAdapter<String>(getActivity(),R.layout.dropdowntext, mItems);
 	    	//绑定 Adapter到控件
 	    	adapter.setDropDownViewResource(R.layout.drop_down_item);
 	    	spinner.setAdapter(adapter);
@@ -191,7 +207,7 @@ public  class ExportStateFragment extends Fragment {
 					ex.printStackTrace();
 				}
 				if(result){
-					list.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1,listdata));
+					list.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.export_state_item,listdata));
                 }else{
                 	Toast.makeText(getActivity(), "获取数据失败", Toast.LENGTH_SHORT).show();
                 }
@@ -251,6 +267,7 @@ public  class ExportStateFragment extends Fragment {
 								Document doc = Jsoup.connect(url.trim()).get();
 								Element select=doc.getElementById("ctl00_ContentPlaceHolder1_PortInfo1_kadmslab");
 								String state="正常";
+								
 								Element select2=doc.getElementById("ctl00_ContentPlaceHolder1_PortInfo1_Label2");
 								Elements links = select2.select("img[src$=.gif]");
 			   	                    for (Element link : links) {
@@ -282,7 +299,7 @@ public  class ExportStateFragment extends Fragment {
 					ex.printStackTrace();
 				}
 				if(result){
-					list.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1,listdata));
+					list.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.export_state_item,listdata));
                 }else{
                 	Toast.makeText(getActivity(), "获取数据失败", Toast.LENGTH_SHORT).show();
                 }

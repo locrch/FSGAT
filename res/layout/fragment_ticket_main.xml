@@ -100,11 +100,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <Spinner
+        <Spinner style="@style/MySpinner"
             android:id="@+id/ticket_main_way_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/ticket_main_way_label"
+            
              />
 
         <TextView
@@ -133,16 +134,17 @@
     <RelativeLayout
         android:id="@+id/relativelayout5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp" >
         <TextView
             android:id="@+id/ticket_main_upplace_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="选择上车点：" />
+            android:text="上车地点：" />
 
-        <Spinner
+        <Spinner style="@style/spinner_style"
             android:id="@+id/ticket_main_upplace_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -155,16 +157,17 @@
     <RelativeLayout
         android:id="@+id/relativelayout6"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp" >
         <TextView
             android:id="@+id/ticket_main_downplace_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="选择下车点：" />
+            android:text="下车地点：" />
 
-        <Spinner
+        <Spinner style="@style/spinner_style"
             android:id="@+id/ticket_main_downplace_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -177,14 +180,15 @@
     <RelativeLayout
         android:id="@+id/relativelayout7"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp" >
         <TextView
             android:id="@+id/ticket_main_uptime_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="去程乘车时间：" />
+            android:text="乘车时间：" />
 
 		<RelativeLayout
 		    android:layout_width="wrap_content"
@@ -192,10 +196,11 @@
 		    android:layout_alignParentRight="true"
 		    android:layout_toRightOf="@+id/ticket_main_uptime_label" >
 
-		    <Spinner
+		    <Spinner style="@style/spinner_style"
 		        android:id="@+id/ticket_main_uptime_uptime"
 		        android:layout_width="100dp"
 		        android:layout_height="wrap_content"
+		        android:layout_centerVertical="true"
 		        android:layout_alignParentRight="true"
 		        android:layout_alignParentTop="true"
 		        android:layout_toRightOf="@+id/ticket_main_uptime_update" />
@@ -231,7 +236,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="选择选座"
+            android:text="选择座位"
             android:background="@drawable/frame_blue" />
 		 
     </RelativeLayout>
@@ -257,7 +262,44 @@
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@+id/ticket_main_ticket_label"
             android:gravity="center"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"
+            android:visibility="gone" />
+        <LinearLayout 
+            android:layout_below="@+id/ticket_main_ticket_np"
+            android:id="@+id/custom_np"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ticket_main_ticket_label"
+            android:orientation="horizontal"
+            >
+            <Button 
+            android:id="@+id/custom_np_down"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/down_img"
+                />
+            <EditText 
+            android:id="@+id/custom_np_num"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="2"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="0"    
+            android:maxEms="2"
+            android:minEms="1"
+            android:clickable="false"
+            android:editable="false"
+            android:focusable="false"
+                />
+            <Button 
+            android:id="@+id/custom_np_up"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/up_img"
+                />
+        </LinearLayout>
 		 
     </RelativeLayout>
     
@@ -283,16 +325,17 @@
     <RelativeLayout
         android:id="@+id/relativelayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp" >
         <TextView
             android:id="@+id/ticket_main_back_upplace_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="选择回程上车点：" />
+            android:text="上车地点：" />
 
-        <Spinner
+        <Spinner style="@style/spinner_style"
             android:id="@+id/ticket_main_back_upplace_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -305,16 +348,17 @@
     <RelativeLayout
         android:id="@+id/relativelayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp" >
         <TextView
             android:id="@+id/ticket_main_back_downplace_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="选择回程下车点：" />
+            android:text="下车地点：" />
 
-        <Spinner
+        <Spinner style="@style/spinner_style"
             android:id="@+id/ticket_main_back_downplace_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -327,15 +371,16 @@
     <RelativeLayout
         android:id="@+id/relativelayout7"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp" >
         <TextView
             android:id="@+id/ticket_main_back_uptime_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="回程乘车时间：" />
-		<Spinner
+            android:text="乘车时间：" />
+		<Spinner style="@style/spinner_style"
 		    android:id="@+id/ticket_main_back_uptime_time_spinner"
 		    android:layout_width="150dp"
 		    android:layout_height="wrap_content"
@@ -360,6 +405,7 @@
 	 <RelativeLayout 
 	     android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
 	     >
 	      <TextView
             android:id="@+id/ticket_main_back_selection"
@@ -507,8 +553,8 @@
 
         <Button
             android:id="@+id/ticket_main_booking_btn"
-            android:layout_width="230dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:background="@drawable/button_orange"
             android:text="订票"

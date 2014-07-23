@@ -105,9 +105,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/seat3"
+        android:id="@+id/selectseat_seatview"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="280dp"
         android:layout_below="@id/seat2"
         android:orientation="horizontal"
         android:padding="20dip" >
@@ -121,6 +121,7 @@
                 android:layout_height="wrap_content" >
 
                 <RelativeLayout
+                    
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" >
 
@@ -150,17 +151,17 @@
 
     <Button
         android:id="@+id/submit_seat_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_orange"
+        android:paddingBottom="10dp"
         android:paddingLeft="80dp"
         android:paddingRight="80dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
         android:text="选座完成"
-        android:textColor="#ffffff"
-        android:background="@drawable/button_orange" />
+        android:textColor="#ffffff" />
 
 </RelativeLayout>

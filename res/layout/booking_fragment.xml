@@ -2,17 +2,19 @@
     android:id="@+id/scrollView1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFFFFF" >
-
+    android:background="#FFFFFF"
+    >
+	
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
-
+	<requestFocus />
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp" >
+            android:layout_margin="10dp"
+            >
 
             <TableRow
                 android:id="@+id/tableRow1"
@@ -33,7 +35,10 @@
                     android:id="@+id/spinner1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5" />
+                    android:layout_weight="5" >
+                    
+                    
+                </Spinner>
             </TableRow>
 
             <TableRow
@@ -58,7 +63,7 @@
                     android:layout_weight="5"
                     android:ems="10" >
 
-                    <requestFocus />
+                    
                 </EditText>
             </TableRow>
 

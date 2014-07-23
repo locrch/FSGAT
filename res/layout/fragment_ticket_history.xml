@@ -3,6 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
+    android:paddingLeft="@dimen/activity_padding_width"
+    android:paddingRight="@dimen/activity_padding_width"
+    
      >
     <ListView 
         android:id="@+id/ticket_history_listview"

@@ -7,6 +7,7 @@
        android:id="@+id/yhhd_webview"
        android:layout_width="match_parent"
     	android:layout_height="match_parent"
+    	android:background="#FFFFFF"
         />
     <ProgressBar
         android:id="@+id/Progress"

@@ -4,12 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <RelativeLayout 
+    <RelativeLayout android:layout_marginBottom="@dimen/ticket_history_content_marginBottom" 
         android:layout_width="match_parent"
     	android:layout_height="wrap_content"
+    	android:visibility="gone"
         >
 
-        <TextView
+        <TextView android:textSize="@dimen/ticket_history_textsize"
             android:id="@+id/ticket_history_id_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -17,7 +18,7 @@
             android:layout_alignParentTop="true"
             android:text="购票订单ID：" />
 
-        <TextView
+        <TextView android:textSize="@dimen/ticket_history_textsize"
             android:id="@+id/ticket_history_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,12 +27,12 @@
 
     </RelativeLayout>
     
-    <RelativeLayout 
+    <RelativeLayout android:layout_marginBottom="@dimen/ticket_history_content_marginBottom" 
         android:layout_width="match_parent"
     	android:layout_height="wrap_content"
         >
 
-        <TextView
+        <TextView android:textSize="@dimen/ticket_history_textsize"
             android:id="@+id/ticket_history_way_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +40,7 @@
             android:layout_alignParentTop="true"
             android:text="车票方向：" />
 
-        <TextView
+        <TextView android:textSize="@dimen/ticket_history_textsize"
             android:id="@+id/ticket_history_way"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,12 +50,12 @@
     </RelativeLayout>
     
     
-    <RelativeLayout 
+    <RelativeLayout android:layout_marginBottom="@dimen/ticket_history_content_marginBottom" 
         android:layout_width="match_parent"
     	android:layout_height="wrap_content"
         >
 
-        <TextView
+        <TextView android:textSize="@dimen/ticket_history_textsize"
             android:id="@+id/ticket_history_count_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +63,7 @@
             android:layout_alignParentTop="true"
             android:text="购票数量：" />
 
-        <TextView
+        <TextView android:textSize="@dimen/ticket_history_textsize"
             android:id="@+id/ticket_history_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,12 +72,12 @@
 
     </RelativeLayout>
     
-    <RelativeLayout 
+    <RelativeLayout android:layout_marginBottom="@dimen/ticket_history_content_marginBottom" 
         android:layout_width="match_parent"
     	android:layout_height="wrap_content"
         >
 
-        <TextView
+        <TextView android:textSize="@dimen/ticket_history_textsize"
             android:id="@+id/ticket_history_date_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,7 +85,7 @@
             android:layout_alignParentTop="true"
             android:text="购买日期：" />
 
-        <TextView
+        <TextView android:textSize="@dimen/ticket_history_textsize"
             android:id="@+id/ticket_history_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,12 +94,12 @@
 
     </RelativeLayout>
     
-    <RelativeLayout 
+    <RelativeLayout android:layout_marginBottom="@dimen/ticket_history_content_marginBottom" 
         android:layout_width="match_parent"
     	android:layout_height="wrap_content"
         >
 
-        <TextView
+        <TextView android:textSize="@dimen/ticket_history_textsize"
             android:id="@+id/ticket_history_price_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -106,7 +107,7 @@
             android:layout_alignParentTop="true"
             android:text="总费用：" />
 
-        <TextView
+        <TextView android:textSize="@dimen/ticket_history_textsize"
             android:id="@+id/ticket_history_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

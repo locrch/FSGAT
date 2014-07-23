@@ -74,6 +74,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -111,9 +113,23 @@ public  class MapPlaceFragment extends Fragment {
 	Map<String,BanZhengDT> places=new LinkedHashMap<String,BanZhengDT>();
 	Map<Marker,String> markerstring=new LinkedHashMap<Marker,String>();
 	
-	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu, inflater);
+		
+		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
+		
+		actionbar_back_btn.setVisibility(View.VISIBLE);
+		
+TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_title);
+		
+		actionbar_title.setText("办证地点");
+	}
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
+    	setHasOptionsMenu(true);
     	SDKInitializer.initialize(getActivity().getApplicationContext());
     	this.inflaters=inflater;
     	View view = inflater.inflate(R.layout.viewmap, null);

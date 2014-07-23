@@ -31,12 +31,16 @@ public class CheckLogin {
     		}*/
 			FragmentTransaction transaction = fragment.getFragmentManager().beginTransaction(); 
      		Fragment loginFragment = new LoginFragment();
-     		transaction.addToBackStack(null);
-            transaction.replace(R.id.content, loginFragment); 
-            transaction.commit();
+     		if (!loginFragment.isAdded())
+			{
+     			transaction.replace(R.id.content, loginFragment); 
+                transaction.commit();
+			}
+     		
  			
  			return false;
  		}
 		return true;
 	}
+	
 }

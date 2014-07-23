@@ -66,6 +66,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -144,8 +146,24 @@ public  class ApplyVisaFragment extends Fragment {
 	       	super.onDestroyView();
 	       }
 	
+	 @Override
+		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+		{
+			// TODO Auto-generated method stub
+			super.onCreateOptionsMenu(menu, inflater);
+			
+			Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
+			
+			actionbar_back_btn.setVisibility(View.VISIBLE);
+			
+			TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_title);
+			
+			actionbar_title.setText("申请签注");
+		}
+	 
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
+    	setHasOptionsMenu(true);
     	sp = getActivity().getSharedPreferences("sp",Context.MODE_PRIVATE);
 		editor = sp.edit();
 //		editor.putString("username", "pangu");

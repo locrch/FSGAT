@@ -74,7 +74,16 @@ public class LoginFragment extends Fragment
 		action_address = menu.findItem(R.id.action_address);
 		action_bookinghistory = menu.findItem(R.id.action_bookinghistory);
 		
+		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
+		
+		actionbar_back_btn.setVisibility(View.INVISIBLE);
+		
+		TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_title);
+		
+		actionbar_title.setText("登录");
 	}
+	
+	
 	
 	private void init()
 	{
@@ -256,23 +265,18 @@ public class LoginFragment extends Fragment
 									
 									//
 									
-									fragmentManager.popBackStackImmediate();
-									transaction.commit();
-									/*YwblFragment ywbl = new YwblFragment();
-									switch (fragmentManager.getBackStackEntryCount())
+									
+									YwblFragment ywbl = new YwblFragment();
+									
+									if (fragmentManager.getBackStackEntryCount()<= 1)
 									{
-									case 0:
 										transaction.replace(R.id.content, ywbl).commit();
 										
-										break;
-									case 1:
-										transaction.replace(R.id.content, ywbl).commit();
 										
-										break;
-									default:
-										
-										break;
-									}*/
+									}else if(fragmentManager.getBackStackEntryCount()>0){
+										fragmentManager.popBackStackImmediate();
+										transaction.commit();
+									}
 									
 									
 									action_logout.setVisible(true);

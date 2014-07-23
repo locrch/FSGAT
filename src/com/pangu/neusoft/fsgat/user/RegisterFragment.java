@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.fspangu.fsgat.FragmentFactory;
 import com.fspangu.fsgat.GrzxFragment;
 import com.fspangu.fsgat.R;
+import com.fspangu.fsgat.YwblFragment;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.core.CheckNetwork;
 import com.pangu.neusoft.fsgat.core.PostJson;
@@ -20,6 +21,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -39,11 +42,18 @@ public class RegisterFragment extends Fragment
 	HashMap<String, Object> GetParamsMap;
 	SharedPreferences sp;
 	Editor editor;
+	FragmentTransaction transaction;
+	FragmentManager fragmentManager;
+	Fragment thisfragment;
 	private void init()
 	{
+		thisfragment = this;
 		
 		sp = getActivity().getSharedPreferences("sp",Context.MODE_PRIVATE);
 		editor = sp.edit();
+		
+		fragmentManager = getFragmentManager();
+		transaction = fragmentManager.beginTransaction();
 		
 //		android.app.ActionBar actionBar = this.getActivity().getActionBar();
 //		actionBar.setCustomView(R.layout.title_bar);
@@ -63,13 +73,26 @@ public class RegisterFragment extends Fragment
 		GetParamsMap = new HashMap<String, Object>();
 		joget = new JSONObject();
 	}
-	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu, inflater);
+		
+		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
+		
+		actionbar_back_btn.setVisibility(View.VISIBLE);
+		
+		TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_title);
+		
+		actionbar_title.setText("注册");
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState)
 	{
 		// TODO Auto-generated method stub
-		
+		setHasOptionsMenu(true);
 		return inflater.inflate(R.layout.activity_register, container,false);
 	}
 	@Override
@@ -127,16 +150,19 @@ public class RegisterFragment extends Fragment
 				        		    	fragmentManager.popBackStack();
 				        		    }
 				        		}
-				        		    FragmentTransaction transaction = fragmentManager.beginTransaction();
+								YwblFragment ywbl = new YwblFragment();
+								transaction.replace(R.id.content, ywbl).commit();
+								
+				        		    /*FragmentTransaction transaction = fragmentManager.beginTransaction();
 				            		Fragment fragment = new LoginFragment();  
 				            		transaction.replace(R.id.content, fragment);  
-				            		transaction.commit();
+				            		transaction.commit();*/
 							}
 									Toast.makeText(getActivity().getApplicationContext(),
 											(String) GetParamsMap.get("msg"),
 											Toast.LENGTH_LONG).show();
 								
-	
+									
 						}
 					}.execute();
 	
@@ -150,7 +176,7 @@ public class RegisterFragment extends Fragment
 				public void onClick(View v)
 				{
 					// TODO Auto-generated method stub
-					new CustomAsynTask(getActivity())
+					new CustomAsynTask(getActivity(),thisfragment)
 					{
 						@Override
 						protected Boolean doInBackground(Void... params)
@@ -173,7 +199,7 @@ public class RegisterFragment extends Fragment
 	
 							success = (Boolean) GetParamsMap.get("success");
 							
-							
+							success = true;
 							
 							return success;
 						}
@@ -182,10 +208,11 @@ public class RegisterFragment extends Fragment
 						{
 	
 							
-			            		Toast.makeText(getActivity().getApplicationContext(),
+							Toast.makeText(getActivity().getApplicationContext(),
 										(String) GetParamsMap.get("msg"),
 										Toast.LENGTH_LONG).show();
 							
+			            		
 						};
 	
 					}.execute();

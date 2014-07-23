@@ -7,6 +7,7 @@ import com.baidu.android.pushservice.CustomPushNotificationBuilder;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.fspangu.fsgat.pushmessage.*;
+import com.pangu.neusoft.fsgat.core.CheckLogin;
 import com.pangu.neusoft.fsgat.user.ChangeAddressDialog;
 import com.pangu.neusoft.fsgat.user.ChangePasswordFragment;
 import com.pangu.neusoft.fsgat.user.ListAddressFragment;
@@ -185,10 +186,10 @@ public class MainActivity extends ActionBarActivity
 		}
 		if (!sp.getString("pushuserid", "").equals(""))
 		{
-			Toast.makeText(
+			/*Toast.makeText(
 					MainActivity.this,
 					"用于推送的用户id：" + sp.getString("pushuserid", "") + "\n"
-							+ Utils.logStringCache, Toast.LENGTH_LONG).show();
+							+ Utils.logStringCache, Toast.LENGTH_LONG).show();*/
 		}
 	}
 
@@ -246,6 +247,7 @@ public class MainActivity extends ActionBarActivity
 		}
 		
 		
+		
 		Button actionbar_back_btn = (Button) findViewById(R.id.actionbar_back_btn);
 
 		actionbar_back_btn.setOnClickListener(new OnClickListener()
@@ -266,7 +268,11 @@ public class MainActivity extends ActionBarActivity
 
 			}
 		});
-
+		
+		
+			actionbar_back_btn.setVisibility(View.VISIBLE);
+		
+			
 		return true;
 	}
 
@@ -317,15 +323,23 @@ public class MainActivity extends ActionBarActivity
 			
 		case R.id.action_pass:
 			ListPassFragment lpf=new ListPassFragment();
-        	transaction.add(R.id.content, lpf);
-        	transaction.addToBackStack(null);
-            transaction.commit();
+			if (!lpf.isVisible())
+			{
+				transaction.replace(R.id.content, lpf);
+	        	
+	            transaction.commit();
+			}
+        	
 			break;
 		case R.id.action_address:
 			ListAddressFragment laf=new ListAddressFragment();
-        	transaction.add(R.id.content, laf);
-        	transaction.addToBackStack(null);
-            transaction.commit();
+			if (!laf.isVisible())
+			{
+				transaction.replace(R.id.content, laf);
+	        	
+				transaction.commit();
+			}
+        	
 			break;
 		case R.id.action_bookinghistory:
 			ShowHistoryFragment shf=new ShowHistoryFragment();
@@ -541,11 +555,12 @@ public class MainActivity extends ActionBarActivity
 
 						editor.remove("username");
 						editor.commit();
-						FragmentTransaction transaction = getSupportFragmentManager()
+						/*FragmentTransaction transaction = getSupportFragmentManager()
 								.beginTransaction();
 						LoginFragment fragment = new LoginFragment();
 						transaction.replace(R.id.content, fragment);
-						transaction.commit();
+						transaction.commit();*/
+						
 					}
 				})
 				.setNegativeButton("取消", new DialogInterface.OnClickListener()

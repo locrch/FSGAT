@@ -29,6 +29,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -57,11 +59,28 @@ public class FragmentSelectSeat extends Fragment{
 	List<Integer> seatNumbersList;
 	ArrayList<seatNumber> GetseatNumbersList;
 	
+	Button submit_seat_btn;
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu, inflater);
+		
+		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
+		
+		actionbar_back_btn.setVisibility(View.INVISIBLE);
+		
+		TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_title);
+		
+		actionbar_title.setText("选择座位");
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		
+		setHasOptionsMenu(true);
 		return inflater.inflate(R.layout.layout_select_seat, null);
 		
 	}
@@ -70,11 +89,13 @@ public class FragmentSelectSeat extends Fragment{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		Button submit_seat_btn = (Button)getActivity().findViewById(R.id.submit_seat_btn);
+		submit_seat_btn = (Button)getActivity().findViewById(R.id.submit_seat_btn);
 		
 		initView();
 		DisplayMetrics displayMetrics = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		
+		
 		width=(displayMetrics.widthPixels);
 		height=(displayMetrics.heightPixels);
 		new Thread(runnable).start();
@@ -180,6 +201,8 @@ public class FragmentSelectSeat extends Fragment{
 							LayoutParams.WRAP_CONTENT, box_size));
 					myView2.addView(textView);
 				}
+				
+				
 			}
 		});
 	}
