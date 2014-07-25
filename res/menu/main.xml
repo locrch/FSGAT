@@ -18,6 +18,12 @@
         android:icon="@android:drawable/ic_menu_delete"
         android:showAsAction="always|withText"
         android:title="注销"/>
+    <item
+        android:id="@+id/action_login"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:showAsAction="always|withText"
+        android:title="登录"
+        android:visible="false"/>
     <!-- <item
         android:id="@+id/action_changeusername"
         android:icon="@android:drawable/ic_menu_edit"

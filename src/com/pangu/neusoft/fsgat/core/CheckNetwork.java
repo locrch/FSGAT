@@ -1,5 +1,7 @@
 package com.pangu.neusoft.fsgat.core;
 
+import com.fspangu.fsgat.R;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -16,7 +18,9 @@ public class CheckNetwork {
 	public static boolean connected(final Fragment fragment){
 		ConnectivityManager cm=(ConnectivityManager)fragment.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
     	NetworkInfo info=cm.getActiveNetworkInfo();
-    	
+    	try
+		{
+		
     	  if (info == null || !info.isConnected()){
     		  
     		  AlertDialog.Builder builder = new Builder(fragment.getActivity());
@@ -49,6 +53,15 @@ public class CheckNetwork {
     	  } else{
     		  return true;
     	  }
+    	  
+    		
+		} catch (Exception e)
+		{
+			// TODO: handle exception
+			Toast.makeText(fragment.getActivity(), R.string.toast_flase_msg,
+					Toast.LENGTH_SHORT).show();
+		}
+		return true;
 	}
 	public static boolean connected(final Activity activity){
 		ConnectivityManager cm=(ConnectivityManager)activity.getSystemService(Context.CONNECTIVITY_SERVICE);

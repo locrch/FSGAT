@@ -116,7 +116,7 @@ public class TicketMainFragment extends Fragment {
 	TicketBackFragment tb;
 	Fragment thisfragment;
 	
-	Integer upwayID,downwayID,busCompanyID,upStationID,downStationID,ticketLineID,goDepartureTimeID;
+	Integer wayID,returnwayID,busCompanyID,upStationID,downStationID,ticketLineID,goDepartureTimeID;
 	Integer returnupwayID,returndownwayID,returnbusCompanyID,returnupStationID,returndownStationID,returnticketLineID,returnDepartureTimeID;
 	
 	JSONObject joget;
@@ -477,11 +477,20 @@ public class TicketMainFragment extends Fragment {
 		if (CheckNetwork.connected(this)){
 		
 			
-			
 			busCompanyID = 1;
 			
 			init();
-		
+			
+			
+			way_spinner.getBackground().setAlpha(100);
+			upplace_spinner.getBackground().setAlpha(100);
+			downplace_spinner.getBackground().setAlpha(100);
+			uptime_time.getBackground().setAlpha(100);
+			back_upplace.getBackground().setAlpha(100);
+			back_downplace.getBackground().setAlpha(100);
+			back_uptime_time.getBackground().setAlpha(100);
+			
+			
 			way_adapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.simple_spinner_item,way_hongkong);	
 			way_spinner.setAdapter(way_adapter);
 			
@@ -534,7 +543,183 @@ public class TicketMainFragment extends Fragment {
 					back_selection.setVisibility(View.GONE);
 					selection.setVisibility(View.GONE);
 					ticket_layout.setVisibility(View.VISIBLE);
-				}
+				
+				new CustomAsynTask(getActivity(),thisfragment)
+				{
+					@Override
+					protected Boolean doInBackground(Void... params)
+					{
+						// TODO Auto-generated method stub
+						
+						String[] keys = new String[]
+						{ "ticketDirectionID","busCompanyID"};
+
+						
+						if (wayID==null|| busCompanyID==null)
+						return false;
+						
+						int[] values = new int[]
+						{wayID,busCompanyID};
+
+						PostJson postJson = new PostJson();
+
+						GetParamsMap = postJson.Post(keys, values,
+								"getUpStation","upStationList");
+
+						Boolean success = false;
+						
+						success = (Boolean) GetParamsMap.get("success");
+						JSONArray upStationList = (JSONArray) GetParamsMap
+								.get("upStationList"); 
+						if (upStationList==null) {
+							return false;
+						}
+						
+						success = (Boolean) GetParamsMap
+						.get("success");
+						
+							if (!listupStationName.isEmpty()) {
+								listupStationName.clear();
+							}
+							
+							for (int i = 0; i < upStationList.length(); i++)
+							{
+								try
+								{
+									JSONObject jo = (JSONObject) upStationList.get(i);
+			
+									adapterListMap = new HashMap<String, Object>();
+			
+									upstation = new Upstation();
+			
+									adapterListMap.put("stationID", jo.getString("stationID").toString());
+									adapterListMap.put("stationName", jo.getString("stationName")
+											.toString());
+									
+			
+									upstation.setStationID(jo.getString("stationID").toString());
+									upstation.setStationName(jo.getString("stationName").toString());
+									
+									listupStationName.add(i, jo.getString("stationName").toString());
+									
+									listupStationID.add(i,Integer.valueOf(jo.getString("stationID")));
+									
+									listupStation.add(i,upstation);
+									
+									adapterList.add(i,
+											(HashMap<String, Object>) adapterListMap);
+									
+									Log.i("upstation ID:" + i, listupStationName.get(i));
+									
+								} catch (JSONException e)
+								{
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+								}
+							
+							Log.i("upstation Size:", String.valueOf(listupStationName.size()) );
+							
+							/*上下车获取数据分割*/
+							
+							PostJSONfromGson postGson = new PostJSONfromGson();
+							
+							PostgetDownStation postgetDownStation = new PostgetDownStation();
+							
+							downstation = new downStation();
+							
+							if (wayID==null||busCompanyID==null)
+							return false;
+							
+							postgetDownStation.setTicketDirectionID(wayID);
+							
+							
+							postgetDownStation.setBusCompanyID(busCompanyID);
+							
+							ListdownStation listdownStation = new ListdownStation();
+							
+							String result = (String) postGson.GsonPost(postgetDownStation, "getDownStation");
+							
+							Type listType=new TypeToken<ListdownStation>(){}.getType();
+							
+							Gson gson = new Gson();
+							
+							listdownStation = gson.fromJson(result,listType);
+							
+							ArrayList<downStation> downStationsList = new ArrayList<downStation>();
+							
+							success = false;
+							
+							downStationsList = listdownStation.getDownStationList();
+							
+							success = listdownStation.getSuccess();
+							
+							listdownStationName = new ArrayList<String>();
+							
+							if (!listdownStationName.isEmpty()) {
+								listdownStationName.clear();
+							}
+							
+							if (!listdownStationID.isEmpty()) {
+								listdownStationID.clear();
+							}
+							
+							for (int j = 0; j < downStationsList.size(); j++) {
+								
+								downstation = downStationsList.get(j);
+								
+								listdownStationName.add(downstation.getStationName());
+								
+								listdownStationID.add(downstation.getStationID());
+							}
+							
+							
+						return success;
+					}
+
+					protected void onPostExecute(Boolean result)
+					{
+						super.onPostExecute(result);
+						
+						try
+						{
+							if (result)
+							{
+
+								adapter_upplace = new ArrayAdapter(
+										getActivity(),
+										R.layout.simple_spinner_item,
+										listupStationName);
+
+								upplace_spinner
+										.setAdapter(adapter_upplace);
+
+								adapter_downplace = new ArrayAdapter(
+										getActivity(),
+										R.layout.simple_spinner_item,
+										listdownStationName);
+
+								downplace_spinner
+										.setAdapter(adapter_downplace);
+
+							} else if (!result)
+							{
+								Toast.makeText(
+										getActivity()
+												.getApplicationContext(),
+										R.string.toast_flase_msg,
+										Toast.LENGTH_LONG).show();
+							}
+						} catch (Exception e)
+						{
+							// TODO: handle exception
+						}
+							
+						
+					}
+				}.execute();
+			}
 			}
 		});
 		
@@ -552,6 +737,183 @@ public class TicketMainFragment extends Fragment {
 						back_selection.setVisibility(View.VISIBLE);
 					}
 					busCompanyID = 1;
+				
+				
+				
+				
+				new CustomAsynTask(getActivity(),thisfragment)
+				{
+					@Override
+					protected Boolean doInBackground(Void... params)
+					{
+						// TODO Auto-generated method stub
+						
+						String[] keys = new String[]
+						{ "ticketDirectionID","busCompanyID"};
+
+						
+						if (wayID==null|| busCompanyID==null)
+						return false;
+						
+						int[] values = new int[]
+						{wayID,busCompanyID};
+
+						PostJson postJson = new PostJson();
+
+						GetParamsMap = postJson.Post(keys, values,
+								"getUpStation","upStationList");
+
+						Boolean success = false;
+						
+						success = (Boolean) GetParamsMap.get("success");
+						JSONArray upStationList = (JSONArray) GetParamsMap
+								.get("upStationList"); 
+						if (upStationList==null) {
+							return false;
+						}
+						
+						success = (Boolean) GetParamsMap
+						.get("success");
+						
+							if (!listupStationName.isEmpty()) {
+								listupStationName.clear();
+							}
+							
+							for (int i = 0; i < upStationList.length(); i++)
+							{
+								try
+								{
+									JSONObject jo = (JSONObject) upStationList.get(i);
+			
+									adapterListMap = new HashMap<String, Object>();
+			
+									upstation = new Upstation();
+			
+									adapterListMap.put("stationID", jo.getString("stationID").toString());
+									adapterListMap.put("stationName", jo.getString("stationName")
+											.toString());
+									
+			
+									upstation.setStationID(jo.getString("stationID").toString());
+									upstation.setStationName(jo.getString("stationName").toString());
+									
+									listupStationName.add(i, jo.getString("stationName").toString());
+									
+									listupStationID.add(i,Integer.valueOf(jo.getString("stationID")));
+									
+									listupStation.add(i,upstation);
+									
+									adapterList.add(i,
+											(HashMap<String, Object>) adapterListMap);
+									
+									Log.i("upstation ID:" + i, listupStationName.get(i));
+									
+								} catch (JSONException e)
+								{
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+								}
+							
+							Log.i("upstation Size:", String.valueOf(listupStationName.size()) );
+							
+							/*上下车获取数据分割*/
+							
+							PostJSONfromGson postGson = new PostJSONfromGson();
+							
+							PostgetDownStation postgetDownStation = new PostgetDownStation();
+							
+							downstation = new downStation();
+							
+							if (wayID==null||busCompanyID==null)
+							return false;
+							
+							postgetDownStation.setTicketDirectionID(wayID);
+							
+							
+							postgetDownStation.setBusCompanyID(busCompanyID);
+							
+							ListdownStation listdownStation = new ListdownStation();
+							
+							String result = (String) postGson.GsonPost(postgetDownStation, "getDownStation");
+							
+							Type listType=new TypeToken<ListdownStation>(){}.getType();
+							
+							Gson gson = new Gson();
+							
+							listdownStation = gson.fromJson(result,listType);
+							
+							ArrayList<downStation> downStationsList = new ArrayList<downStation>();
+							
+							downStationsList = listdownStation.getDownStationList();
+							
+							success = listdownStation.getSuccess();
+							
+							listdownStationName = new ArrayList<String>();
+							
+							if (!listdownStationName.isEmpty()) {
+								listdownStationName.clear();
+							}
+							
+							if (!listdownStationID.isEmpty()) {
+								listdownStationID.clear();
+							}
+							
+							for (int j = 0; j < downStationsList.size(); j++) {
+								
+								downstation = downStationsList.get(j);
+								
+								listdownStationName.add(downstation.getStationName());
+								
+								listdownStationID.add(downstation.getStationID());
+							}
+							
+							
+						return success;
+					}
+
+					protected void onPostExecute(Boolean result)
+					{
+						super.onPostExecute(result);
+						
+						try
+						{
+							if (result)
+							{
+
+								adapter_upplace = new ArrayAdapter(
+										getActivity(),
+										R.layout.simple_spinner_item,
+										listupStationName);
+
+								upplace_spinner
+										.setAdapter(adapter_upplace);
+
+								adapter_downplace = new ArrayAdapter(
+										getActivity(),
+										R.layout.simple_spinner_item,
+										listdownStationName);
+
+								downplace_spinner
+										.setAdapter(adapter_downplace);
+
+							} else if (!result)
+							{
+								Toast.makeText(
+										getActivity()
+												.getApplicationContext(),
+										R.string.toast_flase_msg,
+										Toast.LENGTH_LONG).show();
+							}
+						} catch (Exception e)
+						{
+							// TODO: handle exception
+						}
+							
+						
+					}
+				}.execute();
 				}
 			}
 		});
@@ -792,13 +1154,13 @@ public class TicketMainFragment extends Fragment {
 						{
 							switch (arg2) {
 							case 0:
-								upwayID= arg2+1;
-								downwayID = upwayID+1;
+								wayID= arg2+1;
+								returnwayID = wayID+1;
 								break;
 
 							case 1:
-								upwayID= arg2+1;
-								downwayID = upwayID-1;
+								wayID= arg2+1;
+								returnwayID = wayID-1;
 								break;
 								
 							default:
@@ -807,13 +1169,13 @@ public class TicketMainFragment extends Fragment {
 						}else if (place_macao.isChecked()) {
 							switch (arg2) {
 							case 0:
-								upwayID= arg2+3;
-								downwayID = upwayID+1;
+								wayID= arg2+3;
+								returnwayID = wayID+1;
 								break;
 
 							case 1:
-								upwayID= arg2+3;
-								downwayID = upwayID-1;
+								wayID= arg2+3;
+								returnwayID = wayID-1;
 								break;
 								
 							default:
@@ -837,11 +1199,11 @@ public class TicketMainFragment extends Fragment {
 								{ "ticketDirectionID","busCompanyID"};
 		
 								
-								if (upwayID==null|| busCompanyID==null)
+								if (wayID==null|| busCompanyID==null)
 								return false;
 								
 								int[] values = new int[]
-								{upwayID,busCompanyID};
+								{wayID,busCompanyID};
 		
 								PostJson postJson = new PostJson();
 		
@@ -911,10 +1273,11 @@ public class TicketMainFragment extends Fragment {
 									
 									downstation = new downStation();
 									
-									if (downwayID==null||busCompanyID==null)
+									if (wayID==null||busCompanyID==null)
 									return false;
 									
-									postgetDownStation.setTicketDirectionID(downwayID);
+									postgetDownStation.setTicketDirectionID(wayID);
+									
 									
 									postgetDownStation.setBusCompanyID(busCompanyID);
 									
@@ -938,6 +1301,10 @@ public class TicketMainFragment extends Fragment {
 									
 									if (!listdownStationName.isEmpty()) {
 										listdownStationName.clear();
+									}
+									
+									if (!listdownStationID.isEmpty()) {
+										listdownStationID.clear();
 									}
 									
 									for (int j = 0; j < downStationsList.size(); j++) {
@@ -1031,12 +1398,12 @@ public class TicketMainFragment extends Fragment {
 						
 						PostgetDepartureTime postgetDepartureTime = new PostgetDepartureTime();
 						
-						if (busCompanyID==null||upwayID==null||upStationID==null||downStationID==null)
+						if (busCompanyID==null||wayID==null||upStationID==null||downStationID==null)
 						return false;
 						
 						postgetDepartureTime.setBusCompanyID(busCompanyID);
 						
-						postgetDepartureTime.setTicketDirectionID(upwayID);
+						postgetDepartureTime.setTicketDirectionID(wayID);
 						
 						postgetDepartureTime.setUpStationID(upStationID);
 						
@@ -1164,13 +1531,13 @@ public class TicketMainFragment extends Fragment {
 						
 						PostgetDepartureTime postgetDepartureTime = new PostgetDepartureTime();
 						
-						if (busCompanyID==null||upwayID==null||upStationID==null||downStationID==null)
+						if (busCompanyID==null||wayID==null||upStationID==null||downStationID==null)
 							return false;
 							
 						
 						postgetDepartureTime.setBusCompanyID(busCompanyID);
 						
-						postgetDepartureTime.setTicketDirectionID(upwayID);
+						postgetDepartureTime.setTicketDirectionID(wayID);
 						
 						postgetDepartureTime.setUpStationID(upStationID);
 						
@@ -1480,13 +1847,13 @@ public class TicketMainFragment extends Fragment {
 						
 						PostgetDepartureTime postgetDepartureTime = new PostgetDepartureTime();
 						
-						if (busCompanyID==null||downwayID==null||returnupStationID==null||returndownStationID==null)
+						if (busCompanyID==null||returnwayID==null||returnupStationID==null||returndownStationID==null)
 							return false;
 							
 						
 						postgetDepartureTime.setBusCompanyID(busCompanyID);
 						
-						postgetDepartureTime.setTicketDirectionID(downwayID);
+						postgetDepartureTime.setTicketDirectionID(returnwayID);
 						
 						postgetDepartureTime.setUpStationID(returnupStationID);
 						
@@ -1615,12 +1982,12 @@ public class TicketMainFragment extends Fragment {
 						
 						PostgetDepartureTime postgetDepartureTime = new PostgetDepartureTime();
 						
-						if (busCompanyID==null||downwayID==null||returnupStationID==null||returndownStationID==null)
+						if (busCompanyID==null||returnwayID==null||returnupStationID==null||returndownStationID==null)
 							return false;
 						
 						postgetDepartureTime.setBusCompanyID(busCompanyID);
 						
-						postgetDepartureTime.setTicketDirectionID(downwayID);
+						postgetDepartureTime.setTicketDirectionID(returnwayID);
 						
 						postgetDepartureTime.setUpStationID(returnupStationID);
 						
@@ -1970,12 +2337,12 @@ public class TicketMainFragment extends Fragment {
 					
 					PostgetDepartureTime postgetDepartureTime = new PostgetDepartureTime();
 					
-					if (busCompanyID==null||upwayID==null||upStationID==null||downStationID==null)
+					if (busCompanyID==null||wayID==null||upStationID==null||downStationID==null)
 						return false;
 					
 					postgetDepartureTime.setBusCompanyID(busCompanyID);
 					
-					postgetDepartureTime.setTicketDirectionID(upwayID);
+					postgetDepartureTime.setTicketDirectionID(wayID);
 					
 					postgetDepartureTime.setUpStationID(upStationID);
 					

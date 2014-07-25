@@ -82,10 +82,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -208,7 +210,8 @@ public  class ExportStateFragment extends Fragment {
 				}
 				if(result){
 					list.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.export_state_item,listdata));
-                }else{
+					
+				}else{
                 	Toast.makeText(getActivity(), "获取数据失败", Toast.LENGTH_SHORT).show();
                 }
 			}

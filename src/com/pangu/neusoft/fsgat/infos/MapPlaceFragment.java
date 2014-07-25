@@ -57,6 +57,7 @@ import com.pangu.neusoft.fsgat.model.ListPass;
 import com.pangu.neusoft.fsgat.model.Pass;
 import com.baidu.mapapi.map.Marker;
 
+import android.R.interpolator;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -64,6 +65,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
@@ -140,6 +142,7 @@ TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_t
 //		actionBar.show();
 //		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
 //		titleview.setText("附近办证地点查询");
+    	showid=1;
     	this.getActivity().setTitle("附近办证地点查询");
     	if(CheckNetwork.connected(this)){
 	    	textView1=(TextView)view.findViewById(R.id.textView1);
@@ -191,21 +194,32 @@ TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_t
     	}
         return view;  
     }  
-  
+
+	static int showid=1;
     public Marker setMarker(double a,double b,String text){
     	//定义Maker坐标点  
     	LatLng point = new LatLng(a, b);  
     	//构建Marker图标  
     	BitmapDescriptor bitmap = BitmapDescriptorFactory  
-    	    .fromResource(R.drawable.icon_marka);  
+    	    .fromResource(R.drawable.icon_mark1);  
     	//构建MarkerOption，用于在地图上添加Marker  
+    	try{
+    	Resources resources=getResources();
+    	int id=resources.getIdentifier(getActivity().getPackageName()+":drawable/"+"icon_mark"+showid, null,null);
     	
+    	bitmap = BitmapDescriptorFactory.fromResource(id); 
+    	}catch(Exception rx){  }
+    	if(bitmap==null){
+    		bitmap = BitmapDescriptorFactory  
+            	    .fromResource(R.drawable.icon_mark1);
+    	}
+    		
     	OverlayOptions option = new MarkerOptions()  
     	    .position(point)  
     	    .icon(bitmap);  
     	//在地图上添加Marker，并显示  
     	Marker marker=(Marker)mBaiduMap.addOverlay(option);
-    	
+    	showid++;
 
     	return marker;
     }
@@ -265,6 +279,7 @@ public void getSpinnerPlace(){
     
 public void showMarker(int i){
 	mBaiduMap.clear();
+	showid=1;
 	if(i==0){
 		
 		for(BanZhengDT banz:places.values()){

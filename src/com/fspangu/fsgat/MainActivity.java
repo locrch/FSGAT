@@ -92,7 +92,7 @@ public class MainActivity extends ActionBarActivity
 	private static FragmentManager fragmentManager;
 	private static RadioGroup radioGroup;
 
-	MenuItem action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
+	MenuItem action_login,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -221,6 +221,7 @@ public class MainActivity extends ActionBarActivity
 
 		actionBar.setCustomView(R.layout.title_bar);
 
+		action_login = menu.findItem(R.id.action_login);
 		action_logout = menu.findItem(R.id.action_logout);
 		action_changepassword = menu.findItem(R.id.action_changepassword);
 		action_setting = menu.findItem(R.id.action_setting);
@@ -230,6 +231,7 @@ public class MainActivity extends ActionBarActivity
 		
 		if (sp.getString("username", "").equals(""))
 		{
+			action_login.setVisible(true);
 			action_logout.setVisible(false);
 			action_changepassword.setVisible(false);
 			action_setting.setVisible(false);
@@ -286,6 +288,7 @@ public class MainActivity extends ActionBarActivity
 		
 		if (!(sp.getString("username", "").equals("")))
 		{
+			action_login.setVisible(false);
 			action_logout.setVisible(true);
 			action_changepassword.setVisible(true);
 			action_setting.setVisible(true);
@@ -296,9 +299,18 @@ public class MainActivity extends ActionBarActivity
 		
 		switch (id)
 		{
+		case R.id.action_login:
+			LoginFragment lf = new LoginFragment();
+			if (!lf.isAdded()||!lf.isVisible())
+			{
+				getSupportFragmentManager().beginTransaction().add(R.id.content, lf).commit();
+			}
+			break;
+		
 		case R.id.action_logout:
 			logout();
 			
+			action_login.setVisible(true);
 			action_logout.setVisible(false);
 			action_changepassword.setVisible(false);
 			action_setting.setVisible(false);
@@ -555,11 +567,9 @@ public class MainActivity extends ActionBarActivity
 
 						editor.remove("username");
 						editor.commit();
-						/*FragmentTransaction transaction = getSupportFragmentManager()
-								.beginTransaction();
-						LoginFragment fragment = new LoginFragment();
-						transaction.replace(R.id.content, fragment);
-						transaction.commit();*/
+						
+						
+						getSupportFragmentManager().beginTransaction().add(R.id.content, new LoginFragment()).commit();
 						
 					}
 				})

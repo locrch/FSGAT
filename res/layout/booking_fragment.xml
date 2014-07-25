@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
-	<requestFocus />
+	
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                     android:layout_weight="5"
                     android:ems="10" >
 
-                    
+                    <requestFocus />
                 </EditText>
             </TableRow>
 
@@ -262,7 +262,7 @@
                     android:ems="10"
                     android:inputType="phone" >
 
-                    <requestFocus />
+                    
                 </EditText>
             </TableRow>
 

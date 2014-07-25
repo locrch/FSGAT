@@ -5,9 +5,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.json.JSONObject;
+
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.fspangu.fsgat.GrzxFragment;
+import com.fspangu.fsgat.MainActivity;
 import com.fspangu.fsgat.R;
 import com.fspangu.fsgat.YwblFragment;
+import com.fspangu.fsgat.pushmessage.Utils;
 import com.fspangu.fsgat.ticket.TicketHistoryFragment;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.core.CheckNetwork;
@@ -26,6 +31,7 @@ import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,13 +66,13 @@ public class LoginFragment extends Fragment
 	LoginFragment loginFragment;
 	int usertype;
 	
-	MenuItem action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
+	MenuItem action_login,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
-		
+		action_login = menu.findItem(R.id.action_login);
 		action_logout = menu.findItem(R.id.action_logout);
 		action_changepassword = menu.findItem(R.id.action_changepassword);
 		action_setting = menu.findItem(R.id.action_setting);
@@ -88,25 +94,16 @@ public class LoginFragment extends Fragment
 	private void init()
 	{
 		
-		android.app.ActionBar actionBar = this.getActivity().getActionBar();
 		
-		
-//		actionBar.setCustomView(R.layout.title_bar);
-//		actionBar.setDisplayShowCustomEnabled(true);
-//		actionBar.setDisplayShowHomeEnabled(false);
-//		actionBar.show();
-//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
-//		titleview.setText("登录");
-		this.getActivity().setTitle("登录");
 		// TODO Auto-generated method stub
-		username = (EditText) getActivity().findViewById(R.id.username);
-		password = (EditText) getActivity().findViewById(R.id.password);
+		username = (EditText) rootView.findViewById(R.id.username);
+		password = (EditText) rootView.findViewById(R.id.password);
 
-		login_btn = (Button) getActivity().findViewById(R.id.login_btn);
-		reg_btn = (TextView) getActivity().findViewById(R.id.reg_btn);
-		login_forget_password = (TextView) getActivity().findViewById(R.id.login_forget_password);
-		login_member_CheckBox = (CheckBox)getActivity().findViewById(R.id.login_member_CheckBox);
-		autoCheckBox= (CheckBox)getActivity().findViewById(R.id.auto_CheckBox);
+		login_btn = (Button) rootView.findViewById(R.id.login_btn);
+		reg_btn = (TextView) rootView.findViewById(R.id.reg_btn);
+		login_forget_password = (TextView) rootView.findViewById(R.id.login_forget_password);
+		login_member_CheckBox = (CheckBox)rootView.findViewById(R.id.login_member_CheckBox);
+		autoCheckBox= (CheckBox)rootView.findViewById(R.id.auto_CheckBox);
 		GetParamsMap = new HashMap<String, Object>();
 		joget = new JSONObject();
 		sp = getActivity().getSharedPreferences("sp",Context.MODE_PRIVATE);
@@ -147,188 +144,207 @@ public class LoginFragment extends Fragment
 		
 		rootView = inflater.inflate(R.layout.activity_login, null);
 		setHasOptionsMenu(true);
-		return inflater.inflate(R.layout.activity_login,container,false);
+		
+		
+		if (CheckNetwork.connected(this)){    	  
+			init();
+			login_btn.setOnClickListener(new OnClickListener()
+			{
+	
+				@Override
+				public void onClick(View v){
+					
+					if(checkdata()){
+						if (!Utils.hasBind(getActivity().getApplicationContext())){
+							PushManager.startWork(getActivity().getApplicationContext(),
+									PushConstants.LOGIN_TYPE_API_KEY,
+									Utils.getMetaValue(getActivity(), "api_key"));
+						}
+
+						if (!sp.getString("pushuserid", "0").equals("0")){
+							new CustomAsynTask(getActivity())
+							{
+								@Override
+								protected Boolean doInBackground(Void... params)
+								{
+									// TODO Auto-generated method stub
+									// 收起键盘
+									try{
+									((InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE))
+									.hideSoftInputFromWindow(getActivity()
+											.getCurrentFocus().getWindowToken(),
+											InputMethodManager.HIDE_NOT_ALWAYS);
+									}catch(Exception ex){
+										ex.printStackTrace();
+									}
+									String[] keys = new String[]
+									{ "username", "password","pushKey" };
+			
+									String[] values = new String[]
+									{ username.getText().toString(),
+											password.getText().toString(),sp.getString("pushuserid", "0")};
+			
+									PostJson postJson = new PostJson();
+			
+									GetParamsMap = postJson.Post(keys, values,
+											"loginmember");
+									
+									Boolean success = false;
+									
+									
+									
+									success = (Boolean) GetParamsMap.get("success");
+									
+									if (success ==null) {
+										return false;
+									}
+									
+									
+									
+									if (success)
+									{
+										//usertype = (Integer)GetParamsMap.get("type");
+										
+										user user = new user();
+										
+										user.setUsername(values[0]);
+										
+										user.setPassword(values[1]);
+										
+										editor.putString("username", username.getText().toString());
+										
+										editor.commit();
+									}
+									
+									
+									return success;
+								}
+			
+								protected void onPostExecute(Boolean result)
+								{
+									super.onPostExecute(result);
+									
+									Toast.makeText(getActivity().getApplicationContext(),
+											(String) GetParamsMap.get("msg"),
+											Toast.LENGTH_LONG).show();
+									
+									editor.putString("tempusername",username.getText().toString());
+									editor.commit();
+									
+//									Toast.makeText(rootView.getApplicationContext(),
+//											String.valueOf(usertype),
+//											Toast.LENGTH_LONG).show();
+									
+									if (login_member_CheckBox.isChecked()&&result) {
+										editor.putBoolean("remberpassword", true);									
+										editor.putString("temppassword",password.getText().toString());
+										editor.commit();
+									}else if (!login_member_CheckBox.isChecked()) {
+										editor.putBoolean("remberpassword", false);
+										editor.remove("temppassword");
+										editor.commit();
+									}
+									if (autoCheckBox.isChecked()&&result) {
+										editor.putBoolean("autologin", true);
+										editor.commit();
+									}else if(!autoCheckBox.isChecked()){
+										editor.putBoolean("autologin", false);
+									}
+									
+									if (result)
+									{
+										//fragmentManager.beginTransaction().remove(LoginFragment.this).commit();
+										editor.putString("username", username.getText().toString());
+										editor.putString("switchstatus1", sp.getString("switchstatus1", "off"));
+										editor.putString("switchstatus2", sp.getString("switchstatus2", "off"));
+										editor.putString("switchstatus3", sp.getString("switchstatus3", "off"));
+										editor.putString("switchstatus4", sp.getString("switchstatus4", "off"));
+										editor.putString("switchstatus5", sp.getString("switchstatus5", "off"));
+										editor.commit();
+										
+										//
+										
+										
+										YwblFragment ywbl = new YwblFragment();
+										
+										if (fragmentManager.getBackStackEntryCount()<= 1)
+										{
+											transaction.replace(R.id.content, ywbl).commit();
+											
+											
+										}else if(fragmentManager.getBackStackEntryCount()>0){
+											fragmentManager.popBackStackImmediate();
+											transaction.commit();
+										}
+										
+										action_login.setVisible(false);
+										action_logout.setVisible(true);
+										action_changepassword.setVisible(true);
+										action_setting.setVisible(true);
+										action_pass.setVisible(true);
+										action_address.setVisible(true);
+										action_bookinghistory.setVisible(true);
+									}
+								}
+							}.execute();
+						}else{
+							Toast.makeText(getActivity(), "网络不稳定，请重试！", Toast.LENGTH_SHORT).show();
+							PushManager.startWork(getActivity().getApplicationContext(),
+									PushConstants.LOGIN_TYPE_API_KEY,
+									Utils.getMetaValue(getActivity(), "api_key"));
+						}
+					
+					}
+				}
+				
+				
+			});
+	
+			
+			
+			reg_btn.setOnClickListener(new OnClickListener()
+			{
+	
+				@Override
+				public void onClick(View v)
+				{
+					// TODO Auto-generated method stub
+					transaction = getFragmentManager().beginTransaction();
+					transaction.add(R.id.content,registerFragment);
+					
+					transaction.addToBackStack(null); 
+					
+					transaction.commit();
+				}
+			});
+			
+			login_forget_password.setOnClickListener(new OnClickListener()
+			{
+				
+				@Override
+				public void onClick(View v)
+				{
+					// TODO Auto-generated method stub
+					transaction = getFragmentManager().beginTransaction();
+					transaction.add(R.id.content,changepasswordFragment);
+					transaction.addToBackStack(null); 
+					transaction.commit();
+				}
+			});
+	
+	  }
+		
+		
+		
+		
+		return rootView;
 	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		if (CheckNetwork.connected(this)){    	  
-				init();
-				login_btn.setOnClickListener(new OnClickListener()
-				{
 		
-					@Override
-					public void onClick(View v){
-						
-						if(checkdata()){
-						new CustomAsynTask(getActivity())
-						{
-							@Override
-							protected Boolean doInBackground(Void... params)
-							{
-								// TODO Auto-generated method stub
-								// 收起键盘
-								try{
-								((InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE))
-								.hideSoftInputFromWindow(getActivity()
-										.getCurrentFocus().getWindowToken(),
-										InputMethodManager.HIDE_NOT_ALWAYS);
-								}catch(Exception ex){
-									ex.printStackTrace();
-								}
-								String[] keys = new String[]
-								{ "username", "password" };
-		
-								String[] values = new String[]
-								{ username.getText().toString(),
-										password.getText().toString() };
-		
-								PostJson postJson = new PostJson();
-		
-								GetParamsMap = postJson.Post(keys, values,
-										"loginmember");
-								
-								Boolean success = false;
-								
-								
-								
-								success = (Boolean) GetParamsMap.get("success");
-								
-								if (success ==null) {
-									return false;
-								}
-								
-								
-								
-								if (success)
-								{
-									//usertype = (Integer)GetParamsMap.get("type");
-									
-									user user = new user();
-									
-									user.setUsername(values[0]);
-									
-									user.setPassword(values[1]);
-									
-									editor.putString("username", username.getText().toString());
-									
-									editor.commit();
-								}
-								
-								
-								return success;
-							}
-		
-							protected void onPostExecute(Boolean result)
-							{
-								super.onPostExecute(result);
-								
-								Toast.makeText(getActivity().getApplicationContext(),
-										(String) GetParamsMap.get("msg"),
-										Toast.LENGTH_LONG).show();
-								
-								editor.putString("tempusername",username.getText().toString());
-								editor.commit();
-								
-								Toast.makeText(getActivity().getApplicationContext(),
-										String.valueOf(usertype),
-										Toast.LENGTH_LONG).show();
-								
-								if (login_member_CheckBox.isChecked()&&result) {
-									editor.putBoolean("remberpassword", true);									
-									editor.putString("temppassword",password.getText().toString());
-									editor.commit();
-								}else if (!login_member_CheckBox.isChecked()) {
-									editor.putBoolean("remberpassword", false);
-									editor.remove("temppassword");
-									editor.commit();
-								}
-								if (autoCheckBox.isChecked()&&result) {
-									editor.putBoolean("autologin", true);
-									editor.commit();
-								}else if(!autoCheckBox.isChecked()){
-									editor.putBoolean("autologin", false);
-								}
-								
-								if (result)
-								{
-									//fragmentManager.beginTransaction().remove(LoginFragment.this).commit();
-									editor.putString("username", username.getText().toString());
-									editor.putString("switchstatus1", sp.getString("switchstatus1", "off"));
-									editor.putString("switchstatus2", sp.getString("switchstatus2", "off"));
-									editor.putString("switchstatus3", sp.getString("switchstatus3", "off"));
-									editor.putString("switchstatus4", sp.getString("switchstatus4", "off"));
-									editor.putString("switchstatus5", sp.getString("switchstatus5", "off"));
-									editor.commit();
-									
-									//
-									
-									
-									YwblFragment ywbl = new YwblFragment();
-									
-									if (fragmentManager.getBackStackEntryCount()<= 1)
-									{
-										transaction.replace(R.id.content, ywbl).commit();
-										
-										
-									}else if(fragmentManager.getBackStackEntryCount()>0){
-										fragmentManager.popBackStackImmediate();
-										transaction.commit();
-									}
-									
-									
-									action_logout.setVisible(true);
-									action_changepassword.setVisible(true);
-									action_setting.setVisible(true);
-									action_pass.setVisible(true);
-									action_address.setVisible(true);
-									action_bookinghistory.setVisible(true);
-								}
-							}
-						}.execute();
-						
-						
-						}
-					}
-					
-					
-				});
-		
-				
-				
-				reg_btn.setOnClickListener(new OnClickListener()
-				{
-		
-					@Override
-					public void onClick(View v)
-					{
-						// TODO Auto-generated method stub
-						transaction = getFragmentManager().beginTransaction();
-						transaction.add(R.id.content,registerFragment);
-						
-						transaction.addToBackStack(null); 
-						
-						transaction.commit();
-					}
-				});
-				
-				login_forget_password.setOnClickListener(new OnClickListener()
-				{
-					
-					@Override
-					public void onClick(View v)
-					{
-						// TODO Auto-generated method stub
-						transaction = getFragmentManager().beginTransaction();
-						transaction.add(R.id.content,changepasswordFragment);
-						transaction.addToBackStack(null); 
-						transaction.commit();
-					}
-				});
-		
-    	  }
 		
 	}
 	public boolean checkdata(){

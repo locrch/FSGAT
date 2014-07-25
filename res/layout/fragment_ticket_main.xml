@@ -21,14 +21,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center" >
+            android:gravity="left" >
 
             <RadioButton
                 android:id="@+id/place_hongkong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="香港"
+                android:text="香港        "
                 android:layout_marginRight="50dp" />
 
             <RadioButton
@@ -43,13 +43,13 @@
         android:id="@+id/relativelayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
+		
         <RadioGroup
             android:id="@+id/ticket_main_choose_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center" >
+            android:gravity="left" >
 
             <RadioButton
                 android:id="@+id/company_yd"
@@ -77,14 +77,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center" >
+            android:gravity="left" >
 
             <RadioButton
                 android:id="@+id/monoway_single"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="单程"
+                android:text="单程        "
                 android:layout_marginRight="50dp" />
 
             <RadioButton
@@ -104,9 +104,9 @@
             android:id="@+id/ticket_main_way_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_toRightOf="@+id/ticket_main_way_label"
-            
-             />
+            />
 
         <TextView
             android:id="@+id/ticket_main_way_label"
@@ -144,10 +144,11 @@
             android:layout_centerVertical="true"
             android:text="上车地点：" />
 
-        <Spinner style="@style/spinner_style"
+        <Spinner  style="@style/MySpinner"
             android:id="@+id/ticket_main_upplace_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/ticket_main_upplace_label"
             />
@@ -171,6 +172,7 @@
             android:id="@+id/ticket_main_downplace_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/ticket_main_downplace_label"
             />
@@ -340,6 +342,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
             android:layout_toRightOf="@+id/ticket_main_back_upplace_label"
             />
 
@@ -363,6 +366,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
             android:layout_toRightOf="@+id/ticket_main_back_downplace_label"
             />
 

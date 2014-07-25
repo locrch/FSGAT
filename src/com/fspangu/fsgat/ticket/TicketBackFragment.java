@@ -25,10 +25,7 @@ public class TicketBackFragment extends Fragment {
 				R.id.ticket_main_back_upplace_spinner);
 		downplace_spinner = (Spinner) getActivity().findViewById(
 				R.id.ticket_main_back_downplace_spinner);
-		uptime_date = (EditText) getActivity().findViewById(
-				R.id.ticket_main_back_uptime_date);
-		uptime_time = (EditText) getActivity().findViewById(
-				R.id.ticket_main_back_uptime_time);
+		
 	}
 
 	@Override
