@@ -60,7 +60,7 @@ public class ListAddressFragment extends Fragment
 	Address address;
 	ListAddress listAddress;
 
-	
+	View rootview;
 	
 	private void init()
 	{
@@ -73,8 +73,8 @@ public class ListAddressFragment extends Fragment
 //		titleview.setText("地址管理");
 		this.getActivity().setTitle("地址管理");
 		// TODO Auto-generated method stub
-		listaddress_addaddress_btn = (Button)getActivity().findViewById(R.id.listaddress_addaddress_btn);
-		listaddress_list = (ListView) getActivity().findViewById(R.id.listaddress_list);
+		listaddress_addaddress_btn = (Button)rootview.findViewById(R.id.listaddress_addaddress_btn);
+		listaddress_list = (ListView) rootview.findViewById(R.id.listaddress_list);
 
 		adapterListMap = new HashMap<String, Object>();
 
@@ -111,8 +111,12 @@ public class ListAddressFragment extends Fragment
 	{
 		// TODO Auto-generated method stub
 		setHasOptionsMenu(true);
-		return inflater.inflate(R.layout.activity_list_address, container,
-				false);
+		
+		rootview = inflater.inflate(R.layout.activity_list_address,null);
+		
+		init();
+		
+		return rootview;
 	}
 	
 	public void updateList(){
@@ -209,7 +213,7 @@ public class ListAddressFragment extends Fragment
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		if (CheckNetwork.connected(this)){
-			init();
+			
 			
 			updateList();
 			

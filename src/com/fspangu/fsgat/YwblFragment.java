@@ -35,7 +35,7 @@ public  class YwblFragment extends Fragment {
 	//private static String text2="申请签注(照相方式)";
 	private static String text2="预约办证";
 	private static String text3="受理记录";
-	
+	Fragment thisfragment;
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
@@ -49,12 +49,13 @@ public  class YwblFragment extends Fragment {
 		TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_title);
 		
 		actionbar_title.setText("业务办理");
+		
+		thisfragment = this;
 	}
 	
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
     	setHasOptionsMenu(true);
-    	if(CheckLogin.logined(this)){
     	
 		        View view = inflater.inflate(R.layout.ywbl_fragment, null);
 //		        android.app.ActionBar actionBar = this.getActivity().getActionBar();
@@ -114,30 +115,38 @@ public  class YwblFragment extends Fragment {
 		                HashMap<String, Object> item = (HashMap<String, Object>) arg0.getItemAtPosition(arg2);
 		                
 		                if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text1)){
+		                	if(CheckLogin.logined(thisfragment)){
+			                    	
 		                	FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		   				 	ApplyVisaFragment fragment=new ApplyVisaFragment();
 		                	transaction.add(R.id.content, fragment);
 		                	transaction.addToBackStack(null);
 		                    transaction.commit();
+		                	}
 		                }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text2)){
+		                	if(CheckLogin.logined(thisfragment)){
+				                
 		                	FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		   				 	BookingFragment fragment=new BookingFragment();
 		                	transaction.add(R.id.content, fragment);
 		                	transaction.addToBackStack(null);
 		                    transaction.commit();
+		                	}
 		                }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text3)){
+		                	if(CheckLogin.logined(thisfragment)){
+				                
 		                	FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		                	ShowHistoryFragment fragment=new ShowHistoryFragment();
 		                	transaction.add(R.id.content, fragment);
 		                	transaction.addToBackStack(null);
 		                    transaction.commit();
+		                	}
 		                }
 		               
 		            }
 		        });// 为每一个子项设置监听
 		        return view;
-    	}
-    	return null;
+    	
     }  
   
   

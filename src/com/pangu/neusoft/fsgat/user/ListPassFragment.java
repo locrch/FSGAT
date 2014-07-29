@@ -13,15 +13,20 @@ import com.fspangu.fsgat.R;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.core.CheckNetwork;
 import com.pangu.neusoft.fsgat.core.PostJson;
+import com.pangu.neusoft.fsgat.model.Address;
+import com.pangu.neusoft.fsgat.model.ListAddress;
 import com.pangu.neusoft.fsgat.model.ListPass;
 import com.pangu.neusoft.fsgat.model.ListPassAdapter;
 import com.pangu.neusoft.fsgat.model.Pass;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -38,6 +43,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class ListPassFragment extends Fragment
@@ -58,21 +64,16 @@ public class ListPassFragment extends Fragment
 	FragmentManager fragmentManager;
 	AddpassFragment addpassFragment;
 
+	View rootview;
+	Dialog alertDialog;
+	
 	private void init()
 	{
-//		android.app.ActionBar actionBar = this.getActivity().getActionBar();
-//		actionBar.setCustomView(R.layout.title_bar);
-//		actionBar.setDisplayShowCustomEnabled(true);
-//		actionBar.setDisplayShowHomeEnabled(false);
-//		actionBar.show();
-//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
-//		titleview.setText("证件管理");
-		this.getActivity().setTitle("证件管理");
-		// TODO Auto-generated method stub
-		listpass_list = (ListView) getActivity().findViewById(
+		
+		listpass_list = (ListView) rootview.findViewById(
 				R.id.listpass_list);
 		
-		listpass_addpass_btn = (Button)getActivity().findViewById(R.id.list_pass_addpass_btn);
+		listpass_addpass_btn = (Button)rootview.findViewById(R.id.list_pass_addpass_btn);
 		
 		adapterListMap = new HashMap<String, Object>();
 
@@ -116,7 +117,12 @@ public class ListPassFragment extends Fragment
 	{
 		// TODO Auto-generated method stub
 		setHasOptionsMenu(true);
-		return inflater.inflate(R.layout.activity_list_pass, container, false);
+		
+		rootview = inflater.inflate(R.layout.activity_list_pass, null);
+		
+		init();
+		
+		return rootview;
 	}
 
 	@Override
@@ -125,7 +131,7 @@ public class ListPassFragment extends Fragment
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		if (CheckNetwork.connected(this)){
-			init();
+			
 	
 			new CustomAsynTask(getActivity())
 			{
@@ -164,7 +170,17 @@ public class ListPassFragment extends Fragment
 	
 							pass.setPassNumber(jo.getString("passNumber")
 									.toString());
-	
+							
+							pass.setSurName(jo.getString("surName").toString());
+							
+							pass.setGivenName(jo.getString("givenName").toString());
+							
+							pass.setDob(jo.getString("dob").toString());
+							
+							pass.setIssueDate(jo.getString("issueDate").toString());
+							
+							pass.setExpireDate(jo.getString("expireDate").toString());
+							
 							ListPass.add(i, pass);
 	
 							adapterList.add(i,
@@ -204,8 +220,7 @@ public class ListPassFragment extends Fragment
 									R.id.listpass_content_name });
 					
 					listpass_list.setAdapter(adapter);
-					adapter.notifyDataSetChanged();
-	
+					
 				}
 			}.execute();
 	
@@ -217,7 +232,28 @@ public class ListPassFragment extends Fragment
 						long arg3)
 				{
 					// TODO Auto-generated method stub
-	
+					final int p=arg2;
+					ListPass LP = (ListPass)ListPass.getListpass();
+					final Pass pass = LP.get(p);
+					
+    				alertDialog = new AlertDialog.Builder(getActivity()). 
+			                setTitle("证件详情"). 
+			                setMessage("通行证号："+pass.getPassNumber()+"\n"
+			                			+"姓名："+pass.getSurName()+pass.getGivenName()+"\n"
+			                			+"出生日期："+pass.getDob()+"\n"
+			                			+"签发日期："+pass.getIssueDate()+"\n"
+			                			+"有效期至："+pass.getExpireDate()). 
+			                setIcon(R.drawable.ic_launcher).
+			                setNegativeButton("确定", new DialogInterface.OnClickListener() { 
+			                     
+			                    @Override 
+			                    public void onClick(DialogInterface dialog, int which) { 
+			                        // TODO Auto-generated method stub
+			                    	alertDialog.dismiss();
+			                    } 
+			                }).
+			                create(); 
+			        alertDialog.show(); 
 				}
 	
 			});

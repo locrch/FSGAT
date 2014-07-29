@@ -5,6 +5,7 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
     android:paddingLeft="3dp"
+    android:descendantFocusability="blocksDescendants"
      >
 
         <TextView
@@ -42,7 +43,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="28dp"
-            android:background="@drawable/listpass_content_del_btn_img" />
+            android:background="@drawable/listpass_content_del_btn_img"
+             />
 
         <TextView
             android:id="@+id/listpass_content_name"

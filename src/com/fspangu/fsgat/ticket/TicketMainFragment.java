@@ -506,6 +506,16 @@ public class TicketMainFragment extends Fragment {
 						way_adapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.simple_spinner_item,way_hongkong);	
 						way_spinner.setAdapter(way_adapter);
 						
+						if (company_yd.isChecked())
+						{
+							ticket_layout.setVisibility(View.GONE);
+							selection.setVisibility(View.VISIBLE);
+							
+							if (monoway_double.isChecked())
+							{
+								back_selection.setVisibility(View.VISIBLE);
+							}
+						}
 					}
 					
 			}
@@ -524,6 +534,9 @@ public class TicketMainFragment extends Fragment {
 					way_spinner.setAdapter(way_adapter);
 						
 					
+					back_selection.setVisibility(View.GONE);
+					selection.setVisibility(View.GONE);
+					ticket_layout.setVisibility(View.VISIBLE);
 				}
 					
 			}
@@ -730,11 +743,29 @@ public class TicketMainFragment extends Fragment {
 					boolean isChecked) {
 				// TODO Auto-generated method stub
 				if (isChecked) {
-					ticket_layout.setVisibility(View.GONE);
+					if (place_hongkong.isChecked())
+					{
+						ticket_layout.setVisibility(View.GONE);
 					selection.setVisibility(View.VISIBLE);
+					}else {
+						ticket_layout.setVisibility(View.VISIBLE);
+					selection.setVisibility(View.GONE);
+					}
+					
+					
 					if (monoway_double.isChecked())
 					{
-						back_selection.setVisibility(View.VISIBLE);
+						if (place_hongkong.isChecked())
+						{
+							back_selection.setVisibility(View.VISIBLE);
+						}
+						else {
+							ticket_layout.setVisibility(View.VISIBLE);
+							selection.setVisibility(View.GONE);
+							
+						}
+						
+						
 					}
 					busCompanyID = 1;
 				
@@ -935,6 +966,13 @@ public class TicketMainFragment extends Fragment {
 								back_selection.setVisibility(View.GONE);
 							}
 							
+							if (place_hongkong.isChecked()&&company_yd.isChecked())
+							{
+								selection.setVisibility(View.VISIBLE);
+								back_selection.setVisibility(View.VISIBLE);
+								ticket_layout.setVisibility(View.GONE);
+							}
+							
 							if(fragment_layout.getVisibility()==0||fragment_layout!=null){
 								
 								new CustomAsynTask(getActivity(),thisfragment)
@@ -1090,6 +1128,8 @@ public class TicketMainFragment extends Fragment {
 						// TODO Auto-generated method stub
 						if (isChecked) {
 							fragment_layout.setVisibility(View.GONE);
+							
+							
 						}
 					}
 				});
@@ -2391,8 +2431,6 @@ public class TicketMainFragment extends Fragment {
 						postbuyTicket.setPostcode("528000");
 					}
 					
-					
-					
 					postbuyTicket.setContacter(contact.getText().toString());
 					
 					postbuyTicket.setContactNumber(tellphone.getText().toString());
@@ -2416,19 +2454,27 @@ public class TicketMainFragment extends Fragment {
 						
 						postbuyTicket.setReturnTicketDate(back_uptime_update.getText().toString());
 						
-						if (company_yd.isChecked())
+						if (company_yd.isChecked()&&place_hongkong.isChecked())
 						{
 							postbuyTicket.setReturnSeatNumbers(PutReturnseatNumbersList.getSeatNumbersList());
 							
-						}
-						else if (company_zgt.isChecked())
-						{
 							
+						}
+						else 
+						{
+							zgt_ticket_count =Integer.valueOf(custom_np_num.getText().toString());
+							
+							postbuyTicket.setTicketCount(zgt_ticket_count);
 						}
 						
 					}
+					else if (monoway_single.isChecked()){
+						zgt_ticket_count =Integer.valueOf(custom_np_num.getText().toString());
+						
+						postbuyTicket.setTicketCount(zgt_ticket_count);
+					}
 					
-					if (company_yd.isChecked())
+					if (company_yd.isChecked()&&place_hongkong.isChecked())
 					{
 						if (PutseatNumbersList.getSeatNumbersList() == null)
 						return false;
@@ -2439,7 +2485,7 @@ public class TicketMainFragment extends Fragment {
 						postbuyTicket.setGoSeatNumbers(PutseatNumbersList.getSeatNumbersList());
 						
 						
-					}else if (company_zgt.isChecked()) {
+					}else{
 						
 						zgt_ticket_count =Integer.valueOf(custom_np_num.getText().toString());
 						
@@ -2477,7 +2523,7 @@ public class TicketMainFragment extends Fragment {
 									+ "  "
 									+ uptime_time.getSelectedItem().toString());
 
-							if (company_yd.isChecked())
+							if (company_yd.isChecked()&&place_hongkong.isChecked())
 							{
 								ConfirmInfo.setTicketcount(PutseatNumbersList
 										.getSeatNumbersList().size());
@@ -2486,7 +2532,7 @@ public class TicketMainFragment extends Fragment {
 										.getSeatNumbersList().size()
 										* oneWayPrice;
 
-							} else if (company_zgt.isChecked())
+							} else
 							{
 
 								ConfirmInfo.setTicketcount(zgt_ticket_count);
@@ -2505,7 +2551,9 @@ public class TicketMainFragment extends Fragment {
 							{
 								ConfirmInfo.setCompany("中港通");
 							}
-
+							
+							
+							
 							fragmentTransaction = getFragmentManager()
 									.beginTransaction();
 
