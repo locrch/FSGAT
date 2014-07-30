@@ -38,7 +38,7 @@
         android:theme="@style/activityTitlebar" >
         <meta-data  
         android:name="com.baidu.lbsapi.API_KEY"  
-        android:value="kRessRFUXo4cvKeIMDwWyGBa" />
+        android:value="vqLuBdZsm0NIZDrcmFdCFO4L" />
         <activity
             android:name="com.fspangu.fsgat.MainActivity"
             android:label="@string/app_name" 
@@ -99,8 +99,8 @@
         </service>
         <!-- push结束 -->
         
-		<!-- 在百度开发者中心查询应用的API Key -->
-        <meta-data android:name="com.baidu.lbsapi.API_KEY" android:value="vqLuBdZsm0NIZDrcmFdCFO4L" />
+		<!-- 在百度推送API Key -->
+        <meta-data android:name="api_key" android:value="ujjgpGT9Q0WsUH63AI5uhobn" />
     </application>
 
 </manifest>

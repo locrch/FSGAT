@@ -2564,7 +2564,7 @@ public class TicketMainFragment extends Fragment {
 							fragmentTransaction.commit();
 						} else
 						{
-
+							
 							Toast.makeText(getActivity(), "请完整输入订票信息！",
 									Toast.LENGTH_SHORT).show();
 						}
