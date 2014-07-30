@@ -3,6 +3,7 @@ package com.fspangu.fsgat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.fspangu.fsgat.maps.LocationMap;
 import com.pangu.neusoft.fsgat.infos.ExportStateFragment;
 import com.pangu.neusoft.fsgat.infos.GuideFragment;
 import com.pangu.neusoft.fsgat.infos.KnowledgeFragment;
@@ -18,6 +19,7 @@ import com.pangu.neusoft.fsgat.visa.ShowHistoryFragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -152,11 +154,15 @@ public  class ZhcxFragment extends Fragment {
                 	transaction.addToBackStack(null);
                     transaction.commit();
                 }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text2)){
-                	FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                	MapPlaceFragment fragment=new MapPlaceFragment();
-                	transaction.add(R.id.content, fragment);
-                	transaction.addToBackStack(null);
-                    transaction.commit();
+//                	FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                	MapPlaceFragment fragment=new MapPlaceFragment();
+//                	transaction.add(R.id.content, fragment);
+//                	transaction.addToBackStack(null);
+//                    transaction.commit();
+                	
+                	Intent intent = getActivity().getIntent();
+                    intent.setClass(getActivity(), LocationMap.class);   
+                    startActivity(intent);
                 }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text3)){
                 	showExport();
                 }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text4)){

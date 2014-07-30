@@ -2,6 +2,7 @@ package com.fspangu.fsgat;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import com.baidu.android.pushservice.CustomPushNotificationBuilder;
 import com.baidu.android.pushservice.PushConstants;
@@ -25,9 +26,9 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Notification;
@@ -41,6 +42,10 @@ import android.content.ClipData.Item;
 import android.content.Intent.ShortcutIconResource;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ProviderInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -428,7 +433,7 @@ public class MainActivity extends ActionBarActivity
 
 	public void checkShortCut()
 	{
-		if (!isAddShortCut() && sp.getBoolean("alertshoutcut", true))
+		if (!hasShortcut(MainActivity.this) && sp.getBoolean("alertshoutcut", true))
 		{
 			Dialog alertDialog = new AlertDialog.Builder(MainActivity.this)
 					.setTitle("")
@@ -454,7 +459,7 @@ public class MainActivity extends ActionBarActivity
 										int which)
 								{
 									// TODO Auto-generated method stub
-									addShortCut();
+									addShortcutToDesktop(MainActivity.this);
 									editor.putBoolean("alertshoutcut", false);
 									editor.commit();
 								}
@@ -476,71 +481,69 @@ public class MainActivity extends ActionBarActivity
 		}
 	}
 
-	public boolean isAddShortCut()
-	{
 
-		boolean isInstallShortcut = false;
-		final ContentResolver cr = this.getContentResolver();
+public static void addShortcutToDesktop(Context context) {
+    if (!hasShortcut(context)) {
+      Intent shortcutIntent = new Intent("com.android.launcher.action.INSTALL_SHORTCUT");
+      shortcutIntent.putExtra("duplicate", false);
+      shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME,context.getString(R.string.app_name));
+      shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
+      Intent.ShortcutIconResource.fromContext(context,R.drawable.ic_launcher));
+      Intent intent = new Intent(context, MainActivity.class);
+      intent.setAction("android.intent.action.MAIN");
+      intent.addCategory("android.intent.category.LAUNCHER");
+      shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
+      context.sendBroadcast(shortcutIntent);
+    }
+  }
 
-		int versionLevel = android.os.Build.VERSION.SDK_INT;
-		String AUTHORITY = "com.android.launcher2.settings";
+  private static boolean hasShortcut(Context context) {
+    String AUTHORITY = getAuthorityFromPermission(context,"com.android.launcher.permission.READ_SETTINGS");
+    System.out.println(" AUTHORITY ..." + AUTHORITY);
+    if (AUTHORITY == null) {
+      return false;
+    }
+    Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY+ "/favorites?notify=true");
+    String title = "";
+    final PackageManager packageManager = context.getPackageManager();
+    try {
+      title = packageManager.getApplicationLabel(
+          packageManager.getApplicationInfo(context.getPackageName(),
+          PackageManager.GET_META_DATA)).toString();
+    } catch (NameNotFoundException e) {
+              e.printStackTrace();
+    }
+    Cursor c = context.getContentResolver().
+           query(CONTENT_URI,new String[] { "title" }, "title=?", new String[] { title },null);
+    if (c != null && c.getCount() > 0) {
+      return true;
+    }
+    return false;
+  }
 
-		// 2.2以上的系统的文件文件名字是不一样的
-		if (versionLevel >= 8)
-		{
-			AUTHORITY = "com.android.launcher2.settings";
-		} else
-		{
-			AUTHORITY = "com.android.launcher.settings";
-		}
-
-		final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
-				+ "/favorites?notify=true");
-		Cursor c = cr.query(CONTENT_URI, new String[]
-		{ "title", "iconResource" }, "title=?", new String[]
-		{ getString(R.string.app_name) }, null);
-
-		if (c != null && c.getCount() > 0)
-		{
-			isInstallShortcut = true;
-		}
-		return isInstallShortcut;
-	}
-
-	public void addShortCut()
-	{
-
-		Intent shortcut = new Intent(
-				"com.android.launcher.action.INSTALL_SHORTCUT");
-		// 设置属性
-		shortcut.putExtra(Intent.EXTRA_SHORTCUT_NAME,
-				getResources().getString(R.string.app_name));
-		ShortcutIconResource iconRes = Intent.ShortcutIconResource.fromContext(
-				this.getApplicationContext(), R.drawable.ic_launcher);
-		shortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON, iconRes);
-
-		// 是否允许重复创建
-		shortcut.putExtra("duplicate", false);
-
-		// 设置桌面快捷方式的图标
-		Parcelable icon = Intent.ShortcutIconResource.fromContext(this,
-				R.drawable.ic_launcher);
-		shortcut.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
-
-		// 点击快捷方式的操作
-		Intent intent = new Intent(Intent.ACTION_MAIN);
-		intent.setFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-		intent.addFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
-		intent.addCategory(Intent.CATEGORY_LAUNCHER);
-		intent.setClass(MainActivity.this, MainActivity.class);
-
-		// 设置启动程序
-		shortcut.putExtra(Intent.EXTRA_SHORTCUT_INTENT, intent);
-
-		// 广播通知桌面去创建
-		this.sendBroadcast(shortcut);
-	}
-
+  private static String getAuthorityFromPermission(Context context,String permission) {
+    if (TextUtils.isEmpty(permission)) {
+      return null;
+    }
+    List<PackageInfo> packageInfoList = 
+    context.getPackageManager().getInstalledPackages(PackageManager.GET_PROVIDERS);
+    if (packageInfoList == null) {
+      return null;
+    }
+    for (PackageInfo packageInfo : packageInfoList) {
+      ProviderInfo[] providerInfos = packageInfo.providers;
+      if (providerInfos != null) {
+        for (ProviderInfo providerInfo : providerInfos) {
+          if (permission.equals(providerInfo.readPermission)|| 
+            permission.equals(providerInfo.writePermission)) {
+            return providerInfo.authority;
+          }
+        }
+      }
+    }
+    return null;
+  }
+  
 	@SuppressLint("NewApi")
 	private void showpop(View v)
 	{

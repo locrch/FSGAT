@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#0fa8eb" >
+
+     <Button
+         android:id="@+id/actionbar_back_btn"
+         android:layout_width="40dp"
+         android:layout_height="40dp"
+         android:layout_marginLeft="5dp"
+         android:background="@drawable/back_btn"
+         android:gravity="center" />
+
+ <TextView
+     android:id="@+id/actionbar_title"
+     android:layout_width="wrap_content"
+     android:layout_height="match_parent"
+     android:layout_weight="2"
+     android:gravity="center"
+     android:text="办证地点"
+     android:textColor="#FFFFFF"
+     android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/near"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="5dp"
+        android:text="附近" />
+
+</LinearLayout>
