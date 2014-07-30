@@ -287,6 +287,70 @@
         </RelativeLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/booking_confirm_sendway_oneself_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/border_grey_four"
+        android:padding="5dp"
+         >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
+
+            <TextView
+                android:id="@+id/booking_confirm_takeway"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/booking_confirm_takeway_label"
+                android:layout_toRightOf="@+id/booking_confirm_takeway_label"
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+
+            <TextView
+                android:id="@+id/booking_confirm_takeway_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="取票地点："
+                android:textSize="@dimen/ticket_booking_confirm_textsize" />
+
+            <TextView
+                android:id="@+id/booking_confirm_takeway_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/booking_confirm_takeway_label"
+                android:text="*选择自取方式请在取票点付款" />
+            
+        </RelativeLayout>
+    </LinearLayout>
+	
+    <LinearLayout
+        android:id="@+id/booking_confirm_sendway_mail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/border_grey_four"
+        android:padding="5dp"
+        android:visibility="gone"
+         >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
+
+            <TextView
+                android:id="@+id/booking_confirm_takeway_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*票到付款，邮递代收" />
+            
+        </RelativeLayout>
+    </LinearLayout>
+    
+    
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -296,10 +360,12 @@
             android:id="@+id/booking_confirm_btn"
             android:layout_width="220dp"
             android:layout_height="50dp"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/button_orange"
             android:text="确认购买"
             android:textColor="#ffffff" />
+
     </RelativeLayout>
 
 </LinearLayout>

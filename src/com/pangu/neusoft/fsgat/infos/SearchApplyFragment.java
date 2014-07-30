@@ -106,7 +106,7 @@ TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_t
 //		titleview.setText("办证进度查询");
     	this.getActivity().setTitle("办证进度查询");
     	button1=(ImageButton)view.findViewById(R.id.imageButton1);
-    	textview1=(TextView)view.findViewById(R.id.textView1);
+    	textview1=(TextView)view.findViewById(R.id.apply_search_result);
     	editText1=(EditText)view.findViewById(R.id.editText1);
     	
     	if (CheckNetwork.connected(this)){
@@ -183,7 +183,7 @@ TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_t
 					ex.printStackTrace();
 				}
 				if(result){     
-					if(historyresult.equals("")){
+					if(historyresult==null&&historyresult.equals("")){
 						historyresult="获取不到数据，请检查网络连接，或稍后重试...";
 					}
 					textview1.setText(historyresult);

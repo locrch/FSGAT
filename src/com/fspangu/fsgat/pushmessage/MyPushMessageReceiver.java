@@ -81,6 +81,7 @@ public class MyPushMessageReceiver extends FrontiaPushMessageReceiver {
             SharedPreferences sp = context.getSharedPreferences("sp",Context.MODE_PRIVATE);
     		Editor editor = sp.edit();
     		editor.putString("pushuserid", userId);
+    		editor.putString("pushchannelid", channelId);
     		editor.commit();
         }
        

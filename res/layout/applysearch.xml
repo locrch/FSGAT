@@ -2,6 +2,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#FFFFFF"
+    android:clickable="true"
     android:orientation="vertical"
     android:padding="10dp" >
 
@@ -34,7 +35,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/booking_confirm_contant_label"
+            android:id="@+id/apply_search_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
