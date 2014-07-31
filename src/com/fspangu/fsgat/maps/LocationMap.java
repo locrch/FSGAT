@@ -2,8 +2,11 @@ package com.fspangu.fsgat.maps;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +38,11 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
+
+
+
 
 
 
@@ -81,6 +89,7 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRouteLine;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
+import com.baidu.mapapi.utils.DistanceUtil;
 import com.fspangu.fsgat.R;
 import com.pangu.neusoft.fsgat.model.BanZhengDT;
 import com.pangu.neusoft.fsgat.user.ChangePasswordFragment;
@@ -237,6 +246,13 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 				Intent intent = getIntent();
 				//LocationClientOption option = new LocationClientOption();
 				//option.setCoorType("gcj02");//如果是百度坐标参数为 bd0911
+				
+//				CoordinateConverter converter  = new CoordinateConverter();  
+//				converter.from(CoordType.COMMON);  
+//				// sourceLatLng待转换坐标  
+//				converter.coord(lle);  
+//				LatLng desLatLng = converter.convert();  
+				
 				double bd_lat=lle.latitude;
 				double bd_lon=lle.longitude;
 				double rlat; double rlon;
@@ -245,6 +261,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 				    double theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * Math.PI);  
 				    rlon = z * Math.cos(theta);  
 				    rlat = z * Math.sin(theta); 
+				    
 				intent.putExtra("long", rlon);
 				intent.putExtra("lat", rlat);
                 intent.setClass(LocationMap.this, SosoStreeViewActivityTestActivity.class);   
@@ -402,21 +419,29 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		ListView listView = new ListView(this);//this为获取当前的上下文
 		listView.setFadingEdgeLength(0);
 		 
-		List<Map<String, String>> nameList = new ArrayList<Map<String, String>>();//建立一个数组存储listview上显示的数据
+		List<Map<String, String>> nameList = new LinkedList<Map<String, String>>();//建立一个数组存储listview上显示的数据
 		for(BanZhengDT banz:places.values()){//initData为一个list类型的数据源
 		    Map<String, String> nameMap = new HashMap<String, String>();
 		    nameMap.put("name", banz.getName());
 		    nameMap.put("address",banz.getAddress());
 		    nameMap.put("phone",banz.getPhone());
+		    LatLng point = new LatLng(banz.getLat(), banz.getLot());
+		    
+		    nameMap.put("distance", ""+((double)(Math.round((DistanceUtil.getDistance(lls, point))*100)))/100);
 		    nameMap.put("lat",banz.getLat()+"");
 		    nameMap.put("lot",banz.getLot()+"");
 		    nameList.add(nameMap);
 		}
-		 
+		try {
+			listSort(nameList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		SimpleAdapter adapter = new SimpleAdapter(LocationMap.this,
 		        nameList, R.layout.place_items,
-		        new String[] { "name","address","phone" },
-		        new int[] { R.id.name,R.id.address,R.id.phone });
+		        new String[] { "name","address","phone","distance"},
+		        new int[] { R.id.name,R.id.address,R.id.phone, R.id.distance });
 		listView.setAdapter(adapter);
 		 
 		linearLayoutMain.addView(listView);//往这个布局中加入listview
@@ -446,7 +471,26 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		});
 	}
 	
-	
+	 public void listSort(List<Map<String,String>> resultList) throws Exception{  
+         // resultList是需要排序的list，其内放的是Map  
+         // 返回的结果集  
+         Collections.sort(resultList,new Comparator<Map<String,String>>() {  
+ 
+          public int compare(Map<String, String> o1,Map<String, String> o2) {  
+ 
+           //o1，o2是list中的Map，可以在其内取得值，按其排序，此例为升序，s1和s2是排序字段值  
+              double s1 = Double.parseDouble(o1.get("distance").toString());  
+              double s2 = Double.parseDouble(o2.get("distance").toString());
+ 
+           if(s1>s2) {  
+            return 1;  
+           }else {  
+            return -1;  
+           }  
+          }  
+         });  
+          
+        } 
 	
 	//set 所有办证大厅
 	Map<String,BanZhengDT> places=new LinkedHashMap<String,BanZhengDT>();
