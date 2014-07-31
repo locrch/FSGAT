@@ -160,7 +160,7 @@ public  class ZhcxFragment extends Fragment {
 //                	transaction.addToBackStack(null);
 //                    transaction.commit();
                 	
-                	Intent intent = getActivity().getIntent();
+                	Intent intent = new Intent();
                     intent.setClass(getActivity(), LocationMap.class);   
                     startActivity(intent);
                 }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text3)){
