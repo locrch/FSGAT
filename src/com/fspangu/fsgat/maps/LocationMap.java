@@ -49,6 +49,8 @@ import android.widget.Toast;
 
 
 
+
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -89,6 +91,8 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRouteLine;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
+import com.baidu.mapapi.utils.CoordinateConverter;
+import com.baidu.mapapi.utils.CoordinateConverter.CoordType;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.fspangu.fsgat.R;
 import com.pangu.neusoft.fsgat.model.BanZhengDT;
@@ -247,11 +251,12 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 				//LocationClientOption option = new LocationClientOption();
 				//option.setCoorType("gcj02");//如果是百度坐标参数为 bd0911
 				
-//				CoordinateConverter converter  = new CoordinateConverter();  
-//				converter.from(CoordType.COMMON);  
-//				// sourceLatLng待转换坐标  
-//				converter.coord(lle);  
-//				LatLng desLatLng = converter.convert();  
+				CoordinateConverter converter  = new CoordinateConverter();  
+				converter.from(CoordType.COMMON); 
+				
+				// sourceLatLng待转换坐标  
+				converter.coord(lle);  
+				LatLng desLatLng = converter.convert();  
 				
 				double bd_lat=lle.latitude;
 				double bd_lon=lle.longitude;
