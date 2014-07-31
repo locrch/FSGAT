@@ -3,6 +3,7 @@ package com.fspangu.fsgat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.fspangu.fsgat.maps.KouanLocationMap;
 import com.fspangu.fsgat.maps.LocationMap;
 import com.pangu.neusoft.fsgat.infos.ExportStateFragment;
 import com.pangu.neusoft.fsgat.infos.GuideFragment;
@@ -165,6 +166,7 @@ public  class ZhcxFragment extends Fragment {
                     startActivity(intent);
                 }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text3)){
                 	showExport();
+                	
                 }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text4)){
                 	FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 	ExportStateFragment fragment=new ExportStateFragment();
@@ -227,13 +229,15 @@ public  class ZhcxFragment extends Fragment {
 			     @Override
 			     public void onClick(DialogInterface dialog, int which) {
 			    	// Toast.makeText(getActivity(), visas[selectedFruitIndex], Toast.LENGTH_SHORT).show();
+			    	 /*
 			    	 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 	                	MapExportFragment fragment=new MapExportFragment();   
 	                	
 			    	 if(exportid==1){
 		                	Bundle args = new Bundle();  
 		                    args.putString("export", "macau");  
-		                    fragment.setArguments(args);                    
+		                    fragment.setArguments(args);   
+		                    
 			    	 }else{
 		                	Bundle args = new Bundle();  
 		                    args.putString("export", "hk");  
@@ -242,6 +246,19 @@ public  class ZhcxFragment extends Fragment {
 			    	 transaction.add(R.id.content, fragment);
 	                	transaction.addToBackStack(null);
 	                    transaction.commit();
+	                    */
+			    	 if(exportid==1){
+			    		 Intent intent = new Intent();
+		                 intent.setClass(getActivity(), KouanLocationMap.class);
+			    		 intent.putExtra("export", "macau");		                 
+		                 startActivity(intent);
+			    	 }else{
+			    		 Intent intent = new Intent();
+		                 intent.setClass(getActivity(), KouanLocationMap.class);   
+		                 intent.putExtra("export", "hk");
+		                 startActivity(intent);
+			    	 }
+			    	 
 			     }
 			    }).
 			    setNegativeButton("取消", new DialogInterface.OnClickListener() {

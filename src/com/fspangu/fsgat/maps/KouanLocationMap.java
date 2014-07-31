@@ -106,7 +106,7 @@ import com.pangu.neusoft.fsgat.user.VersionInfoFragment;
 import com.pangu.neusoft.fsgat.visa.ShowHistoryFragment;
 import com.pangu.neusoft.tools.update.UpdateOperation;
 
-public class LocationMap extends Activity implements OnGetRoutePlanResultListener {
+public class KouanLocationMap extends Activity implements OnGetRoutePlanResultListener {
 
 	// 定位相关
 	LocationClient mLocClient;
@@ -126,7 +126,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 	Button driver;
 	Button transit;
 	Button walk;
-	
+	String export;
 	
 	boolean isFirstLoc = true;// 是否首次定位
 
@@ -138,13 +138,13 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 				this.getBaseContext().getResources()
 						.getDrawable(R.drawable.title_background));
 		getActionBar().show();
-		setTitle("办证地点");
+		setTitle("通关口岸");
 		
 		SDKInitializer.initialize(getApplicationContext());
 		
 		setOverflowShowingAlways();
 		
-		
+		export=getIntent().getStringExtra("export");
 		setContentView(R.layout.activity_location);
 		requestLocButton = (Button) findViewById(R.id.button1);
 		locButton= (Button) findViewById(R.id.button2);
@@ -153,22 +153,23 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		 driver= (Button) findViewById(R.id.driver);
 		 transit= (Button) findViewById(R.id.transit);
 		 walk= (Button) findViewById(R.id.walk);
-		 mBtnPre= (Button) findViewById(R.id.pre);
-         mBtnNext= (Button) findViewById(R.id.next);
-         requestLocButton.setText("普通");
- 		showfunction=(LinearLayout)findViewById(R.id.showfunction);
- 		
+		  mBtnPre= (Button) findViewById(R.id.pre);
+          mBtnNext= (Button) findViewById(R.id.next);
+		 
+          
+			requestLocButton.setText("普通");
+			showfunction=(LinearLayout)findViewById(R.id.showfunction);
+
 		// 地图初始化
 		mMapView = (MapView) findViewById(R.id.bmapView);
-		mBaiduMap = mMapView.getMap();
+		mBaiduMap = mMapView.getMap();		
 		mCurrentMode = LocationMode.NORMAL;
-		LatLng ptCenter = new LatLng(22.997531d,113.121134d);//设置禅城为中心
-		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ptCenter ));
 		setPlace();//设置所有Place
-		showMarker("all");
+			
 		
 		// 开启定位图层
 		mBaiduMap.setMyLocationEnabled(true);
+		
 		// 定位初始化
 		mLocClient = new LocationClient(this);
 		mLocClient.registerLocationListener(myListener);
@@ -177,7 +178,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		option.setCoorType("bd09ll"); // 设置坐标类型
 		option.setScanSpan(1000);
 		mLocClient.setLocOption(option);
-		mLocClient.start();
+		
 		mBaiduMap.setMyLocationConfigeration(new MyLocationConfigeration(
 				mCurrentMode, true, mCurrentMarker));
 		mBaiduMap.setOnMarkerClickListener(new OnMarkerClickListener() {
@@ -186,133 +187,138 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 				Point p = mBaiduMap.getProjection().toScreenLocation(ll);
 				p.y -= 47;
 				String res=markerstring.get(marker);
-				Toast.makeText(LocationMap.this, res, Toast.LENGTH_LONG).show();
+				Toast.makeText(KouanLocationMap.this, res, Toast.LENGTH_LONG).show();
 				return true;
 			}
 		});
-		mBtnNext.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				nodeClick(1);
-			}
-			 
-		 });
-		 mBtnPre.setOnClickListener(new OnClickListener(){
+		
+		showMarker("all");	
+		 mBtnNext.setOnClickListener(new OnClickListener(){
 
 				@Override
 				public void onClick(View arg0) {
 					// TODO Auto-generated method stub
-					nodeClick(0);
+					nodeClick(1);
 				}
 				 
 			 });
-		
-		
-		driver.setOnClickListener(new OnClickListener(){
+			 mBtnPre.setOnClickListener(new OnClickListener(){
 
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				SearchButtonProcess(1);
-			}
+					@Override
+					public void onClick(View arg0) {
+						// TODO Auto-generated method stub
+						nodeClick(0);
+					}
+					 
+				 });
 			
-		});
-		
-		transit.setOnClickListener(new OnClickListener(){
+			driver.setOnClickListener(new OnClickListener(){
 
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				SearchButtonProcess(2);
-			}
-			
-		});
-		walk.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				SearchButtonProcess(3);
-			}
-			
-		});
-		
-		OnClickListener locButtonListener=new OnClickListener(){
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				//mCurrentMode = LocationMode.FOLLOWING;
-				double lat=mBaiduMap.getLocationData().latitude;
-				double lon=mBaiduMap.getLocationData().longitude;
-				LatLng ptCenter = new LatLng(lat,lon);//设置当前位置为中心
-				mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ptCenter ));
- 				
-			}
-			
-		};
-		
-		OnClickListener btnClickListener = new OnClickListener() {
-			public void onClick(View v) {
-				switch (mCurrentMode) {
-				
-				case COMPASS:
-					requestLocButton.setText("普通");
-					mCurrentMode = LocationMode.NORMAL;
-					mBaiduMap
-							.setMyLocationConfigeration(new MyLocationConfigeration(
-									mCurrentMode, true, mCurrentMarker));
-					break;
-				case NORMAL:
-					requestLocButton.setText("罗盘");
-					mCurrentMode = LocationMode.COMPASS;
-					mBaiduMap
-							.setMyLocationConfigeration(new MyLocationConfigeration(
-									mCurrentMode, true, mCurrentMarker));
-					break;
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					SearchButtonProcess(1);
 				}
-			}
-		};
-		viewstreet.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View arg0) {
-				// 全景
-				Intent intent = getIntent();
-				//LocationClientOption option = new LocationClientOption();
-				//option.setCoorType("gcj02");//如果是百度坐标参数为 bd0911
 				
-				CoordinateConverter converter  = new CoordinateConverter();  
-				converter.from(CoordType.COMMON); 
-				
-				// sourceLatLng待转换坐标  
-				converter.coord(lle);  
-				LatLng desLatLng = converter.convert();  
-				
-				double bd_lat=lle.latitude;
-				double bd_lon=lle.longitude;
-				double rlat; double rlon;
-				    double x = bd_lon - 0.0065, y = bd_lat - 0.006;  
-				    double z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * Math.PI);  
-				    double theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * Math.PI);  
-				    rlon = z * Math.cos(theta);  
-				    rlat = z * Math.sin(theta); 
-				    
-				intent.putExtra("long", rlon);
-				intent.putExtra("lat", rlat);
-                intent.setClass(LocationMap.this, SosoStreeViewActivityTestActivity.class);   
-                startActivity(intent); 
-			}
+			});
 			
-		});
-		
+			transit.setOnClickListener(new OnClickListener(){
+
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					SearchButtonProcess(2);
+				}
+				
+			});
+			walk.setOnClickListener(new OnClickListener(){
+
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					SearchButtonProcess(3);
+				}
+				
+			});
+			
+			OnClickListener locButtonListener=new OnClickListener(){
+
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					//mCurrentMode = LocationMode.FOLLOWING;
+					if(mLocClient!=null&&lls==null){
+						mLocClient.start();
+						
+					}
+					//double lat=mBaiduMap.getLocationData().latitude;
+					//double lon=mBaiduMap.getLocationData().longitude;
+					//LatLng ptCenter = new LatLng(lat,lon);//设置当前位置为中心
+					//mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ptCenter ));
+	 				
+				}
+				
+			};
+			
+			OnClickListener btnClickListener = new OnClickListener() {
+				public void onClick(View v) {
+					switch (mCurrentMode) {
+					
+					case COMPASS:
+						requestLocButton.setText("普通");
+						mCurrentMode = LocationMode.NORMAL;
+						mBaiduMap
+								.setMyLocationConfigeration(new MyLocationConfigeration(
+										mCurrentMode, true, mCurrentMarker));
+						break;
+					case NORMAL:
+						requestLocButton.setText("罗盘");
+						mCurrentMode = LocationMode.COMPASS;
+						mBaiduMap
+								.setMyLocationConfigeration(new MyLocationConfigeration(
+										mCurrentMode, true, mCurrentMarker));
+						break;
+					}
+				}
+			};
+			viewstreet.setOnClickListener(new OnClickListener(){
+
+				@Override
+				public void onClick(View arg0) {
+					// 全景
+					Intent intent = getIntent();
+					//LocationClientOption option = new LocationClientOption();
+					//option.setCoorType("gcj02");//如果是百度坐标参数为 bd0911
+					
+					CoordinateConverter converter  = new CoordinateConverter();  
+					converter.from(CoordType.COMMON); 
+					
+					// sourceLatLng待转换坐标  
+					converter.coord(lle);  
+					LatLng desLatLng = converter.convert();  
+					
+					double bd_lat=lle.latitude;
+					double bd_lon=lle.longitude;
+					double rlat; double rlon;
+					    double x = bd_lon - 0.0065, y = bd_lat - 0.006;  
+					    double z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * Math.PI);  
+					    double theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * Math.PI);  
+					    rlon = z * Math.cos(theta);  
+					    rlat = z * Math.sin(theta); 
+					    
+					intent.putExtra("long", rlon);
+					intent.putExtra("lat", rlat);
+	                intent.setClass(KouanLocationMap.this, KouanSosoStreeViewActivityTestActivity.class);   
+	                startActivity(intent); 
+				}
+				
+			});
+			
 		requestLocButton.setOnClickListener(btnClickListener);
 		locButton.setOnClickListener(locButtonListener);
 		
-		 mSearch = RoutePlanSearch.newInstance();
-	     mSearch.setOnGetRoutePlanResultListener(this);
+		mSearch = RoutePlanSearch.newInstance();
+	    mSearch.setOnGetRoutePlanResultListener(this);
 	}
 
 	private void setOverflowShowingAlways()
@@ -353,6 +359,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 				MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
 				mBaiduMap.animateMapStatus(u);
 				lls=ll;
+				near_back_btn.setText("选择口岸");
 			}
 		}
 
@@ -384,7 +391,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		super.onDestroy();
 	}
 	
-	
+	Button near_back_btn;
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
 		android.app.ActionBar actionBar = getActionBar();
@@ -392,9 +399,10 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		actionBar.setDisplayShowCustomEnabled(true);
 		actionBar.setCustomView(R.layout.map_title_bar);
 		Button actionbar_back_btn = (Button) findViewById(R.id.actionbar_back_btn);
-		Button near_back_btn = (Button) findViewById(R.id.near);
+		near_back_btn = (Button) findViewById(R.id.near);
+		near_back_btn.setText("请先定位");
 		TextView actionbar_title=(TextView)findViewById(R.id.actionbar_title);
-		actionbar_title.setText("办证地点");
+		actionbar_title.setText("通关口岸");
 		actionbar_back_btn.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v){
@@ -405,7 +413,13 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 
 			@Override
 			public void onClick(View v){
-				choosePlace();
+				if(mLocClient!=null&&lls==null){
+					mLocClient.start();	
+					
+				}
+				else{
+					choosePlace();
+				}
 			}
 		});
 		near_back_btn.setVisibility(View.VISIBLE);
@@ -442,8 +456,8 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		SimpleAdapter adapter = new SimpleAdapter(LocationMap.this,
-		        nameList, R.layout.place_items,
+		SimpleAdapter adapter = new SimpleAdapter(KouanLocationMap.this,
+		        nameList, R.layout.export_items,
 		        new String[] { "name","address","phone","distance"},
 		        new int[] { R.id.name,R.id.address,R.id.phone, R.id.distance });
 		listView.setAdapter(adapter);
@@ -451,7 +465,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		linearLayoutMain.addView(listView);//往这个布局中加入listview
 		 
 		final AlertDialog dialog = new AlertDialog.Builder(this)
-		        .setTitle("选择办证大厅").setView(linearLayoutMain)//在这里把写好的这个listview的布局加载dialog中
+		        .setTitle("选择通关口岸").setView(linearLayoutMain)//在这里把写好的这个listview的布局加载dialog中
 		        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
 		 
 		            @Override
@@ -532,7 +546,11 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
     
 	    
 	public void setPlace(){
-		String place=getResources().getString(R.string.banzheng_place);
+		String place="";
+		if(export.equals("hk"))
+			place=getResources().getString(R.string.export_place_hk);
+		else
+			place=getResources().getString(R.string.export_place_macau);
 		String[] resall=place.split("\\|");
 	
 		for(String resone:resall){
@@ -557,14 +575,20 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		mBaiduMap.clear();
 		showid=1;
 		if(name.equals("all")){
+			double lat=22.997531d;
+			double lot=113.121134d;
 			showfunction.setVisibility(View.GONE);
 			for(BanZhengDT banz:places.values()){
 				Marker marker=setMarker(banz.getLat(),banz.getLot(),banz.getAddress());
-				markerstring.put(marker, banz.getName()+"\n电话："+banz.getPhone()+" \n地址："+banz.getAddress());
+				markerstring.put(marker, banz.getName()+"\n开放时间："+banz.getPhone()+" \n地址："+banz.getAddress());
+				if(banz.getName().equals("罗湖口岸")||banz.getName().equals("拱北口岸")){
+					lat=banz.getLat();
+					lot=banz.getLot();
+				}
 				
 			}
 			
-			LatLng ptCenter = new LatLng(22.997531d,113.121134d);//设置禅城为中心
+			LatLng ptCenter = new LatLng(lat,lot);//设置常用口岸为中心
 			mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ptCenter ));
 		}else{
 			
@@ -573,7 +597,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 			BanZhengDT banz=places.get(obj.get(name));
 			if(banz!=null){
 				Marker marker=setMarker(banz.getLat(),banz.getLot(),banz.getAddress());
-				markerstring.put(marker, banz.getName()+"\n电话："+banz.getPhone()+" \n地址："+banz.getAddress());
+				markerstring.put(marker, banz.getName()+"\n开放时间："+banz.getPhone()+" \n地址："+banz.getAddress());
 				LatLng ptCenter = new LatLng(banz.getLat(),banz.getLot());//设置禅城为中心
 				mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ptCenter ));
 				lle=ptCenter;
@@ -601,7 +625,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 	        route = null;
 	        mBtnPre.setVisibility(View.INVISIBLE);
 	        mBtnNext.setVisibility(View.INVISIBLE);
-	       
+	        
 	        // 处理搜索按钮响应
 	       
 	        
@@ -624,7 +648,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 	                    .to(enNode));
 	        }
     	}else{
-    			Toast.makeText(LocationMap.this, "定位错误，请先选择目的地！", Toast.LENGTH_SHORT).show();
+    			Toast.makeText(KouanLocationMap.this, "定位错误，请先选择目的地！", Toast.LENGTH_SHORT).show();
     	}
     }
 
@@ -690,7 +714,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
     @Override
     public void onGetWalkingRouteResult(WalkingRouteResult result) {
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(LocationMap.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+            Toast.makeText(KouanLocationMap.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
         }
         if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
             //起终点或途经点地址有岐义，通过以下接口获取建议查询信息
@@ -698,7 +722,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
             return;
         }
         if (result.error == SearchResult.ERRORNO.NO_ERROR) {
-        	 mBaiduMap.clear();
+        	mBaiduMap.clear();
             nodeIndex = -1;
             mBtnPre.setVisibility(View.VISIBLE);
             mBtnNext.setVisibility(View.VISIBLE);
@@ -783,7 +807,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
     public void onGetTransitRouteResult(TransitRouteResult result) {
 
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(LocationMap.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+            Toast.makeText(KouanLocationMap.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
         }
         if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
             //起终点或途经点地址有岐义，通过以下接口获取建议查询信息
@@ -791,7 +815,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
             return;
         }
         if (result.error == SearchResult.ERRORNO.NO_ERROR) {
-        	 mBaiduMap.clear();
+        	mBaiduMap.clear();
             nodeIndex = -1;
             mBtnPre.setVisibility(View.VISIBLE);
             mBtnNext.setVisibility(View.VISIBLE);
@@ -808,7 +832,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
     @Override
     public void onGetDrivingRouteResult(DrivingRouteResult result) {
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(LocationMap.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
+            Toast.makeText(KouanLocationMap.this, "抱歉，未找到结果", Toast.LENGTH_SHORT).show();
         }
         if (result.error == SearchResult.ERRORNO.AMBIGUOUS_ROURE_ADDR) {
             //起终点或途经点地址有岐义，通过以下接口获取建议查询信息
@@ -816,7 +840,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
             return;
         }
         if (result.error == SearchResult.ERRORNO.NO_ERROR) {
-        	 mBaiduMap.clear();
+        	mBaiduMap.clear();
             nodeIndex = -1;
             mBtnPre.setVisibility(View.VISIBLE);
             mBtnNext.setVisibility(View.VISIBLE);

@@ -75,6 +75,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
+        
         <activity
             android:name="com.fspangu.fsgat.maps.PanoramaActivityMain"
             android:configChanges="orientation|keyboardHidden"
@@ -138,9 +139,18 @@
         <meta-data
             android:name="api_key"
             android:value="ujjgpGT9Q0WsUH63AI5uhobn" />
-
         <activity
             android:name="com.fspangu.fsgat.maps.SosoStreeViewActivityTestActivity"
+            android:label="@string/title_activity_tec_street" >
+        </activity>
+        <activity
+            android:name="com.fspangu.fsgat.maps.KouanLocationMap"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.fspangu.fsgat.maps.KouanSosoStreeViewActivityTestActivity"
             android:label="@string/title_activity_tec_street" >
         </activity>
     </application>
