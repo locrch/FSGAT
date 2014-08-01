@@ -15,6 +15,7 @@ import com.fspangu.fsgat.YwblFragment;
 import com.fspangu.fsgat.pushmessage.Utils;
 import com.fspangu.fsgat.ticket.TicketHistoryFragment;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
+import com.pangu.neusoft.fsgat.CustomView.ProtocolAlterDialog;
 import com.pangu.neusoft.fsgat.core.CheckNetwork;
 import com.pangu.neusoft.fsgat.core.PostJson;
 import com.pangu.neusoft.fsgat.model.user;
@@ -64,6 +65,8 @@ public class LoginFragment extends Fragment
 	Fragment registerFragment,changepasswordFragment;
 	LoginFragment loginFragment;
 	int usertype;
+	
+	ProtocolAlterDialog dialog;
 	
 	MenuItem action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
 	@Override
@@ -325,12 +328,59 @@ public class LoginFragment extends Fragment
 					public void onClick(View v)
 					{
 						// TODO Auto-generated method stub
-						transaction = getFragmentManager().beginTransaction();
-						transaction.add(R.id.content,registerFragment);
 						
-						transaction.addToBackStack(null); 
+						dialog = new ProtocolAlterDialog
+						(getActivity(),
+						 getActivity().getString(R.string.reg_protocol_content1)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content2)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content3)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content4)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content5)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content6)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content7)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content8)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content9)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content10)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content11)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content12)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content13)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content14)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content15)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content16)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content17)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content18)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content19)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content20)+"\n"
+						+getActivity().getString(R.string.reg_protocol_content21)+"\n"
+						,"注册协议")
+						{
+							
+							@Override
+							public void agree_clickCallBack()
+							{
+								// TODO Auto-generated method stub
+								transaction = getFragmentManager().beginTransaction();
+								transaction.add(R.id.content,registerFragment);
+								
+								transaction.addToBackStack(null); 
+								
+								transaction.commit();
+								
+								dialog.dismiss();
+							}
+
+							@Override
+							public void diaagree_clickCallBack()
+							{
+								// TODO Auto-generated method stub
+								
+								dialog.dismiss();
+							}
+						};
 						
-						transaction.commit();
+						dialog.show();
+						
+						/**/
 					}
 				});
 				
