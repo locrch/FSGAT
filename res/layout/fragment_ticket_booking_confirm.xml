@@ -59,6 +59,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/booking_confirm_address_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >

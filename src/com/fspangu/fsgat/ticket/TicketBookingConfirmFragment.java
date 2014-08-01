@@ -3,6 +3,7 @@ package com.fspangu.fsgat.ticket;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import com.baidu.platform.comapi.map.r;
 import com.fspangu.fsgat.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
@@ -41,6 +43,7 @@ public class TicketBookingConfirmFragment extends Fragment{
 	FragmentTransaction transaction;
 	View rootview;
 	LinearLayout sendway_oneself_layout,sendway_mail_layout;
+	RelativeLayout address_layout;
 	private void init() {
 		// TODO Auto-generated method stub
 		contant = (TextView)rootview.findViewById(R.id.booking_confirm_contant);
@@ -53,10 +56,9 @@ public class TicketBookingConfirmFragment extends Fragment{
 		ticketcount = (TextView)rootview.findViewById(R.id.booking_confirm_ticketcount);
 		price = (TextView)rootview.findViewById(R.id.booking_confirm_price);
 		confirm_btn = (Button)rootview.findViewById(R.id.booking_confirm_btn);
-		
 		sendway_oneself_layout = (LinearLayout)rootview.findViewById(R.id.booking_confirm_sendway_oneself_layout);
-		
 		sendway_mail_layout = (LinearLayout)rootview.findViewById(R.id.booking_confirm_sendway_mail_layout);
+		address_layout = (RelativeLayout)rootview.findViewById(R.id.booking_confirm_address_layout);
 		
 		postbuyTicket = TicketMainFragment.postbuyTicket;
 		
@@ -107,7 +109,18 @@ public class TicketBookingConfirmFragment extends Fragment{
 			float pricenum = ConfirmInfo.getPrice();
 			ticketcount.setText(String.valueOf(ticketcountnum));
 			price.setText(String.valueOf(pricenum));
-		
+			
+			if (TicketMainFragment.postbuyTicket.getIsExpress())
+			{
+				sendway_oneself_layout.setVisibility(View.GONE);
+				sendway_mail_layout.setVisibility(View.VISIBLE);
+			}
+			else {
+				address_layout.setVisibility(View.GONE);
+				sendway_oneself_layout.setVisibility(View.VISIBLE);
+				sendway_mail_layout.setVisibility(View.GONE);
+			}
+			
 		confirm_btn.setOnClickListener(new OnClickListener() {
 			
 			@Override
