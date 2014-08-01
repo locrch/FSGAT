@@ -66,7 +66,7 @@ public class LoginFragment extends Fragment
 	LoginFragment loginFragment;
 	int usertype;
 	
-	ProtocolAlterDialog dialog;
+	ProtocolAlterDialog PAdialog;
 	
 	MenuItem action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
 	@Override
@@ -329,7 +329,7 @@ public class LoginFragment extends Fragment
 					{
 						// TODO Auto-generated method stub
 						
-						dialog = new ProtocolAlterDialog
+						PAdialog = new ProtocolAlterDialog
 						(getActivity(),
 						 getActivity().getString(R.string.reg_protocol_content1)+"\n"
 						+getActivity().getString(R.string.reg_protocol_content2)+"\n"
@@ -366,7 +366,7 @@ public class LoginFragment extends Fragment
 								
 								transaction.commit();
 								
-								dialog.dismiss();
+								PAdialog.dismiss();
 							}
 
 							@Override
@@ -374,11 +374,11 @@ public class LoginFragment extends Fragment
 							{
 								// TODO Auto-generated method stub
 								
-								dialog.dismiss();
+								PAdialog.dismiss();
 							}
 						};
 						
-						dialog.show();
+						PAdialog.show();
 						
 						/**/
 					}

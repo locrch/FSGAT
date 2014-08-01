@@ -125,7 +125,9 @@ public  class YwblFragment extends Fragment {
 		                	}
 		                }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text2)){
 		                	if(CheckLogin.logined(thisfragment)){
-				                
+				            
+		                		
+		                		
 		                	FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		   				 	BookingFragment fragment=new BookingFragment();
 		                	transaction.add(R.id.content, fragment);
