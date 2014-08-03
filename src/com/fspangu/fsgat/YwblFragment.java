@@ -3,6 +3,7 @@ package com.fspangu.fsgat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.pangu.neusoft.fsgat.CustomView.ProtocolAlterDialog;
 import com.pangu.neusoft.fsgat.core.CheckLogin;
 import com.pangu.neusoft.fsgat.user.LoginFragment;
 import com.pangu.neusoft.fsgat.visa.ApplyVisaFragment;
@@ -13,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,6 +38,9 @@ public  class YwblFragment extends Fragment {
 	private static String text2="预约办证";
 	private static String text3="受理记录";
 	Fragment thisfragment;
+	FragmentTransaction transaction;
+	FragmentManager fragmentManager;
+	ProtocolAlterDialog PAdialog;
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
@@ -116,23 +121,92 @@ public  class YwblFragment extends Fragment {
 		                
 		                if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text1)){
 		                	if(CheckLogin.logined(thisfragment)){
-			                    	
-		                	FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		   				 	ApplyVisaFragment fragment=new ApplyVisaFragment();
-		                	transaction.add(R.id.content, fragment);
-		                	transaction.addToBackStack(null);
-		                    transaction.commit();
+			                
+		                		PAdialog = new ProtocolAlterDialog
+		        						(getActivity(),
+		        						 getActivity().getString(R.string.visa_protocol_content1)+"\n"
+		        						+getActivity().getString(R.string.visa_protocol_content2)+"\n"
+		        						+getActivity().getString(R.string.visa_protocol_content3)+"\n"
+		        						+getActivity().getString(R.string.visa_protocol_content4)+"\n"
+		        						+getActivity().getString(R.string.visa_protocol_content5)+"\n"
+		        						+getActivity().getString(R.string.visa_protocol_content6)+"\n"
+		        						+getActivity().getString(R.string.visa_protocol_content7)+"\n"
+		        						+getActivity().getString(R.string.visa_protocol_content8)+"\n"
+		        						,"申请协议书")
+		        						{
+		        							
+		        							@Override
+		        							public void agree_clickCallBack()
+		        							{
+		        								// TODO Auto-generated method stub
+		        								
+		        								FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		        			   				 	ApplyVisaFragment fragment=new ApplyVisaFragment();
+		        			                	transaction.add(R.id.content, fragment);
+		        			                	transaction.addToBackStack(null);
+		        			                    transaction.commit();
+		        								
+		        								PAdialog.dismiss();
+		        							}
+		        							
+		        							@Override
+		        							public void diaagree_clickCallBack()
+		        							{
+		        								// TODO Auto-generated method stub
+		        								
+		        								PAdialog.dismiss();
+		        							}
+		        						};
+		        						
+		        						PAdialog.show();	
+		                		
+		                	
 		                	}
 		                }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text2)){
 		                	if(CheckLogin.logined(thisfragment)){
 				            
+		                	PAdialog = new ProtocolAlterDialog
+		        						(getActivity(),
+		        						 getActivity().getString(R.string.booking_protocol_content1)+"\n"
+		        						+getActivity().getString(R.string.booking_protocol_content2)+"\n"
+		        						+getActivity().getString(R.string.booking_protocol_content3)+"\n"
+		        						+getActivity().getString(R.string.booking_protocol_content4)+"\n"
+		        						+getActivity().getString(R.string.booking_protocol_content5)+"\n"
+		        						+getActivity().getString(R.string.booking_protocol_content6)+"\n"
+		        						+getActivity().getString(R.string.booking_protocol_content7)+"\n"
+		        						+getActivity().getString(R.string.booking_protocol_content8)+"\n"
+		        						+getActivity().getString(R.string.booking_protocol_content9)+"\n"
+		        						+getActivity().getString(R.string.booking_protocol_content10)+"\n"
+		        						,"预约协议")
+		        						{
+		        							
+		        							@Override
+		        							public void agree_clickCallBack()
+		        							{
+		        								// TODO Auto-generated method stub
+		        								
+		        								FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		        			   				 	BookingFragment fragment=new BookingFragment();
+		        			                	transaction.add(R.id.content, fragment);
+		        			                	transaction.addToBackStack(null);
+		        			                    transaction.commit();
+		        								
+		        								PAdialog.dismiss();
+		        							}
+
+		        							@Override
+		        							public void diaagree_clickCallBack()
+		        							{
+		        								// TODO Auto-generated method stub
+		        								
+		        								PAdialog.dismiss();
+		        							}
+		        						};
+		        						
+		        						PAdialog.show();	
 		                		
 		                		
-		                	FragmentTransaction transaction = getFragmentManager().beginTransaction();
-		   				 	BookingFragment fragment=new BookingFragment();
-		                	transaction.add(R.id.content, fragment);
-		                	transaction.addToBackStack(null);
-		                    transaction.commit();
+		                	
 		                	}
 		                }else if(item!=null&&item.get("ItemText")!=null&&item.get("ItemText").equals(text3)){
 		                	if(CheckLogin.logined(thisfragment)){
