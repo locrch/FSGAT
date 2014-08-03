@@ -2038,6 +2038,7 @@ containing a value of this type.
         public static final int title_activity_user_main=0x7f0a000f;
         public static final int toast_flase_msg=0x7f0a0018;
         public static final int updateserverurl=0x7f0a0019;
+        public static final int version_info_content=0x7f0a004c;
         public static final int visa_protocol_content1=0x7f0a0044;
         public static final int visa_protocol_content2=0x7f0a0045;
         public static final int visa_protocol_content3=0x7f0a0046;

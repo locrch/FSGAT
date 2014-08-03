@@ -14,4 +14,15 @@
         android:layout_marginTop="50dp"
         android:src="@drawable/pangu_logo" />
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="71dp"
+        android:text="@string/version_info_content" />
+
 </RelativeLayout>
