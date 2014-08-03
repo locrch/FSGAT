@@ -2,3 +2,4 @@ bin/
 gen/
 .settings
 R.java
+.class

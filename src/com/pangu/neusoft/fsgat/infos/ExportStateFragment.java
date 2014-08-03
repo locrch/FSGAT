@@ -166,7 +166,9 @@ public  class ExportStateFragment extends Fragment {
         return view;  
     }  
     
-    List<String> listdata=new ArrayList<String>();
+    List<String> listdatazhu=new ArrayList<String>();
+    ArrayList<Map<String,Object>> listdata= new ArrayList<Map<String,Object>>();
+    
     AsyncTask<Void, Void, Boolean> loading;
     public void getShenZhenDatas(){
         listdata.clear();
@@ -191,7 +193,21 @@ public  class ExportStateFragment extends Fragment {
 			   		 Element select=doc.getElementById("portStatus");
 			   		 Elements links=select.getElementsByTag("li");
 			   		 for (Element link : links) {
-			   			listdata.add(link.text().replace(Jsoup.parse("&nbsp;").text(), ""));
+			   			String text=link.text().replace(Jsoup.parse("&nbsp;").text(), "");
+			   			String export=text.replace("顺畅","").replace("正常","").replace("繁忙","");
+			   			int drawable;
+			   			if(text.contains("顺畅")){
+			   				drawable=R.drawable.export_status_fast;
+			   			}else if(text.contains("繁忙")){
+			   				drawable=R.drawable.export_status_busy;
+			   			}else{
+			   				drawable=R.drawable.export_status_normal;
+			   			}
+			   				
+			   			Map<String,Object> item = new HashMap<String,Object>();  
+			   	        item.put("status", drawable);  
+			   	        item.put("export", export);  
+			   			listdata.add(item);
 			   		 } 
 			   		        
 			   	}catch(Exception ex){
@@ -209,8 +225,13 @@ public  class ExportStateFragment extends Fragment {
 					ex.printStackTrace();
 				}
 				if(result){
-					list.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.export_state_item,listdata));
-					
+					try{
+					SimpleAdapter adapter = new SimpleAdapter(getActivity(),listdata,R.layout.export_status_item,  
+						        new String[]{"export","status"},new int[]{R.id.export,R.id.status});  
+					list.setAdapter(adapter);
+					}catch(Exception ex){
+						
+					}
 				}else{
                 	Toast.makeText(getActivity(), "获取数据失败", Toast.LENGTH_SHORT).show();
                 }
@@ -273,6 +294,7 @@ public  class ExportStateFragment extends Fragment {
 								
 								Element select2=doc.getElementById("ctl00_ContentPlaceHolder1_PortInfo1_Label2");
 								Elements links = select2.select("img[src$=.gif]");
+								int drawable=R.drawable.export_status_normal;
 			   	                    for (Element link : links) {
 			   	                        String imagesPath = link.attr("src");	
 			   	                        if(imagesPath.equals("images/tj/bulb1.gif"))
@@ -283,8 +305,23 @@ public  class ExportStateFragment extends Fragment {
 			   	                        	state="闭关";
 				   	                    else
 			 	                        	state="正常";
-			   	                        listdata.add(select.text()+" "+state);
+			   	                        
+			   	                         
+				   	                    if(state.contains("繁忙")){
+				   	                    	drawable=R.drawable.export_status_busy;
+				   	                    }
+				   	                    else if(state.contains("顺畅")){
+				   	                    	drawable=R.drawable.export_status_fast;
+				   	                    }else{
+				   	                    	drawable=R.drawable.export_status_normal;
+				   	                    }
+				 			   			//listdatazhu.add(select.text()+" "+state);
 			   	                    }
+			   	                    
+			   	                 Map<String,Object> item = new HashMap<String,Object>();  
+			 			   	        item.put("status", drawable);  
+			 			   	        item.put("export", select.text());  
+			 			   			listdata.add(item);
 							}
 			   		        
 			   	}catch(Exception ex){
@@ -302,7 +339,15 @@ public  class ExportStateFragment extends Fragment {
 					ex.printStackTrace();
 				}
 				if(result){
-					list.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.export_state_item,listdata));
+					try{
+					 SimpleAdapter adapter = new SimpleAdapter(getActivity(),listdata,R.layout.export_status_item,  
+						        new String[]{"export","status"},new int[]{R.id.export,R.id.status});  
+					list.setAdapter(adapter);
+					
+						//list.setAdapter(new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, listdatazhu));
+					}catch(Exception ex){
+						
+					}
                 }else{
                 	Toast.makeText(getActivity(), "获取数据失败", Toast.LENGTH_SHORT).show();
                 }

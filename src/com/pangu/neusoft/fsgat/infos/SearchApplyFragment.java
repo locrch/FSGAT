@@ -53,6 +53,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -96,6 +98,7 @@ TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_t
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
     	setHasOptionsMenu(true);
+    	getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     	View view = inflater.inflate(R.layout.applysearch, null);
 //    	android.app.ActionBar actionBar = this.getActivity().getActionBar();
 //		actionBar.setCustomView(R.layout.title_bar);
@@ -108,7 +111,12 @@ TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_t
     	button1=(ImageButton)view.findViewById(R.id.imageButton1);
     	textview1=(TextView)view.findViewById(R.id.apply_search_result);
     	editText1=(EditText)view.findViewById(R.id.editText1);
-    	
+    	editText1.setFocusable(true);
+    	editText1.requestFocus();
+    	InputMethodManager imm = (InputMethodManager) getActivity().getApplicationContext()
+    			  .getSystemService(Context.INPUT_METHOD_SERVICE);
+    			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+
     	if (CheckNetwork.connected(this)){
     		button1.setOnClickListener(new OnClickListener(){
 				@Override

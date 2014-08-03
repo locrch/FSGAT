@@ -16,7 +16,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_margin="20dp"
-        android:text="定位" />
+        android:background="@drawable/map_location" />
 
     <Button
         android:id="@+id/button1"
@@ -25,7 +25,8 @@
         android:layout_alignBaseline="@+id/button2"
         android:layout_alignBottom="@+id/button2"
         android:layout_alignLeft="@+id/button2"
-        android:layout_marginLeft="69dp" />
+        android:layout_marginLeft="69dp"
+        android:background="@drawable/map_normal" />
 
     <LinearLayout
         android:id="@+id/showfunction"
@@ -41,25 +42,25 @@
             android:id="@+id/driver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="驾车" />
+            android:background="@drawable/map_driver" />
 
         <Button
             android:id="@+id/transit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="乘车" />
+            android:background="@drawable/map_car" />
 
         <Button
             android:id="@+id/walk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="步行" />
+            android:background="@drawable/map_walk" />
 
         <Button
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="查看街景" />
+            android:background="@drawable/map_street" />
 
     </LinearLayout>
 

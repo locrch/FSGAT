@@ -2,13 +2,23 @@ package com.fspangu.fsgat;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.baidu.android.pushservice.CustomPushNotificationBuilder;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 import com.fspangu.fsgat.pushmessage.*;
 import com.pangu.neusoft.fsgat.core.CheckLogin;
+import com.pangu.neusoft.fsgat.core.PostJson;
+import com.pangu.neusoft.fsgat.model.History;
+import com.pangu.neusoft.fsgat.model.PushMessage;
 import com.pangu.neusoft.fsgat.user.ChangeAddressDialog;
 import com.pangu.neusoft.fsgat.user.ChangePasswordFragment;
 import com.pangu.neusoft.fsgat.user.ListAddressFragment;
@@ -52,6 +62,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -76,6 +87,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -83,8 +95,10 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.ShareActionProvider;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 import android.os.Build;
 
 @SuppressLint("NewApi")
@@ -97,7 +111,7 @@ public class MainActivity extends ActionBarActivity
 	private static FragmentManager fragmentManager;
 	private static RadioGroup radioGroup;
 
-	MenuItem action_login,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
+	MenuItem action_login,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory,action_messagebox;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -210,6 +224,118 @@ public class MainActivity extends ActionBarActivity
 	{
 		super.onResume();
 		updateDisplay();
+		
+		
+	}
+	
+	AsyncTask<Void, Void, Boolean> loading1;
+	 HashMap<String, Object> GetParamsMap=new HashMap<String,Object>();
+	 @Override
+	   	public void onPause(){
+	       	if(loading1!=null){
+	       		loading1.cancel(false);
+	       	}	
+	       	super.onPause();
+	       }
+	static BadgeView messageCenterBadge;
+	
+	int count=0;
+	
+	private void setupMessagesBadge(final MenuItem msgItem){
+		 	msgItem.setTitle("消息盒子 "+"("+1+")");
+		    msgItem.setActionView(R.layout.common_messages_indicator);
+		    msgItem.getIcon();
+		    if(msgItem.getActionView().findViewById(R.id.imgMessagesIcon) != null)
+		    {
+		        ImageView imgMessagesIcon = ((ImageView)msgItem.getActionView().findViewById(R.id.imgMessagesIcon));
+
+		        BadgeView badge = new BadgeView(MainActivity.this, imgMessagesIcon);
+		        badge.setText("1");
+		        badge.show();
+		        Log.e("tag update message box","show update "+msgItem.getItemId());
+		    }
+	}
+	
+	private void setupMessagesBadge1(final MenuItem msgItem) {
+		
+		loading1=new AsyncTask<Void, Void, Boolean>(){
+		    @SuppressWarnings("deprecation")
+			@Override  
+	        protected void onPreExecute() {   
+	            super.onPreExecute();   
+	           
+	        }			
+			@Override
+			protected Boolean doInBackground(Void... params){
+				String[] keys = new String[]{ "username" };
+
+						String[] values = new String[]{ sp.getString("username", "") };
+
+						PostJson postJson = new PostJson();
+
+						GetParamsMap = postJson.Post(keys, values, "GetPushMessage","pushMessageList");
+
+						JSONArray pushMessageList = (JSONArray) GetParamsMap.get("pushMessageList");
+						if(pushMessageList!=null){
+							for (int i = 0; i < pushMessageList.length(); i++)
+							{
+								try
+								{
+									JSONObject jo = (JSONObject) pushMessageList.get(i);
+			
+									
+						            if(jo.getInt("pushMessageStatusID")==0){						            	
+						            	count++;
+						            }
+									
+								} catch (JSONException e)
+								{
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+			
+							}
+						}
+						
+						Boolean success= (Boolean) GetParamsMap.get("success");
+						return success;
+			}
+			
+			@SuppressWarnings("deprecation")
+			@Override
+			protected void onPostExecute(Boolean result){
+				super.onPostExecute(result);	
+				
+				if(count>0){
+					
+				    msgItem.setTitle("消息盒子 "+"("+count+")");
+				    msgItem.setActionView(R.layout.common_messages_indicator);
+				    if(msgItem.getActionView().findViewById(R.id.imgMessagesIcon) != null)
+				    {
+				        ImageView imgMessagesIcon = ((ImageView)msgItem.getActionView().findViewById(R.id.imgMessagesIcon));
+
+				        BadgeView badge = new BadgeView(MainActivity.this, imgMessagesIcon);
+				        badge.setText("1");
+				        badge.show();
+				        Log.e("tag update message box","show update "+msgItem.getItemId());
+				    }
+				}
+			}
+			@SuppressWarnings("deprecation")
+			@Override
+			protected void onCancelled()
+			{
+				super.onCancelled();
+				try{
+					setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
+			}
+			
+		};
+		loading1.execute();
+	    
 	}
 
 	@Override
@@ -233,6 +359,8 @@ public class MainActivity extends ActionBarActivity
 		action_pass = menu.findItem(R.id.action_pass);
 		action_address = menu.findItem(R.id.action_address);
 		action_bookinghistory = menu.findItem(R.id.action_bookinghistory);
+		action_messagebox = menu.findItem(R.id.action_messagebox);
+		
 		
 		if (sp.getString("username", "").equals(""))
 		{
@@ -243,6 +371,7 @@ public class MainActivity extends ActionBarActivity
 			action_pass.setVisible(false);
 			action_address.setVisible(false);
 			action_bookinghistory.setVisible(false);
+			action_messagebox.setVisible(false);
 		}
 		else {
 			action_logout.setVisible(true);
@@ -251,6 +380,8 @@ public class MainActivity extends ActionBarActivity
 			action_pass.setVisible(true);
 			action_address.setVisible(true);
 			action_bookinghistory.setVisible(true);
+			action_messagebox.setVisible(true);
+			setupMessagesBadge(action_messagebox);
 		}
 		
 		
@@ -278,7 +409,7 @@ public class MainActivity extends ActionBarActivity
 		
 		
 			actionbar_back_btn.setVisibility(View.VISIBLE);
-		
+			setupMessagesBadge(action_messagebox);
 			
 		return true;
 	}
@@ -300,6 +431,7 @@ public class MainActivity extends ActionBarActivity
 			action_pass.setVisible(true);
 			action_address.setVisible(true);
 			action_bookinghistory.setVisible(true);
+			action_messagebox.setVisible(true);
 		}
 		
 		switch (id)
@@ -311,10 +443,16 @@ public class MainActivity extends ActionBarActivity
 				getSupportFragmentManager().beginTransaction().add(R.id.content, lf).commit();
 			}
 			break;
-		
-		case R.id.action_logout:
-			logout();
+		case R.id.action_messagebox:
+			//显示消息盒子
 			
+			PushMessageFragment pshf=new PushMessageFragment();
+        	transaction.add(R.id.content, pshf);
+        	transaction.addToBackStack(null);
+            transaction.commit();
+			break;
+		case R.id.action_logout:
+			logout();			
 			action_login.setVisible(true);
 			action_logout.setVisible(false);
 			action_changepassword.setVisible(false);
@@ -322,6 +460,7 @@ public class MainActivity extends ActionBarActivity
 			action_pass.setVisible(false);
 			action_address.setVisible(false);
 			action_bookinghistory.setVisible(false);
+			action_messagebox.setVisible(false);
 			break;
 		
 		case R.id.action_changepassword:
@@ -387,11 +526,11 @@ public class MainActivity extends ActionBarActivity
 			break;
 		}
 
-		
-			
-		
+	
 		return super.onOptionsItemSelected(item);
 	}
+	
+	  
 	
 	@Override
 	public boolean onMenuOpened(int featureId, Menu menu)
@@ -407,12 +546,13 @@ public class MainActivity extends ActionBarActivity
 							"setOptionalIconsVisible", Boolean.TYPE);
 					m.setAccessible(true);
 					m.invoke(menu, true);
+					setupMessagesBadge(action_messagebox);
 				} catch (Exception e)
 				{
 				}
 			}
 		}
-
+	
 		return super.onMenuOpened(featureId, menu);
 	}
 
@@ -594,11 +734,12 @@ public static void addShortcutToDesktop(Context context) {
 	 */
 	public static class PlaceholderFragment extends Fragment
 	{
-
+		
 		public PlaceholderFragment()
 		{
 		}
 
+	
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState)
@@ -621,7 +762,7 @@ public static void addShortcutToDesktop(Context context) {
 				public void onClick(View arg0)
 				{
 					// TODO Auto-generated method stub
-
+						
 					if (arg0.getId() == R.id.rg_ta1)
 					{
 						showFragment(1);

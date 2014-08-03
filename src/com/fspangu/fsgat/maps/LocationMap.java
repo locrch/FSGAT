@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -38,6 +39,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 
 
@@ -130,7 +132,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 	
 	boolean isFirstLoc = true;// 是否首次定位
 
-	@Override
+	@SuppressLint("NewApi") @Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); // 设置为圆形旋转进度条
@@ -155,7 +157,8 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		 walk= (Button) findViewById(R.id.walk);
 		 mBtnPre= (Button) findViewById(R.id.pre);
          mBtnNext= (Button) findViewById(R.id.next);
-         requestLocButton.setText("普通");
+         Drawable dr = this.getResources().getDrawable(R.drawable.map_normal); 
+         requestLocButton.setBackground(dr);
  		showfunction=(LinearLayout)findViewById(R.id.showfunction);
  		
 		// 地图初始化
@@ -259,14 +262,16 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 				switch (mCurrentMode) {
 				
 				case COMPASS:
-					requestLocButton.setText("普通");
+					Drawable dr = getResources().getDrawable(R.drawable.map_normal); 
+			         requestLocButton.setBackground(dr);
 					mCurrentMode = LocationMode.NORMAL;
 					mBaiduMap
 							.setMyLocationConfigeration(new MyLocationConfigeration(
 									mCurrentMode, true, mCurrentMarker));
 					break;
 				case NORMAL:
-					requestLocButton.setText("罗盘");
+					Drawable dr1 =getResources().getDrawable(R.drawable.map_luopan); 
+			         requestLocButton.setBackground(dr1);
 					mCurrentMode = LocationMode.COMPASS;
 					mBaiduMap
 							.setMyLocationConfigeration(new MyLocationConfigeration(
@@ -384,7 +389,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		super.onDestroy();
 	}
 	
-	
+	Button near_back_btn;
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){
 		android.app.ActionBar actionBar = getActionBar();
@@ -392,7 +397,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		actionBar.setDisplayShowCustomEnabled(true);
 		actionBar.setCustomView(R.layout.map_title_bar);
 		Button actionbar_back_btn = (Button) findViewById(R.id.actionbar_back_btn);
-		Button near_back_btn = (Button) findViewById(R.id.near);
+		near_back_btn = (Button) findViewById(R.id.near);
 		TextView actionbar_title=(TextView)findViewById(R.id.actionbar_title);
 		actionbar_title.setText("办证地点");
 		actionbar_back_btn.setOnClickListener(new OnClickListener(){
@@ -417,6 +422,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 
 	
 	public void choosePlace(){
+		near_back_btn.setClickable(false);
 		LinearLayout linearLayoutMain = new LinearLayout(this);//自定义一个布局文件
 		linearLayoutMain.setLayoutParams(new LayoutParams(
 		        LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -458,6 +464,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		            public void onClick(DialogInterface dialog, int which) {
 		                // TODO Auto-generated method stub
 		                dialog.cancel();
+		                near_back_btn.setClickable(true);
 		            }
 		        }).create();
 		dialog.setCanceledOnTouchOutside(false);//使除了dialog以外的地方不能被点击
@@ -471,6 +478,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		        TextView tv = (TextView) arg1.findViewById(R.id.name);//取得每条item中的textview控件
 		        showMarker(tv.getText().toString());
 		        dialog.cancel();
+		        near_back_btn.setClickable(true);
 		    }
 		});
 	}

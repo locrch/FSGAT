@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -38,6 +39,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 
 
@@ -106,7 +108,7 @@ import com.pangu.neusoft.fsgat.user.VersionInfoFragment;
 import com.pangu.neusoft.fsgat.visa.ShowHistoryFragment;
 import com.pangu.neusoft.tools.update.UpdateOperation;
 
-public class KouanLocationMap extends Activity implements OnGetRoutePlanResultListener {
+@SuppressLint("NewApi") public class KouanLocationMap extends Activity implements OnGetRoutePlanResultListener {
 
 	// 定位相关
 	LocationClient mLocClient;
@@ -156,8 +158,9 @@ public class KouanLocationMap extends Activity implements OnGetRoutePlanResultLi
 		  mBtnPre= (Button) findViewById(R.id.pre);
           mBtnNext= (Button) findViewById(R.id.next);
 		 
-          
-			requestLocButton.setText("普通");
+          Drawable dr = this.getResources().getDrawable(R.drawable.map_normal); 
+          requestLocButton.setBackground(dr);
+			
 			showfunction=(LinearLayout)findViewById(R.id.showfunction);
 
 		// 地图初始化
@@ -265,14 +268,16 @@ public class KouanLocationMap extends Activity implements OnGetRoutePlanResultLi
 					switch (mCurrentMode) {
 					
 					case COMPASS:
-						requestLocButton.setText("普通");
+						Drawable dr = getResources().getDrawable(R.drawable.map_normal); 
+				         requestLocButton.setBackground(dr);
 						mCurrentMode = LocationMode.NORMAL;
 						mBaiduMap
 								.setMyLocationConfigeration(new MyLocationConfigeration(
 										mCurrentMode, true, mCurrentMarker));
 						break;
 					case NORMAL:
-						requestLocButton.setText("罗盘");
+						Drawable dr1 = getResources().getDrawable(R.drawable.map_luopan); 
+				        requestLocButton.setBackground(dr1);
 						mCurrentMode = LocationMode.COMPASS;
 						mBaiduMap
 								.setMyLocationConfigeration(new MyLocationConfigeration(
@@ -418,6 +423,7 @@ public class KouanLocationMap extends Activity implements OnGetRoutePlanResultLi
 					
 				}
 				else{
+					
 					choosePlace();
 				}
 			}
@@ -431,6 +437,7 @@ public class KouanLocationMap extends Activity implements OnGetRoutePlanResultLi
 
 	
 	public void choosePlace(){
+		near_back_btn.setClickable(false);
 		LinearLayout linearLayoutMain = new LinearLayout(this);//自定义一个布局文件
 		linearLayoutMain.setLayoutParams(new LayoutParams(
 		        LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -472,6 +479,7 @@ public class KouanLocationMap extends Activity implements OnGetRoutePlanResultLi
 		            public void onClick(DialogInterface dialog, int which) {
 		                // TODO Auto-generated method stub
 		                dialog.cancel();
+		                near_back_btn.setClickable(true);
 		            }
 		        }).create();
 		dialog.setCanceledOnTouchOutside(false);//使除了dialog以外的地方不能被点击
@@ -485,6 +493,7 @@ public class KouanLocationMap extends Activity implements OnGetRoutePlanResultLi
 		        TextView tv = (TextView) arg1.findViewById(R.id.name);//取得每条item中的textview控件
 		        showMarker(tv.getText().toString());
 		        dialog.cancel();
+		        near_back_btn.setClickable(true);
 		    }
 		});
 	}
