@@ -16,7 +16,6 @@
         android:id="@+id/action_userinfo"
         android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider"
         android:showAsAction="always|withText"
-        
         >
 	    
 	    </item>

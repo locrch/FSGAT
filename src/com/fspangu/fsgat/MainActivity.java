@@ -21,6 +21,7 @@ import com.pangu.neusoft.fsgat.model.History;
 import com.pangu.neusoft.fsgat.model.PushMessage;
 import com.pangu.neusoft.fsgat.user.ChangeAddressDialog;
 import com.pangu.neusoft.fsgat.user.ChangePasswordFragment;
+import com.pangu.neusoft.fsgat.user.ChargeUserFragment;
 import com.pangu.neusoft.fsgat.user.ListAddressFragment;
 import com.pangu.neusoft.fsgat.user.ListPassFragment;
 import com.pangu.neusoft.fsgat.user.LoginFragment;
@@ -111,7 +112,9 @@ public class MainActivity extends ActionBarActivity
 	private static FragmentManager fragmentManager;
 	private static RadioGroup radioGroup;
 
-	MenuItem action_login,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory,action_messagebox;
+	MenuItem action_userinfo,action_login,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory,action_messagebox;
+	
+	String usertype;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -352,6 +355,7 @@ public class MainActivity extends ActionBarActivity
 
 		actionBar.setCustomView(R.layout.title_bar);
 
+		action_userinfo = menu.findItem(R.id.action_userinfo);
 		action_login = menu.findItem(R.id.action_login);
 		action_logout = menu.findItem(R.id.action_logout);
 		action_changepassword = menu.findItem(R.id.action_changepassword);
@@ -361,6 +365,20 @@ public class MainActivity extends ActionBarActivity
 		action_bookinghistory = menu.findItem(R.id.action_bookinghistory);
 		action_messagebox = menu.findItem(R.id.action_messagebox);
 		
+		usertype = sp.getString("usertype", "0");
+		
+		if (usertype == "0")
+		{
+			action_userinfo.setTitle("欢迎您,"+"普通会员");
+		}
+		if (usertype == "1")
+		{
+			action_userinfo.setTitle("欢迎您,"+"5元收费用户");
+		}
+		if (usertype == "2")
+		{
+			action_userinfo.setTitle("欢迎您,"+"10元收费用户");
+		}
 		
 		if (sp.getString("username", "").equals(""))
 		{
@@ -406,6 +424,7 @@ public class MainActivity extends ActionBarActivity
 
 			}
 		});
+		
 		
 		
 			actionbar_back_btn.setVisibility(View.VISIBLE);
@@ -517,6 +536,13 @@ public class MainActivity extends ActionBarActivity
 		case R.id.action_versioninfo:
 			VersionInfoFragment vif=new VersionInfoFragment();
         	transaction.add(R.id.content, vif);
+        	transaction.addToBackStack(null);
+            transaction.commit();
+			break;
+			
+		case R.id.action_userinfo:
+			ChargeUserFragment cuf = new ChargeUserFragment();
+			transaction.add(R.id.content, cuf);
         	transaction.addToBackStack(null);
             transaction.commit();
 			break;

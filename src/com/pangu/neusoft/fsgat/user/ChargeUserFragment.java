@@ -21,10 +21,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 public class ChargeUserFragment extends Fragment
@@ -34,6 +39,8 @@ public class ChargeUserFragment extends Fragment
 	Button charge_get_var_btn,charge_user_charge_btn;
 	SharedPreferences sp;
 	Editor editor;
+	String msg;
+	MenuItem action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
 	private void init()
 	{
 		// TODO Auto-generated method stub
@@ -46,6 +53,28 @@ public class ChargeUserFragment extends Fragment
 		editor = sp.edit();
 	}
 	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu, inflater);
+		
+		action_logout = menu.findItem(R.id.action_logout);
+		action_changepassword = menu.findItem(R.id.action_changepassword);
+		action_setting = menu.findItem(R.id.action_setting);
+		action_pass = menu.findItem(R.id.action_pass);
+		action_address = menu.findItem(R.id.action_address);
+		action_bookinghistory = menu.findItem(R.id.action_bookinghistory);
+		
+		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
+		
+		actionbar_back_btn.setVisibility(View.INVISIBLE);
+		
+		TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_title);
+		
+		actionbar_title.setText("会员升级");
+	}
+	
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState)
@@ -53,6 +82,7 @@ public class ChargeUserFragment extends Fragment
 			// TODO Auto-generated method stub
 			rootview = inflater.inflate(R.layout.fragment_charge_user, null);
 			init();
+			setHasOptionsMenu(true);
 			return rootview;
 		}
 		@Override
@@ -60,6 +90,9 @@ public class ChargeUserFragment extends Fragment
 		{
 			// TODO Auto-generated method stub
 			super.onActivityCreated(savedInstanceState);
+			
+			charge_user_username.setText(sp.getString("username", ""));
+			
 			charge_user_charge_btn.setOnClickListener(new OnClickListener()
 			{
 				
@@ -69,62 +102,54 @@ public class ChargeUserFragment extends Fragment
 					// TODO Auto-generated method stub
 					new CustomAsynTask(getActivity()){
 						protected Boolean doInBackground(Void... params) {
-							
-							/*PostJSONfromGson postGson = new PostJSONfromGson();
+							super.doInBackground(params);
+							PostJSONfromGson postGson = new PostJSONfromGson();
 							
 							PostcCharge postcCharge = new PostcCharge();
 							
 							ListcCharge listcCharge = new ListcCharge();
 							
-							
+							if (sp.getString("username", null)==null||charge_user_var.getText().toString()==null)
+							{
+								return false;
+							}
+							 
 							postcCharge.setUsername(sp.getString("username", null));
 							
+							postcCharge.setCaptcha(charge_user_var.getText().toString());
 							
+							postcCharge.setType("2");
 							
+							String result = (String) postGson.GsonPost(postcCharge, "cCharge");
 							
-							postgetDownStation.setBusCompanyID(busCompanyID);
-							
-							ListdownStation listdownStation = new ListdownStation();
-							
-							String result = (String) postGson.GsonPost(postgetDownStation, "getDownStation");
-							
-							Type listType=new TypeToken<ListdownStation>(){}.getType();
+							Type listType=new TypeToken<ListcCharge>(){}.getType();
 							
 							Gson gson = new Gson();
 							
-							listdownStation = gson.fromJson(result,listType);
+							listcCharge = gson.fromJson(result,listType);
 							
-							ArrayList<downStation> downStationsList = new ArrayList<downStation>();
+							Boolean success = false;
 							
-							downStationsList = listdownStation.getDownStationList();
+							success = listcCharge.getSuccess();
 							
-							success = listdownStation.getSuccess();
+							msg = listcCharge.getMsg();
 							
-							listdownStationName = new ArrayList<String>();
-							
-							if (!listdownStationName.isEmpty()) {
-								listdownStationName.clear();
-							}
-							
-							if (!listdownStationID.isEmpty()) {
-								listdownStationID.clear();
-							}
-							
-							for (int j = 0; j < downStationsList.size(); j++) {
-								
-								downstation = downStationsList.get(j);
-								
-								listdownStationName.add(downstation.getStationName());
-								
-								listdownStationID.add(downstation.getStationID());
-							}
-							*/
-							return null;
+							return success;
 						};
 						
 						protected void onPostExecute(Boolean result) {
-							
-							
+							super.onPostExecute(result);
+							if (result)
+							{
+								Toast.makeText(getActivity(),
+										msg,
+										Toast.LENGTH_SHORT).show();
+							}
+							else {
+								Toast.makeText(getActivity(),
+										R.string.toast_flase_msg,
+										Toast.LENGTH_SHORT).show();
+							}
 							
 						};
 						

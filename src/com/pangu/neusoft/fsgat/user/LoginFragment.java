@@ -232,6 +232,8 @@ public class LoginFragment extends Fragment
 											
 											editor.putString("username", username.getText().toString());
 											
+											editor.putString("usertype", values[2]);
+											
 											editor.commit();
 										}
 										
