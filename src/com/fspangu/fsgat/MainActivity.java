@@ -108,7 +108,7 @@ public class MainActivity extends ActionBarActivity
 	static DisplayMetrics getphonesize;
 	static SharedPreferences sp;
 	Editor editor;
-
+	MessageActionProvider myactionprovider;
 	private static FragmentManager fragmentManager;
 	private static RadioGroup radioGroup;
 
@@ -244,23 +244,10 @@ public class MainActivity extends ActionBarActivity
 	
 	int count=0;
 	
-	private void setupMessagesBadge(final MenuItem msgItem){
-		 	msgItem.setTitle("消息盒子 "+"("+1+")");
-		    msgItem.setActionView(R.layout.common_messages_indicator);
-		    msgItem.getIcon();
-		    if(msgItem.getActionView().findViewById(R.id.imgMessagesIcon) != null)
-		    {
-		        ImageView imgMessagesIcon = ((ImageView)msgItem.getActionView().findViewById(R.id.imgMessagesIcon));
-
-		        BadgeView badge = new BadgeView(MainActivity.this, imgMessagesIcon);
-		        badge.setText("1");
-		        badge.show();
-		        Log.e("tag update message box","show update "+msgItem.getItemId());
-		    }
-	}
 	
-	private void setupMessagesBadge1(final MenuItem msgItem) {
-		
+	
+	private void setupMessagesBadge(final MenuItem msgItem) {
+		 count=0;
 		loading1=new AsyncTask<Void, Void, Boolean>(){
 		    @SuppressWarnings("deprecation")
 			@Override  
@@ -287,7 +274,7 @@ public class MainActivity extends ActionBarActivity
 									JSONObject jo = (JSONObject) pushMessageList.get(i);
 			
 									
-						            if(jo.getInt("pushMessageStatusID")==0){						            	
+						            if(jo.getInt("pushMessageStatusID")==1){						            	
 						            	count++;
 						            }
 									
@@ -312,15 +299,13 @@ public class MainActivity extends ActionBarActivity
 				if(count>0){
 					
 				    msgItem.setTitle("消息盒子 "+"("+count+")");
-				    msgItem.setActionView(R.layout.common_messages_indicator);
-				    if(msgItem.getActionView().findViewById(R.id.imgMessagesIcon) != null)
-				    {
-				        ImageView imgMessagesIcon = ((ImageView)msgItem.getActionView().findViewById(R.id.imgMessagesIcon));
-
-				        BadgeView badge = new BadgeView(MainActivity.this, imgMessagesIcon);
-				        badge.setText("1");
+				    if(myactionprovider!=null){
+				    	ImageView view=myactionprovider.getButton();
+				   
+				        BadgeView badge = new BadgeView(MainActivity.this, view);
+				        badge.setText(""+count);
 				        badge.show();
-				        Log.e("tag update message box","show update "+msgItem.getItemId());
+				        Log.e("tag update message box","show update "+view);
 				    }
 				}
 			}
@@ -399,7 +384,7 @@ public class MainActivity extends ActionBarActivity
 			action_address.setVisible(true);
 			action_bookinghistory.setVisible(true);
 			action_messagebox.setVisible(true);
-			setupMessagesBadge(action_messagebox);
+			
 		}
 		
 		
@@ -429,8 +414,8 @@ public class MainActivity extends ActionBarActivity
 		
 			actionbar_back_btn.setVisibility(View.VISIBLE);
 			setupMessagesBadge(action_messagebox);
-			
-		return true;
+			myactionprovider = (MessageActionProvider) action_messagebox.getActionProvider();  
+		return super.onCreateOptionsMenu(menu);  
 	}
 
 	@Override
@@ -453,6 +438,7 @@ public class MainActivity extends ActionBarActivity
 			action_bookinghistory.setVisible(true);
 			action_messagebox.setVisible(true);
 		}
+		
 		
 		switch (id)
 		{

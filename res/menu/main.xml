@@ -62,6 +62,7 @@
     <item
         android:id="@+id/action_messagebox"
         android:icon="@drawable/ic_menu_messagebox"
+        
         android:showAsAction="always|withText"        
         android:title="消息盒子"/>
     <item
