@@ -16,6 +16,7 @@ import com.fspangu.fsgat.pushmessage.Utils;
 import com.fspangu.fsgat.ticket.TicketHistoryFragment;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.CustomView.ProtocolAlterDialog;
+import com.pangu.neusoft.fsgat.core.CheckLogin;
 import com.pangu.neusoft.fsgat.core.CheckNetwork;
 import com.pangu.neusoft.fsgat.core.PostJson;
 import com.pangu.neusoft.fsgat.model.user;
@@ -64,23 +65,29 @@ public class LoginFragment extends Fragment
 	FragmentManager fragmentManager;
 	Fragment registerFragment,changepasswordFragment;
 	LoginFragment loginFragment;
-	int usertype;
-	
+	String usertype;
+	String type;
 	ProtocolAlterDialog PAdialog;
 	
-	MenuItem action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
+	MenuItem action_userinfo,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
-		
+		action_userinfo = menu.findItem(R.id.action_userinfo);
 		action_logout = menu.findItem(R.id.action_logout);
 		action_changepassword = menu.findItem(R.id.action_changepassword);
 		action_setting = menu.findItem(R.id.action_setting);
 		action_pass = menu.findItem(R.id.action_pass);
 		action_address = menu.findItem(R.id.action_address);
 		action_bookinghistory = menu.findItem(R.id.action_bookinghistory);
+		
+		if (sp.getString("username", "").equals(""))
+		{
+			action_userinfo.setVisible(false);
+			
+		}
 		
 		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
 		
@@ -208,6 +215,8 @@ public class LoginFragment extends Fragment
 										GetParamsMap = postJson.Post(keys, values,
 												"loginmember");
 										
+										type = (String)GetParamsMap.get("type");
+										
 										Boolean success = false;
 										
 										
@@ -232,7 +241,7 @@ public class LoginFragment extends Fragment
 											
 											editor.putString("username", username.getText().toString());
 											
-											editor.putString("usertype", values[2]);
+											editor.putString("usertype", type);
 											
 											editor.commit();
 										}
@@ -298,13 +307,28 @@ public class LoginFragment extends Fragment
 												transaction.commit();
 											}
 											
-											
+											action_userinfo.setVisible(true);
 											action_logout.setVisible(true);
 											action_changepassword.setVisible(true);
 											action_setting.setVisible(true);
 											action_pass.setVisible(true);
 											action_address.setVisible(true);
 											action_bookinghistory.setVisible(true);
+											
+											usertype = sp.getString("usertype", "0");
+											
+											if (usertype == "0")
+											{
+												action_userinfo.setTitle("欢迎您,"+"普通会员");
+											}
+											if (usertype == "1")
+											{
+												action_userinfo.setTitle("欢迎您,"+"5元收费用户");
+											}
+											if (usertype == "2")
+											{
+												action_userinfo.setTitle("欢迎您,"+"10元收费用户");
+											}
 										}
 									}
 								}.execute();

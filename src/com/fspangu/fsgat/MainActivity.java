@@ -443,6 +443,7 @@ public class MainActivity extends ActionBarActivity
 		
 		if (!(sp.getString("username", "").equals("")))
 		{
+			action_userinfo.setVisible(true);
 			action_login.setVisible(false);
 			action_logout.setVisible(true);
 			action_changepassword.setVisible(true);
@@ -472,6 +473,7 @@ public class MainActivity extends ActionBarActivity
 			break;
 		case R.id.action_logout:
 			logout();			
+			action_userinfo.setVisible(false);
 			action_login.setVisible(true);
 			action_logout.setVisible(false);
 			action_changepassword.setVisible(false);

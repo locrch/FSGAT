@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import com.fspangu.fsgat.R;
+import com.fspangu.fsgat.YwblFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
@@ -67,6 +68,18 @@ public class ChargeUserFragment extends Fragment
 		action_bookinghistory = menu.findItem(R.id.action_bookinghistory);
 		
 		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
+		
+		actionbar_back_btn.setOnClickListener(new OnClickListener()
+		{
+			
+			@Override
+			public void onClick(View v)
+			{
+				// TODO Auto-generated method stub
+				YwblFragment ywbl = new YwblFragment();
+				getFragmentManager().beginTransaction().replace(R.id.content, ywbl).commit();
+			}
+		});
 		
 		actionbar_back_btn.setVisibility(View.INVISIBLE);
 		

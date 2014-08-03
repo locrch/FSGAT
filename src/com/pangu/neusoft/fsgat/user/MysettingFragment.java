@@ -1,6 +1,7 @@
 package com.pangu.neusoft.fsgat.user;
 
 import com.fspangu.fsgat.R;
+import com.fspangu.fsgat.YwblFragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -87,6 +88,18 @@ public class MysettingFragment extends Fragment
 		super.onCreateOptionsMenu(menu, inflater);
 		
 		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
+		
+		actionbar_back_btn.setOnClickListener(new OnClickListener()
+		{
+			
+			@Override
+			public void onClick(View v)
+			{
+				// TODO Auto-generated method stub
+				YwblFragment ywbl = new YwblFragment();
+				getFragmentManager().beginTransaction().replace(R.id.content, ywbl).commit();
+			}
+		});
 		
 		actionbar_back_btn.setVisibility(View.VISIBLE);
 		

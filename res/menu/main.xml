@@ -12,13 +12,11 @@
           android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider" />
     -->
 	<item
-	    
-        android:id="@+id/action_userinfo"
+	    android:id="@+id/action_userinfo"
         android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider"
         android:showAsAction="always|withText"
-        >
+        />
 	    
-	    </item>
     <item
         android:id="@+id/action_logout"
         android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider"

@@ -22,7 +22,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="18dp"
             android:layout_marginTop="22dp"
-            android:text="请给佛山港澳通评分："
+            android:text="请给佛山港澳提出意见："
             android:textSize="15sp" />
 
         <RatingBar
