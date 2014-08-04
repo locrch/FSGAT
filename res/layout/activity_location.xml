@@ -11,78 +11,87 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/location_map_btn_width"
+        android:layout_height="@dimen/location_map_btn_width"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/map_location" />
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/location_map_btn_width"
+        android:layout_height="@dimen/location_map_btn_width"
         android:layout_alignBaseline="@+id/button2"
         android:layout_alignBottom="@+id/button2"
         android:layout_alignLeft="@+id/button2"
-        android:layout_marginLeft="69dp"
+        android:layout_toRightOf="@+id/button2"
+        android:layout_marginLeft="50dp"
         android:background="@drawable/map_normal" />
 
     <LinearLayout
         android:id="@+id/showfunction"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="18dp"
+        android:layout_marginRight="10dp"
         android:gravity="center"
-        android:visibility="invisible" >
+        android:visibility="invisible"
+        android:orientation="vertical" >
 
         <Button
             android:id="@+id/driver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/map_driver" />
+            android:layout_width="@dimen/location_map_btn_width"
+        android:layout_height="@dimen/location_map_btn_width"
+            android:background="@drawable/map_driver"
+            android:layout_marginBottom="@dimen/location_map_btn_marginBottom"
+             />
 
         <Button
             android:id="@+id/transit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/map_car" />
+            android:layout_width="@dimen/location_map_btn_width"
+        android:layout_height="@dimen/location_map_btn_width"
+            android:background="@drawable/map_car" 
+            android:layout_marginBottom="@dimen/location_map_btn_marginBottom"/>
 
         <Button
             android:id="@+id/walk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/map_walk" />
+            android:layout_width="@dimen/location_map_btn_width"
+        android:layout_height="@dimen/location_map_btn_width"
+            android:background="@drawable/map_walk"
+            android:layout_marginBottom="@dimen/location_map_btn_marginBottom" />
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/map_street" />
+            android:layout_width="@dimen/location_map_btn_width"
+        android:layout_height="@dimen/location_map_btn_width"
+            android:background="@drawable/map_street"
+            android:layout_marginBottom="@dimen/location_map_btn_marginBottom" />
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/pre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_below="@+id/showfunction"
-        android:layout_marginTop="22dp"
-        android:background="@drawable/pre_"
-        android:visibility="invisible" />
-
-    <Button
         android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/location_map_btn_width"
+        android:layout_height="@dimen/location_map_btn_width"
         android:layout_alignBaseline="@+id/pre"
         android:layout_alignBottom="@+id/pre"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
         android:background="@drawable/next_"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/pre"
+        android:layout_width="@dimen/location_map_btn_width"
+        android:layout_height="@dimen/location_map_btn_width"
+        android:layout_above="@+id/button2"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_marginBottom="67dp"
+        android:background="@drawable/pre_"
         android:visibility="invisible" />
 
 </RelativeLayout>

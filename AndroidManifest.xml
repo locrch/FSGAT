@@ -48,7 +48,7 @@
         android:theme="@style/activityTitlebar" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="kRessRFUXo4cvKeIMDwWyGBa" />
+            android:value="vqLuBdZsm0NIZDrcmFdCFO4L" />
 		<meta-data
 		    android:name="TencentMapSDK"
 		    android:value="DLRBZ-OCYWG-TPFQD-IWMOC-WQJ5V-BNFWM" />
@@ -138,7 +138,7 @@
         <!-- 在百度推送API Key -->
         <meta-data
             android:name="api_key"
-            android:value="ujjgpGT9Q0WsUH63AI5uhobn" />
+            android:value="vqLuBdZsm0NIZDrcmFdCFO4L" />
         <activity
             android:name="com.fspangu.fsgat.maps.SosoStreeViewActivityTestActivity"
             android:label="@string/title_activity_tec_street" >
