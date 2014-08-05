@@ -87,8 +87,10 @@ public class AddAddressFragment extends Fragment
 			public void onClick(View v)
 			{
 				// TODO Auto-generated method stub
-				YwblFragment ywbl = new YwblFragment();
+				/*YwblFragment ywbl = new YwblFragment();
 				getFragmentManager().beginTransaction().replace(R.id.content, ywbl).commit();
+				*/
+				getFragmentManager().popBackStack();
 			}
 		});
 		
