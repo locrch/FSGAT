@@ -3,13 +3,6 @@ package com.pangu.neusoft.fsgat.user;
 import java.util.HashMap;
 
 import org.json.JSONObject;
-
-
-
-
-
-
-
 import com.fspangu.fsgat.R;
 import com.fspangu.fsgat.YwblFragment;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;

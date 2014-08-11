@@ -13,6 +13,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.fspangu.fsgat.maps.KouanLocationMap;
 import com.pangu.neusoft.fsgat.core.CheckNetwork;
 import com.pangu.neusoft.fsgat.core.PostJson;
 import com.pangu.neusoft.fsgat.core.PostJsonObject;
@@ -22,8 +23,10 @@ import com.pangu.neusoft.fsgat.model.PushMessage;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
@@ -50,11 +53,12 @@ import android.widget.AdapterView.OnItemClickListener;
 public class PushMessageFragment extends Fragment{
 	SharedPreferences sp;
 	Editor editor;
+	private ProgressDialog mProgressDialog;
 	ListView list;
 	AsyncTask<Void, Void, Boolean> loading1;
 	AsyncTask<Void, Void, Boolean> loading2;
-	
-	 
+	final int state=2;//1未读， 2已读
+ 	 
 	 @Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 		{
@@ -75,11 +79,18 @@ public class PushMessageFragment extends Fragment{
     	sp = getActivity().getSharedPreferences("sp",Context.MODE_PRIVATE);
 		editor = sp.edit();		
     	View view = inflater.inflate(R.layout.history_fragment, null);
+    	mProgressDialog = new ProgressDialog(getActivity());   
+        mProgressDialog.setMessage("正在加载数据...");   
+        mProgressDialog.setIndeterminate(false);  
+        mProgressDialog.setCanceledOnTouchOutside(false);//设置进度条是否可以按退回键取消  
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);   
+        
     	this.getActivity().setTitle("消息盒子");
     	if (CheckNetwork.connected(this)){
 	    	list=(ListView)view.findViewById(R.id.listView1);
 	    	getMessage();
     	 }
+    	
         return view;  
     }  
   
@@ -88,21 +99,20 @@ public class PushMessageFragment extends Fragment{
 	 @Override
 	   	public void onPause(){
 	       	if(loading1!=null){
-	       		loading1.cancel(false);	
-	       		try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
-				}catch(Exception ex){
-					ex.printStackTrace();
-				}
+	       		loading1.cancel(true);	
+	       		
 	       	}	
 	     	if(loading2!=null){
-	       		loading2.cancel(false);	
-	       		try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
-				}catch(Exception ex){
-					ex.printStackTrace();
-				}
+	       		loading2.cancel(true);	
+	       		
 	       	}
+	     	try{
+				if(mProgressDialog.isShowing()){
+					mProgressDialog.dismiss();
+				}
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
 	       	super.onPause();
 	       }
 	static BadgeView messageCenterBadge;
@@ -118,7 +128,7 @@ public class PushMessageFragment extends Fragment{
 	        protected void onPreExecute() {   
 	            super.onPreExecute();   
 	            try{
-		    		getActivity().setProgressBarIndeterminateVisibility(true);// 执行前使进度条可见
+	            	mProgressDialog.show();
 		    	}catch(Exception ex){
 		    		ex.printStackTrace();
 		    	}// 执行前使进度条可见
@@ -188,7 +198,10 @@ public class PushMessageFragment extends Fragment{
 			protected void onPostExecute(Boolean result){
 				super.onPostExecute(result);	
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -204,24 +217,36 @@ public class PushMessageFragment extends Fragment{
 					list.setOnItemClickListener(new OnItemClickListener(){
 	
 						 @Override
-						public void onItemClick(AdapterView<?> parent, View view,
+						public void onItemClick(AdapterView<?> parent, final View view,
 								int position, long id) {
 							HashMap<String,Object> map=(HashMap<String,Object>)list.getItemAtPosition(position);
-							int mid=(Integer) map.get("pushMessageID"); 		
+							final int mid=(Integer) map.get("pushMessageID"); 		
 							int status=(Integer) map.get("pushMessageStatusID");
 							String title=(String) map.get("messageTitle");
 							String createTime=(String) map.get("createTime");
 							String messageContent=(String) map.get("messageContent");
-							ImageView img=(ImageView)view.findViewById(R.id.status);	
-							Resources resources = getActivity().getResources();  
-							Drawable btnDrawable = resources.getDrawable(R.drawable.seat_null); 
-							img.setImageDrawable(btnDrawable); 
-							//img.setVisibility(View.GONE);
-							setReaded(mid,2);
+							
+							setReaded(mid,state,view);
 							Dialog alertDialog = new AlertDialog.Builder(getActivity()). 
 						                setTitle(title). 
 						                setMessage(createTime+"\n"+messageContent). 
 						                setIcon(R.drawable.ic_menu_messagebox). 
+						                setPositiveButton("标记为未读", new DialogInterface.OnClickListener() {
+
+						   			     @Override
+						   			     public void onClick(DialogInterface dialog, int which) {
+												setReaded(mid,1,view);
+
+						   			    	 
+						   			     }
+						   			    }).
+						   			    setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+						   			     @Override
+						   			     public void onClick(DialogInterface dialog, int which) {
+						   			      // TODO Auto-generated method stub
+						   			     }
+						   			    }).
 						                create(); 
 						        alertDialog.show();
 						}
@@ -235,7 +260,10 @@ public class PushMessageFragment extends Fragment{
 			{
 				super.onCancelled();
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -245,14 +273,14 @@ public class PushMessageFragment extends Fragment{
 		loading1.execute();
 	}
     String res="";
-	public void setReaded(final int id,final int status){
+	public void setReaded(final int id,final int status,final View view){
 		loading2=new AsyncTask<Void, Void, Boolean>(){
 		    @SuppressWarnings("deprecation")
 			@Override  
 	        protected void onPreExecute() {   
 	            super.onPreExecute();   
 	            try{
-		    		getActivity().setProgressBarIndeterminateVisibility(true);// 执行前使进度条可见
+	            	mProgressDialog.show();
 		    	}catch(Exception ex){
 		    		ex.printStackTrace();
 		    	}// 执行前使进度条可见
@@ -277,12 +305,24 @@ public class PushMessageFragment extends Fragment{
 			protected void onPostExecute(Boolean result){
 				super.onPostExecute(result);	
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
+				
 				if(!result)
 					Toast.makeText(getActivity(), "错误:"+res, Toast.LENGTH_LONG).show();
+				else{
+					ImageView img=(ImageView)view.findViewById(R.id.status);	
+					Resources resources = getActivity().getResources();  
+					Drawable btnDrawable = resources.getDrawable(R.drawable.seat_null); 
+					img.setImageDrawable(btnDrawable); 
+					img.setVisibility(View.GONE);
+					((MainActivity)getActivity()).setupMessagesBadge(((MainActivity)getActivity()).action_messagebox);
+				}
 			}
 			@SuppressWarnings("deprecation")
 			@Override
@@ -290,7 +330,10 @@ public class PushMessageFragment extends Fragment{
 			{
 				super.onCancelled();
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -299,5 +342,24 @@ public class PushMessageFragment extends Fragment{
 		};
 		loading2.execute();
 	}
-   
+	@Override
+	public void onDestroy(){
+		if(loading1!=null){
+       		loading1.cancel(true);	
+       		
+       	}	
+     	if(loading2!=null){
+       		loading2.cancel(true);	
+       		
+       	}
+    		
+		try{
+			if(mProgressDialog.isShowing()){
+				mProgressDialog.dismiss();
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		super.onDestroy();
+	}
 }

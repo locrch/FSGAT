@@ -108,7 +108,9 @@ public class MainActivity extends ActionBarActivity
 	static DisplayMetrics getphonesize;
 	static SharedPreferences sp;
 	Editor editor;
-	MessageActionProvider myactionprovider;
+	BadgeView badge;
+	View showbadge;
+	
 	private static FragmentManager fragmentManager;
 	private static RadioGroup radioGroup;
 
@@ -143,7 +145,7 @@ public class MainActivity extends ActionBarActivity
 		setTitle(this.getResources().getString(R.string.app_name));
 
 		setOverflowShowingAlways();
-
+		
 		if (savedInstanceState == null)
 		{
 			/*
@@ -186,8 +188,13 @@ public class MainActivity extends ActionBarActivity
 		cBuilder.setLayoutDrawable(resource.getIdentifier(
 				"simple_notification_icon", "drawable", pkgName));
 		PushManager.setNotificationBuilder(this, 1, cBuilder);
+		
+	
+		
 	}
 
+
+	
 	@Override
 	protected void onStart()
 	{
@@ -236,18 +243,18 @@ public class MainActivity extends ActionBarActivity
 	 @Override
 	   	public void onPause(){
 	       	if(loading1!=null){
-	       		loading1.cancel(false);
+	       		loading1.cancel(true);
 	       	}	
 	       	super.onPause();
 	       }
 	static BadgeView messageCenterBadge;
 	
-	int count=0;
+	static int count=0;
 	
 	
 	
-	private void setupMessagesBadge(final MenuItem msgItem) {
-		 count=0;
+	public void setupMessagesBadge(final MenuItem msgItem) {
+		count=0;
 		loading1=new AsyncTask<Void, Void, Boolean>(){
 		    @SuppressWarnings("deprecation")
 			@Override  
@@ -298,15 +305,16 @@ public class MainActivity extends ActionBarActivity
 				
 				if(count>0){
 					
-				    msgItem.setTitle("消息盒子 "+"("+count+")");
-				    if(myactionprovider!=null){
-				    	ImageView view=myactionprovider.getButton();
-				   
-				        BadgeView badge = new BadgeView(MainActivity.this, view);
-				        badge.setText(""+count);
-				        badge.show();
-				        Log.e("tag update message box","show update "+view);
-				    }
+				   msgItem.setTitle("消息盒子 "+"("+count+")");
+				   //showbadge.setVisibility(View.VISIBLE);
+				   badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+				   badge.setTextSize(10);
+				   badge.setText(""+count);
+				   badge.show();
+				}else{
+					//showbadge.setVisibility(View.GONE);
+				   msgItem.setTitle("消息盒子 ");
+				   badge.hide();
 				}
 			}
 			@SuppressWarnings("deprecation")
@@ -314,11 +322,7 @@ public class MainActivity extends ActionBarActivity
 			protected void onCancelled()
 			{
 				super.onCancelled();
-				try{
-					setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
-				}catch(Exception ex){
-					ex.printStackTrace();
-				}
+				
 			}
 			
 		};
@@ -350,21 +354,44 @@ public class MainActivity extends ActionBarActivity
 		action_bookinghistory = menu.findItem(R.id.action_bookinghistory);
 		action_messagebox = menu.findItem(R.id.action_messagebox);
 		
-		usertype = sp.getString("usertype", "0");
+		usertype = sp.getString("usertype", "");
 		
-		if (usertype == "0")
+		if (usertype.equals("0"))
 		{
 			action_userinfo.setTitle("欢迎您,"+"普通会员");
 		}
-		if (usertype == "1")
+		if (usertype.equals("1"))
 		{
 			action_userinfo.setTitle("欢迎您,"+"5元收费用户");
 		}
-		if (usertype == "2")
+		if (usertype.equals("2"))
 		{
 			action_userinfo.setTitle("欢迎您,"+"10元收费用户");
 		}
 		
+		showbadge = (ImageView)findViewById(R.id.badge);
+		showbadge.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				List<Fragment> fragments=fragmentManager.getFragments();
+				for(Fragment fragment:fragments){
+					if(fragment!=null&&fragment.getClass()!=null&&fragment.getClass().getName().equals("com.fspangu.fsgat.PushMessageFragment")){
+						Log.e("fragment", fragment.getClass().getName());
+						fragmentManager.popBackStackImmediate();
+					}					
+				}
+				
+				FragmentTransaction transaction = fragmentManager.beginTransaction();
+				PushMessageFragment pshf=new PushMessageFragment();
+	        	transaction.replace(R.id.content, pshf);
+	        	transaction.addToBackStack(null);
+	            transaction.commit();
+			}
+			
+		});
 		if (sp.getString("username", "").equals(""))
 		{
 			action_login.setVisible(true);
@@ -375,6 +402,7 @@ public class MainActivity extends ActionBarActivity
 			action_address.setVisible(false);
 			action_bookinghistory.setVisible(false);
 			action_messagebox.setVisible(false);
+			//showbadge.setVisibility(View.GONE);
 		}
 		else {
 			action_logout.setVisible(true);
@@ -385,6 +413,10 @@ public class MainActivity extends ActionBarActivity
 			action_bookinghistory.setVisible(true);
 			action_messagebox.setVisible(true);
 			
+			
+			//showbadge.setVisibility(View.GONE);
+			badge = new BadgeView(MainActivity.this, showbadge);
+			setupMessagesBadge(action_messagebox);
 		}
 		
 		
@@ -413,8 +445,7 @@ public class MainActivity extends ActionBarActivity
 		
 		
 			actionbar_back_btn.setVisibility(View.VISIBLE);
-			setupMessagesBadge(action_messagebox);
-			myactionprovider = (MessageActionProvider) action_messagebox.getActionProvider();  
+			
 		return super.onCreateOptionsMenu(menu);  
 	}
 
@@ -437,6 +468,7 @@ public class MainActivity extends ActionBarActivity
 			action_address.setVisible(true);
 			action_bookinghistory.setVisible(true);
 			action_messagebox.setVisible(true);
+			//showbadge.setVisibility(View.GONE);
 		}
 		
 		
@@ -459,15 +491,7 @@ public class MainActivity extends ActionBarActivity
 			break;
 		case R.id.action_logout:
 			logout();			
-			action_userinfo.setVisible(false);
-			action_login.setVisible(true);
-			action_logout.setVisible(false);
-			action_changepassword.setVisible(false);
-			action_setting.setVisible(false);
-			action_pass.setVisible(false);
-			action_address.setVisible(false);
-			action_bookinghistory.setVisible(false);
-			action_messagebox.setVisible(false);
+			
 			break;
 		
 		case R.id.action_changepassword:
@@ -550,6 +574,8 @@ public class MainActivity extends ActionBarActivity
 	public boolean onMenuOpened(int featureId, Menu menu)
 	{
 		// TODO Auto-generated method stub
+		
+		
 		if (featureId == Window.FEATURE_ACTION_BAR && menu != null)
 		{
 			if (menu.getClass().getSimpleName().equals("MenuBuilder"))
@@ -724,8 +750,16 @@ public static void addShortcutToDesktop(Context context) {
 
 						editor.remove("username");
 						editor.commit();
-						
-						
+						action_userinfo.setVisible(false);
+						action_login.setVisible(true);
+						action_logout.setVisible(false);
+						action_changepassword.setVisible(false);
+						action_setting.setVisible(false);
+						action_pass.setVisible(false);
+						action_address.setVisible(false);
+						action_bookinghistory.setVisible(false);
+						action_messagebox.setVisible(false);
+						showbadge.setVisibility(View.GONE);
 						getSupportFragmentManager().beginTransaction().add(R.id.content, new LoginFragment()).commit();
 						
 					}
@@ -768,7 +802,8 @@ public static void addShortcutToDesktop(Context context) {
 			RadioButton ta3 = (RadioButton) rootView.findViewById(R.id.rg_ta3);
 			RadioButton ta4 = (RadioButton) rootView.findViewById(R.id.rg_ta4);
 			//RadioButton ta5 = (RadioButton) rootView.findViewById(R.id.rg_ta5);
-
+			
+			
 			OnClickListener a = new OnClickListener()
 			{
 

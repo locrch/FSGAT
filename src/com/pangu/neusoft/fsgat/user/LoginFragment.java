@@ -219,8 +219,6 @@ public class LoginFragment extends Fragment
 										
 										Boolean success = false;
 										
-										
-										
 										success = (Boolean) GetParamsMap.get("success");
 										
 										if (success ==null) {
@@ -317,15 +315,15 @@ public class LoginFragment extends Fragment
 											
 											usertype = sp.getString("usertype", "0");
 											
-											if (usertype == "0")
+											if (usertype.equals("0"))
 											{
 												action_userinfo.setTitle("欢迎您,"+"普通会员");
 											}
-											if (usertype == "1")
+											if (usertype.equals("1"))
 											{
 												action_userinfo.setTitle("欢迎您,"+"5元收费用户");
 											}
-											if (usertype == "2")
+											if (usertype.equals("2"))
 											{
 												action_userinfo.setTitle("欢迎您,"+"10元收费用户");
 											}

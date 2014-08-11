@@ -55,6 +55,7 @@ import android.R.integer;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -94,6 +95,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+
 import com.pangu.neusoft.fsgat.core.CheckLogin;
 
 public class TicketMainFragment extends Fragment {
@@ -110,7 +112,7 @@ public class TicketMainFragment extends Fragment {
 	
 	EditText custom_np_num;
 	Button custom_np_down,custom_np_up;
-	
+	private ProgressDialog mProgressDialog;
 	FragmentManager fragmentManager;
 	FragmentTransaction fragmentTransaction;
 	TicketBackFragment tb;
@@ -176,6 +178,12 @@ public class TicketMainFragment extends Fragment {
 	
 	private void init() {
 		// TODO Auto-generated method stub
+		mProgressDialog = new ProgressDialog(getActivity());   
+        mProgressDialog.setMessage("正在加载数据...");   
+        mProgressDialog.setIndeterminate(false);  
+        mProgressDialog.setCanceledOnTouchOutside(false);//设置进度条是否可以按退回键取消  
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);   
+		
 		this.getActivity().setTitle("车票预订");
 		adapter_uptimetime = new ArrayAdapter<ArrayList<String>>(getActivity(), R.layout.simple_spinner_item);
 		choose_place = (RadioGroup) getActivity().findViewById(
@@ -335,7 +343,7 @@ public class TicketMainFragment extends Fragment {
 	        protected void onPreExecute() {   
 	            super.onPreExecute();   
 	            try{
-		    		getActivity().setProgressBarIndeterminateVisibility(true);// 执行前使进度条可见
+	            	mProgressDialog.show();
 		    	}catch(Exception ex){
 		    		ex.printStackTrace();
 		    	}// 执行前使进度条可见
@@ -375,7 +383,10 @@ public class TicketMainFragment extends Fragment {
 			protected void onPostExecute(Boolean result){
 				super.onPostExecute(result);
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -435,7 +446,10 @@ public class TicketMainFragment extends Fragment {
 			{
 				super.onCancelled();
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -445,7 +459,18 @@ public class TicketMainFragment extends Fragment {
 		};
 		loading3.execute(); 
 	}
-	
+	@Override
+	public void onDestroy(){
+
+		try{
+			if(mProgressDialog.isShowing()){
+				mProgressDialog.dismiss();
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		super.onDestroy();
+	}
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{

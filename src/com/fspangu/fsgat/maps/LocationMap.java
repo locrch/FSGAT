@@ -165,6 +165,7 @@ public class LocationMap extends Activity implements OnGetRoutePlanResultListene
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mBaiduMap = mMapView.getMap();
 		mCurrentMode = LocationMode.NORMAL;
+
 		LatLng ptCenter = new LatLng(22.997531d,113.121134d);//设置禅城为中心
 		mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(ptCenter ));
 		setPlace();//设置所有Place

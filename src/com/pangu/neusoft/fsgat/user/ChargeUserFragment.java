@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.core.PostJSONfromGson;
-import com.pangu.neusoft.fsgat.model.ListcCharge;
+import com.pangu.neusoft.fsgat.model.ListcDef;
 import com.pangu.neusoft.fsgat.model.ListdownStation;
 import com.pangu.neusoft.fsgat.model.PostcCharge;
 import com.pangu.neusoft.fsgat.model.PostgetDownStation;
@@ -42,6 +42,7 @@ public class ChargeUserFragment extends Fragment
 	Editor editor;
 	String msg;
 	MenuItem action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
+	
 	private void init()
 	{
 		// TODO Auto-generated method stub
@@ -120,7 +121,7 @@ public class ChargeUserFragment extends Fragment
 							
 							PostcCharge postcCharge = new PostcCharge();
 							
-							ListcCharge listcCharge = new ListcCharge();
+							ListcDef listcCharge = new ListcDef();
 							
 							if (sp.getString("username", null)==null||charge_user_var.getText().toString()==null)
 							{
@@ -135,7 +136,7 @@ public class ChargeUserFragment extends Fragment
 							
 							String result = (String) postGson.GsonPost(postcCharge, "cCharge");
 							
-							Type listType=new TypeToken<ListcCharge>(){}.getType();
+							Type listType=new TypeToken<ListcDef>(){}.getType();
 							
 							Gson gson = new Gson();
 							
@@ -152,6 +153,41 @@ public class ChargeUserFragment extends Fragment
 						
 						protected void onPostExecute(Boolean result) {
 							super.onPostExecute(result);
+							
+								Toast.makeText(getActivity(),
+										msg,
+										Toast.LENGTH_SHORT).show();
+							
+							
+						};
+						
+					}.execute();
+				}
+			});
+			
+			charge_get_var_btn.setOnClickListener(new OnClickListener()
+			{
+				
+				@Override
+				public void onClick(View v)
+				{
+					// TODO Auto-generated method stub
+					new CustomAsynTask(getActivity()){
+						protected Boolean doInBackground(Void... params) {
+							super.doInBackground(params);
+					ListcDef listcDef = new ListcDef();
+					GetCaptacha getCaptacha = new GetCaptacha();
+					listcDef = getCaptacha.GetCaptacha(charge_user_username.getText().toString());
+					msg = listcDef.getMsg().toString();
+					
+					Boolean success = listcDef.getSuccess();
+					
+					return success;
+					
+						}
+						protected void onPostExecute(Boolean result) {
+							super.onPostExecute(result);
+							
 							if (result)
 							{
 								Toast.makeText(getActivity(),
@@ -162,7 +198,9 @@ public class ChargeUserFragment extends Fragment
 								Toast.makeText(getActivity(),
 										R.string.toast_flase_msg,
 										Toast.LENGTH_SHORT).show();
+							
 							}
+								
 							
 						};
 						

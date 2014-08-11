@@ -110,12 +110,13 @@ public class PostJson
 		
 		try
 		{
-			if (joget!=null&&joget.getString("msg")!=null)
+			if (joget!=null&&joget.getString("msg")!=null&&joget.getString("type")!=null)
 			{
 				GetParamsMap.put("success", joget.getBoolean("success"));
 				
 				GetParamsMap.put("msg", joget.getString("msg"));
 				
+				GetParamsMap.put("type", joget.getString("type"));
 				
 			}
 		} catch (JSONException e)

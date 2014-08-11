@@ -35,6 +35,7 @@ import com.pangu.neusoft.fsgat.model.Pass;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -80,26 +81,26 @@ public  class ShowHistoryFragment extends Fragment {
 	ListView list;
 	AsyncTask<Void, Void, Boolean> loading1;
 	AsyncTask<Void, Void, Boolean> loading2;
+	private ProgressDialog mProgressDialog;
 	
 	 @Override
 	   	public void onPause(){
 	       	if(loading1!=null){
-	       		loading1.cancel(false);
-	       		try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
-				}catch(Exception ex){
-					ex.printStackTrace();
-				}
+	       		loading1.cancel(true);
+	       		
 	       	}
 	       	if(loading2!=null){
-	       		loading2.cancel(false);
-	       		try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
-				}catch(Exception ex){
-					ex.printStackTrace();
-				}
+	       		loading2.cancel(true);
+	       		
 	       	}
-	       	
+	       	try{
+
+				if(mProgressDialog.isShowing()){
+					mProgressDialog.dismiss();
+				}
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
 	       	super.onDestroyView();
 	       }
 	 
@@ -133,6 +134,12 @@ public  class ShowHistoryFragment extends Fragment {
 //		actionBar.show();
 //		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
 //		titleview.setText("受理记录");
+    	mProgressDialog = new ProgressDialog(getActivity());   
+        mProgressDialog.setMessage("正在加载数据...");   
+        mProgressDialog.setIndeterminate(false);  
+        mProgressDialog.setCanceledOnTouchOutside(false);//设置进度条是否可以按退回键取消  
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);  
+    	
     	this.getActivity().setTitle("受理记录");
     	if (CheckNetwork.connected(this)){
 	    	list=(ListView)view.findViewById(R.id.listView1);
@@ -157,7 +164,7 @@ public  class ShowHistoryFragment extends Fragment {
 	        protected void onPreExecute() {   
 	            super.onPreExecute();   
 	            try{
-		    		getActivity().setProgressBarIndeterminateVisibility(true);// 执行前使进度条可见
+	            	mProgressDialog.show();
 		    	}catch(Exception ex){
 		    		ex.printStackTrace();
 		    	}// 执行前使进度条可见
@@ -249,7 +256,10 @@ public  class ShowHistoryFragment extends Fragment {
 			protected void onPostExecute(Boolean result){
 				super.onPostExecute(result);	
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -287,7 +297,10 @@ public  class ShowHistoryFragment extends Fragment {
 			{
 				super.onCancelled();
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -307,7 +320,7 @@ public  class ShowHistoryFragment extends Fragment {
 	        protected void onPreExecute() {   
 	            super.onPreExecute(); 
 	            try{
-		    		getActivity().setProgressBarIndeterminateVisibility(true);// 执行前使进度条可见
+	            	mProgressDialog.show();
 		    	}catch(Exception ex){
 		    		ex.printStackTrace();
 		    	}// 执行前使进度条可见
@@ -344,7 +357,10 @@ public  class ShowHistoryFragment extends Fragment {
 			protected void onPostExecute(Boolean result){
 				super.onPostExecute(result);
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -377,17 +393,34 @@ public  class ShowHistoryFragment extends Fragment {
 			{
 				super.onCancelled();
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
 			}
 			
 		};
-		loading2.execute();
-			
-		    	
-    	
+		loading2.execute();	
     }
-    
+    @Override
+	public void onDestroy(){
+		if(loading1!=null){
+       		loading1.cancel(true);	
+       		
+       	}	
+     	if(loading2!=null){
+       		loading2.cancel(true);	
+       	}	
+		try{
+			if(mProgressDialog.isShowing()){
+				mProgressDialog.dismiss();
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		super.onDestroy();
+	}
 }  

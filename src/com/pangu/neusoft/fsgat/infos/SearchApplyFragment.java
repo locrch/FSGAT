@@ -35,6 +35,7 @@ import com.pangu.neusoft.fsgat.model.Pass;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -81,6 +82,7 @@ public  class SearchApplyFragment extends Fragment {
 	ImageButton button1;
 	TextView textview1;
 	EditText editText1;
+	private ProgressDialog mProgressDialog;
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
@@ -107,6 +109,11 @@ TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_t
 //		actionBar.show();
 //		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
 //		titleview.setText("办证进度查询");
+    	mProgressDialog = new ProgressDialog(getActivity());   
+        mProgressDialog.setMessage("正在加载数据...");   
+        mProgressDialog.setIndeterminate(false);  
+        mProgressDialog.setCanceledOnTouchOutside(false);//设置进度条是否可以按退回键取消  
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);  
     	this.getActivity().setTitle("办证进度查询");
     	button1=(ImageButton)view.findViewById(R.id.imageButton1);
     	textview1=(TextView)view.findViewById(R.id.apply_search_result);
@@ -138,7 +145,10 @@ TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_t
        	if(loading!=null){
        		loading.cancel(false);
        		try{
-				getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+				if(mProgressDialog.isShowing()){
+					mProgressDialog.dismiss();
+				}
 			}catch(Exception ex){
 				ex.printStackTrace();
 			}
@@ -156,10 +166,10 @@ TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_t
 	        protected void onPreExecute() {   
 	            super.onPreExecute();   
 	            try{
-		    		getActivity().setProgressBarIndeterminateVisibility(true);// 执行前使进度条可见
+	            	mProgressDialog.show();
 		    	}catch(Exception ex){
 		    		ex.printStackTrace();
-		    	}
+		    	}// 执行前使进度条可见
 	        }			
 			@Override
 			protected Boolean doInBackground(Void... params){
@@ -186,7 +196,10 @@ TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_t
 			protected void onPostExecute(Boolean result){
 				super.onPostExecute(result);	
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -207,7 +220,10 @@ TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_t
 			{
 				super.onCancelled();
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -219,5 +235,16 @@ TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_t
 		    	
     	
     }
-   
+    @Override
+	public void onDestroy(){
+
+		try{
+			if(mProgressDialog.isShowing()){
+				mProgressDialog.dismiss();
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		super.onDestroy();
+	}
 }  

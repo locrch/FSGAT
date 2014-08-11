@@ -28,7 +28,6 @@ import android.widget.TextView;
  * @author Jeff Gilfelt
  */
 public class BadgeView extends TextView {
-
 	public static final int POSITION_TOP_LEFT = 1;
 	public static final int POSITION_TOP_RIGHT = 2;
 	public static final int POSITION_BOTTOM_LEFT = 3;

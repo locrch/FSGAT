@@ -60,6 +60,7 @@ import com.baidu.mapapi.map.Marker;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -107,6 +108,7 @@ public  class ExportStateFragment extends Fragment {
 	
 	ListView list;
 	Spinner spinner;
+	private ProgressDialog mProgressDialog;
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
@@ -132,6 +134,12 @@ public  class ExportStateFragment extends Fragment {
 //		actionBar.show();
 //		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
 //		titleview.setText("通关口岸状态查询");
+    	mProgressDialog = new ProgressDialog(getActivity());   
+        mProgressDialog.setMessage("正在加载数据...");   
+        mProgressDialog.setIndeterminate(false);  
+        mProgressDialog.setCanceledOnTouchOutside(false);//设置进度条是否可以按退回键取消  
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);   
+    	
     	this.getActivity().setTitle("通过口岸状态查询");
     	if(CheckNetwork.connected(this)){
 	    	list=(ListView)view.findViewById(R.id.listView1);
@@ -177,10 +185,13 @@ public  class ExportStateFragment extends Fragment {
 			@Override  
 	        protected void onPreExecute() {   
 		    	try{
-		    		getActivity().setProgressBarIndeterminateVisibility(true);// 执行前使进度条可见
-		    	}catch(Exception ex){
-		    		ex.printStackTrace();
-		    	}
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
 		    	super.onPreExecute();   
 	        }			
 			@Override
@@ -220,7 +231,10 @@ public  class ExportStateFragment extends Fragment {
 			protected void onPostExecute(Boolean result){
 				super.onPostExecute(result);
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -242,7 +256,10 @@ public  class ExportStateFragment extends Fragment {
 			{
 				super.onCancelled();
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -259,7 +276,10 @@ public  class ExportStateFragment extends Fragment {
        	if(loading!=null){
        		loading.cancel(false);
        		try{
-				getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+				if(mProgressDialog.isShowing()){
+					mProgressDialog.dismiss();
+				}
 			}catch(Exception ex){
 				ex.printStackTrace();
 			}
@@ -274,10 +294,13 @@ public  class ExportStateFragment extends Fragment {
 			@Override  
 	        protected void onPreExecute() {   
 		    	try{
-		    		getActivity().setProgressBarIndeterminateVisibility(true);// 执行前使进度条可见
-		    	}catch(Exception ex){
-		    		ex.printStackTrace();
-		    	}
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
 	            super.onPreExecute();   
 	        }			
 			@Override
@@ -334,7 +357,10 @@ public  class ExportStateFragment extends Fragment {
 			protected void onPostExecute(Boolean result){
 				super.onPostExecute(result);	
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -358,7 +384,10 @@ public  class ExportStateFragment extends Fragment {
 			{
 				super.onCancelled();
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -368,4 +397,17 @@ public  class ExportStateFragment extends Fragment {
     	loading.execute();
     	
     } 
+    
+    @Override
+	public void onDestroy(){
+
+		try{
+			if(mProgressDialog.isShowing()){
+				mProgressDialog.dismiss();
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		super.onDestroy();
+	}
 }  

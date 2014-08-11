@@ -1,6 +1,6 @@
 package com.pangu.neusoft.fsgat.model;
 
-public class ListcCharge
+public class ListcDef
 {
 	Boolean success;
 	String msg;

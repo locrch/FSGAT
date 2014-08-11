@@ -50,6 +50,7 @@ import com.pangu.neusoft.fsgat.user.AddpassFragment;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -93,7 +94,7 @@ public  class ApplyVisaFragment extends Fragment {
 	SharedPreferences sp;
 	Editor editor;
 	Spinner passselecter;
-	
+	private ProgressDialog mProgressDialog;
 	boolean shipment=false;
 	
 	TableRow tableRow4;
@@ -119,30 +120,29 @@ public  class ApplyVisaFragment extends Fragment {
 	AsyncTask<Void, Void, Boolean> loading3;
 	 @Override
 	   	public void onPause(){
-	       	if(loading1!=null){
-	       		loading1.cancel(false);
-	       		try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
-				}catch(Exception ex){
-					ex.printStackTrace();
-				}
+		 
+			if(loading1!=null){
+	       		loading1.cancel(true);	
+	       		
+	       	}	
+	     	if(loading2!=null){
+	       		loading2.cancel(true);	
+	       		
 	       	}
-	       	if(loading2!=null){
-	       		loading2.cancel(false);
-	       		try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
-				}catch(Exception ex){
-					ex.printStackTrace();
-				}
-	       	}
-	       	if(loading3!=null){
-	       		loading3.cancel(false);
-	       		try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
-				}catch(Exception ex){
-					ex.printStackTrace();
-				}
-	       	}
+	    	if(loading3!=null){
+	       		loading3.cancel(true);	
+	       		
+	       	}	
+	     	
+		 
+		 try{
+
+			if(mProgressDialog.isShowing()){
+					mProgressDialog.dismiss();
+			}
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
 	       	super.onDestroyView();
 	       }
 	
@@ -177,6 +177,13 @@ public  class ApplyVisaFragment extends Fragment {
 //		actionBar.show();
 //		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
 //		titleview.setText("申请签注");
+    	mProgressDialog = new ProgressDialog(getActivity());   
+        mProgressDialog.setMessage("正在加载数据...");   
+        mProgressDialog.setIndeterminate(false);  
+        mProgressDialog.setCanceledOnTouchOutside(false);//设置进度条是否可以按退回键取消  
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);   
+		
+    	
     	this.getActivity().setTitle("申请签注");
     	ConnectivityManager cm=(ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
     	NetworkInfo info=cm.getActiveNetworkInfo();
@@ -375,7 +382,7 @@ public  class ApplyVisaFragment extends Fragment {
 		        protected void onPreExecute() {   
 		            super.onPreExecute();   
 		            try{
-			    		getActivity().setProgressBarIndeterminateVisibility(true);// 执行前使进度条可见
+		            	mProgressDialog.show();
 			    	}catch(Exception ex){
 			    		ex.printStackTrace();
 			    	}// 执行前使进度条可见
@@ -419,7 +426,10 @@ public  class ApplyVisaFragment extends Fragment {
 				@Override
 				protected void onPostExecute(Boolean result){
 					try{
-						getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+						if(mProgressDialog.isShowing()){
+							mProgressDialog.dismiss();
+						}
 					}catch(Exception ex){
 						ex.printStackTrace();
 					}
@@ -451,7 +461,10 @@ public  class ApplyVisaFragment extends Fragment {
 				{
 					super.onCancelled();
 					try{
-						getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+						if(mProgressDialog.isShowing()){
+							mProgressDialog.dismiss();
+						}
 					}catch(Exception ex){
 						ex.printStackTrace();
 					}
@@ -483,7 +496,7 @@ public void getPass(){
 	        protected void onPreExecute() {   
 	            super.onPreExecute();   
 	            try{
-		    		getActivity().setProgressBarIndeterminateVisibility(true);// 执行前使进度条可见
+	            	mProgressDialog.show();
 		    	}catch(Exception ex){
 		    		ex.printStackTrace();
 		    	}// 执行前使进度条可见
@@ -529,7 +542,10 @@ public void getPass(){
 			protected void onPostExecute(Boolean result){
 				super.onPostExecute(result);
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -562,7 +578,10 @@ public void getPass(){
 			{
 				super.onCancelled();
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -625,7 +644,7 @@ public void getPass(){
 	        protected void onPreExecute() {   
 	            super.onPreExecute();   
 	            try{
-		    		getActivity().setProgressBarIndeterminateVisibility(true);// 执行前使进度条可见
+	            	mProgressDialog.show();
 		    	}catch(Exception ex){
 		    		ex.printStackTrace();
 		    	}// 执行前使进度条可见
@@ -664,7 +683,10 @@ public void getPass(){
 			protected void onPostExecute(Boolean result){
 				super.onPostExecute(result);
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -724,7 +746,10 @@ public void getPass(){
 			{
 				super.onCancelled();
 				try{
-					getActivity().setProgressBarIndeterminateVisibility(false);// 执行前使进度条可见
+
+					if(mProgressDialog.isShowing()){
+						mProgressDialog.dismiss();
+					}
 				}catch(Exception ex){
 					ex.printStackTrace();
 				}
@@ -813,5 +838,27 @@ public void getPass(){
 			    create();
 			  alertDialog.show();
 	}
-    
+	@Override
+	public void onDestroy(){
+		if(loading1!=null){
+       		loading1.cancel(true);	
+       		
+       	}	
+     	if(loading2!=null){
+       		loading2.cancel(true);	
+       		
+       	}
+    	if(loading3!=null){
+       		loading3.cancel(true);	
+       		
+       	}	
+		try{
+			if(mProgressDialog.isShowing()){
+				mProgressDialog.dismiss();
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		super.onDestroy();
+	}
 }  
