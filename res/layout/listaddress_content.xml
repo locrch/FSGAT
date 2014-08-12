@@ -33,7 +33,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/listaddress_content_address_label"
         android:layout_toRightOf="@+id/listaddress_content_address_label"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:singleLine="true"
+		android:ellipsize="end" />
 
     <TextView
         android:id="@+id/listaddress_content_postcode"

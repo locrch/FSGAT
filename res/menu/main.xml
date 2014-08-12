@@ -11,6 +11,12 @@
           android:showAsAction="always|withText"
           android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider" />
     -->
+    <item
+	    android:id="@+id/action_userlevelcontent"
+        android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider"
+        android:showAsAction="always|withText"
+        android:title="当前会员等级："
+        />
 	<item
 	    android:id="@+id/action_userinfo"
         android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider"
@@ -19,7 +25,6 @@
 	    
     <item
         android:id="@+id/action_logout"
-        android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider"
         android:icon="@android:drawable/ic_menu_delete"
         android:showAsAction="always|withText"
         android:title="注销"/>

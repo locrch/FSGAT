@@ -69,12 +69,13 @@ public class LoginFragment extends Fragment
 	String type;
 	ProtocolAlterDialog PAdialog;
 	
-	MenuItem action_userinfo,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
+	MenuItem action_userlevelcontent,action_userinfo,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
+		action_userlevelcontent = menu.findItem(R.id.action_userlevelcontent);
 		action_userinfo = menu.findItem(R.id.action_userinfo);
 		action_logout = menu.findItem(R.id.action_logout);
 		action_changepassword = menu.findItem(R.id.action_changepassword);
@@ -86,7 +87,7 @@ public class LoginFragment extends Fragment
 		if (sp.getString("username", "").equals(""))
 		{
 			action_userinfo.setVisible(false);
-			
+			action_userlevelcontent.setVisible(false);
 		}
 		
 		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
@@ -304,7 +305,7 @@ public class LoginFragment extends Fragment
 												fragmentManager.popBackStackImmediate();
 												transaction.commit();
 											}
-											
+											action_userlevelcontent.setVisible(true);
 											action_userinfo.setVisible(true);
 											action_logout.setVisible(true);
 											action_changepassword.setVisible(true);
@@ -317,15 +318,16 @@ public class LoginFragment extends Fragment
 											
 											if (usertype.equals("0"))
 											{
-												action_userinfo.setTitle("欢迎您,"+"普通会员");
+												action_userinfo.setTitle(getResources().getText(R.string.user_level_content_0));
 											}
 											if (usertype.equals("1"))
 											{
-												action_userinfo.setTitle("欢迎您,"+"5元收费用户");
+												action_userinfo.setTitle(getResources().getText(R.string.user_level_content_1));
 											}
+											
 											if (usertype.equals("2"))
 											{
-												action_userinfo.setTitle("欢迎您,"+"10元收费用户");
+												action_userinfo.setTitle(getResources().getText(R.string.user_level_content_2));
 											}
 										}
 									}

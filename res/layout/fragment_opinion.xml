@@ -25,13 +25,28 @@
             android:text="请给佛山港澳提出意见："
             android:textSize="15sp" />
 
-        <RatingBar
-            android:id="@+id/ratingBar1"
+        <EditText
+            android:id="@+id/opinion_content"
+            android:layout_width="400dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/mysetting_switch1_label"
+            android:ems="10"
+            android:gravity="left|top" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/opinion_commit_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/mysetting_switch1_label"
+            android:layout_below="@+id/opinion_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="14dp" />
+            android:text="提交"
+            android:background="@drawable/button_orange"
+            android:textColor="#ffffff" />
 
     </RelativeLayout>
 

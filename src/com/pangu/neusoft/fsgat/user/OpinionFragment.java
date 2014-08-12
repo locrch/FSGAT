@@ -12,10 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class OpinionFragment extends Fragment
 {
+	View rootview;
+	EditText opinion_content;
+	Button opinion_commit_btn;
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
@@ -42,20 +47,47 @@ public class OpinionFragment extends Fragment
 		
 		actionbar_title.setText("意见反馈");
 	}
+	
+	private void init()
+	{
+		// TODO Auto-generated method stub
+		opinion_content = (EditText)rootview.findViewById(R.id.opinion_content);
+		opinion_commit_btn = (Button)rootview.findViewById(R.id.opinion_commit_btn);
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState)
 	{
 		setHasOptionsMenu(true);
-		// TODO Auto-generated method stub
-//		android.app.ActionBar actionBar = this.getActivity().getActionBar();
-//		actionBar.setCustomView(R.layout.title_bar);
-//		actionBar.setDisplayShowCustomEnabled(true);
-//		actionBar.setDisplayShowHomeEnabled(false);
-//		actionBar.show();
-//		TextView titleview=(TextView)actionBar.getCustomView().findViewById(R.id.title);
-//		titleview.setText(this.getActivity().getResources().getString(R.string.app_name));
+		
+		rootview = inflater.inflate(R.layout.fragment_opinion,null);
+		
 		this.getActivity().setTitle(this.getActivity().getResources().getString(R.string.app_name));
-		return inflater.inflate(R.layout.fragment_opinion, container,false);
+		
+		init();
+		
+		return rootview;
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		
+		opinion_commit_btn.setOnClickListener(new OnClickListener()
+		{
+			
+			@Override
+			public void onClick(View v)
+			{
+				// TODO Auto-generated method stub
+				Toast.makeText(getActivity(), "反馈成功！",
+						Toast.LENGTH_SHORT).show();
+				
+				opinion_content.getText().clear();
+			}
+		});
 	}
 }

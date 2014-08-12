@@ -77,6 +77,7 @@ import android.view.LayoutInflater.Factory;
 import android.view.MenuItem.OnActionExpandListener;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.ActionProvider;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -114,7 +115,7 @@ public class MainActivity extends ActionBarActivity
 	private static FragmentManager fragmentManager;
 	private static RadioGroup radioGroup;
 
-	MenuItem action_userinfo,action_login,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory,action_messagebox;
+	MenuItem action_userlevelcontent,action_userinfo,action_login,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory,action_messagebox;
 	
 	String usertype;
 	
@@ -254,6 +255,7 @@ public class MainActivity extends ActionBarActivity
 	
 	
 	public void setupMessagesBadge(final MenuItem msgItem) {
+		if (!sp.getString("username", "").equals("")){
 		count=0;
 		loading1=new AsyncTask<Void, Void, Boolean>(){
 		    @SuppressWarnings("deprecation")
@@ -264,12 +266,13 @@ public class MainActivity extends ActionBarActivity
 	        }			
 			@Override
 			protected Boolean doInBackground(Void... params){
+				
 				String[] keys = new String[]{ "username" };
 
 						String[] values = new String[]{ sp.getString("username", "") };
 
 						PostJson postJson = new PostJson();
-
+						
 						GetParamsMap = postJson.Post(keys, values, "GetPushMessage","pushMessageList");
 
 						JSONArray pushMessageList = (JSONArray) GetParamsMap.get("pushMessageList");
@@ -327,7 +330,7 @@ public class MainActivity extends ActionBarActivity
 			
 		};
 		loading1.execute();
-	    
+	}   
 	}
 
 	@Override
@@ -344,6 +347,7 @@ public class MainActivity extends ActionBarActivity
 
 		actionBar.setCustomView(R.layout.title_bar);
 
+		action_userlevelcontent = menu.findItem(R.id.action_userlevelcontent);
 		action_userinfo = menu.findItem(R.id.action_userinfo);
 		action_login = menu.findItem(R.id.action_login);
 		action_logout = menu.findItem(R.id.action_logout);
@@ -358,15 +362,16 @@ public class MainActivity extends ActionBarActivity
 		
 		if (usertype.equals("0"))
 		{
-			action_userinfo.setTitle("欢迎您,"+"普通会员");
+			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_0));
 		}
 		if (usertype.equals("1"))
 		{
-			action_userinfo.setTitle("欢迎您,"+"5元收费用户");
+			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_1));
 		}
+		
 		if (usertype.equals("2"))
 		{
-			action_userinfo.setTitle("欢迎您,"+"10元收费用户");
+			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_2));
 		}
 		
 		showbadge = (ImageView)findViewById(R.id.badge);
@@ -449,6 +454,23 @@ public class MainActivity extends ActionBarActivity
 		return super.onCreateOptionsMenu(menu);  
 	}
 
+	
+	/*@Override
+	public boolean onCreatePanelMenu(int featureId, Menu menu)
+	{
+		// TODO Auto-generated method stub
+		action_userinfo = menu.findItem(R.id.action_userinfo);
+		if (featureId == R.id.action_userinfo)
+		{
+			View v = getLayoutInflater().inflate(  
+	                R.layout.menu_user_info, null);
+			 action_userinfo.setActionView(v);
+		}
+		return true;
+	}*/
+	
+	
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
@@ -459,6 +481,7 @@ public class MainActivity extends ActionBarActivity
 		
 		if (!(sp.getString("username", "").equals("")))
 		{
+			action_userlevelcontent.setVisible(true);
 			action_userinfo.setVisible(true);
 			action_login.setVisible(false);
 			action_logout.setVisible(true);
@@ -553,10 +576,15 @@ public class MainActivity extends ActionBarActivity
 			break;
 			
 		case R.id.action_userinfo:
-			ChargeUserFragment cuf = new ChargeUserFragment();
+			if (usertype.equals("0"))
+			{
+				ChargeUserFragment cuf = new ChargeUserFragment();
 			transaction.add(R.id.content, cuf);
         	transaction.addToBackStack(null);
             transaction.commit();
+			}
+			
+			
 			break;
 		default:
 			
@@ -750,6 +778,7 @@ public static void addShortcutToDesktop(Context context) {
 
 						editor.remove("username");
 						editor.commit();
+						action_userlevelcontent.setVisible(false);
 						action_userinfo.setVisible(false);
 						action_login.setVisible(true);
 						action_logout.setVisible(false);
