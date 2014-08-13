@@ -22,6 +22,7 @@ import com.pangu.neusoft.fsgat.model.PushMessage;
 import com.pangu.neusoft.fsgat.user.ChangeAddressDialog;
 import com.pangu.neusoft.fsgat.user.ChangePasswordFragment;
 import com.pangu.neusoft.fsgat.user.ChargeUserFragment;
+import com.pangu.neusoft.fsgat.user.DowngradeUserFragment;
 import com.pangu.neusoft.fsgat.user.ListAddressFragment;
 import com.pangu.neusoft.fsgat.user.ListPassFragment;
 import com.pangu.neusoft.fsgat.user.LoginFragment;
@@ -360,16 +361,16 @@ public class MainActivity extends ActionBarActivity
 		
 		usertype = sp.getString("usertype", "");
 		
-		if (usertype.equals("0"))
+		if (usertype.equals("1"))
 		{
 			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_0));
 		}
-		if (usertype.equals("1"))
+		if (usertype.equals("2"))
 		{
 			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_1));
 		}
 		
-		if (usertype.equals("2"))
+		if (usertype.equals("3"))
 		{
 			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_2));
 		}
@@ -576,14 +577,19 @@ public class MainActivity extends ActionBarActivity
 			break;
 			
 		case R.id.action_userinfo:
-			if (usertype.equals("0"))
+			if (usertype.equals("1"))
 			{
-				ChargeUserFragment cuf = new ChargeUserFragment();
+			ChargeUserFragment cuf = new ChargeUserFragment();
 			transaction.add(R.id.content, cuf);
         	transaction.addToBackStack(null);
             transaction.commit();
 			}
-			
+			else {
+				DowngradeUserFragment duf = new DowngradeUserFragment();
+				transaction.add(R.id.content, duf);
+	        	transaction.addToBackStack(null);
+	            transaction.commit();
+			}
 			
 			break;
 		default:

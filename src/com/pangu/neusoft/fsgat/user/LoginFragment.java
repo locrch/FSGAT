@@ -314,18 +314,18 @@ public class LoginFragment extends Fragment
 											action_address.setVisible(true);
 											action_bookinghistory.setVisible(true);
 											
-											usertype = sp.getString("usertype", "0");
+											usertype = sp.getString("usertype", "1");
 											
-											if (usertype.equals("0"))
+											if (usertype.equals("1"))
 											{
 												action_userinfo.setTitle(getResources().getText(R.string.user_level_content_0));
 											}
-											if (usertype.equals("1"))
+											if (usertype.equals("2"))
 											{
 												action_userinfo.setTitle(getResources().getText(R.string.user_level_content_1));
 											}
 											
-											if (usertype.equals("2"))
+											if (usertype.equals("3"))
 											{
 												action_userinfo.setTitle(getResources().getText(R.string.user_level_content_2));
 											}

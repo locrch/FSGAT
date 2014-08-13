@@ -1,7 +1,6 @@
 package com.pangu.neusoft.fsgat.user;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 import com.fspangu.fsgat.R;
 import com.fspangu.fsgat.YwblFragment;
@@ -10,15 +9,11 @@ import com.google.gson.reflect.TypeToken;
 import com.pangu.neusoft.fsgat.CustomView.CustomAsynTask;
 import com.pangu.neusoft.fsgat.core.PostJSONfromGson;
 import com.pangu.neusoft.fsgat.model.ListcDef;
-import com.pangu.neusoft.fsgat.model.ListdownStation;
 import com.pangu.neusoft.fsgat.model.PostcCharge;
-import com.pangu.neusoft.fsgat.model.PostgetDownStation;
-import com.pangu.neusoft.fsgat.model.downStation;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -27,17 +22,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View.OnClickListener;
 
-public class ChargeUserFragment extends Fragment
-{ 
+public class DowngradeUserFragment extends Fragment
+{
 	View rootview;
-	EditText charge_user_username,charge_user_var;
-	Button charge_get_var_btn,charge_user_charge_btn;
+	EditText downgrade_user_username,downgrade_user_var;
+	Button downgrade_get_var_btn,downgrade_user_downgrade_btn;
 	SharedPreferences sp;
 	Editor editor;
 	String msg;
@@ -46,10 +41,11 @@ public class ChargeUserFragment extends Fragment
 	private void init()
 	{
 		// TODO Auto-generated method stub
-		charge_user_username = (EditText)rootview.findViewById(R.id.charge_user_username);
-		charge_user_var = (EditText)rootview.findViewById(R.id.charge_user_var);
-		charge_get_var_btn = (Button)rootview.findViewById(R.id.charge_get_var_btn);
-		charge_user_charge_btn = (Button)rootview.findViewById(R.id.charge_user_charge_btn);
+		
+		downgrade_user_username = (EditText)rootview.findViewById(R.id.downgrade_user_username);
+		downgrade_user_var = (EditText)rootview.findViewById(R.id.downgrade_user_var);
+		downgrade_get_var_btn = (Button)rootview.findViewById(R.id.downgrade_get_var_btn);
+		downgrade_user_downgrade_btn = (Button)rootview.findViewById(R.id.downgrade_user_downgrade_btn);
 		
 		sp = getActivity().getSharedPreferences("sp",Context.MODE_PRIVATE);
 		editor = sp.edit();
@@ -88,7 +84,7 @@ public class ChargeUserFragment extends Fragment
 		
 		TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_title);
 		
-		actionbar_title.setText("会员升级");
+		actionbar_title.setText("取消会员");
 		
 		
 	}
@@ -98,7 +94,7 @@ public class ChargeUserFragment extends Fragment
 				Bundle savedInstanceState)
 		{
 			// TODO Auto-generated method stub
-			rootview = inflater.inflate(R.layout.fragment_charge_user, null);
+			rootview = inflater.inflate(R.layout.fragment_downgrade_user, null);
 			init();
 			setHasOptionsMenu(true);
 			return rootview;
@@ -109,9 +105,9 @@ public class ChargeUserFragment extends Fragment
 			// TODO Auto-generated method stub
 			super.onActivityCreated(savedInstanceState);
 			
-			charge_user_username.setText(sp.getString("username", ""));
+			downgrade_user_username.setText(sp.getString("username", ""));
 			
-			charge_user_charge_btn.setOnClickListener(new OnClickListener()
+			downgrade_user_downgrade_btn.setOnClickListener(new OnClickListener()
 			{
 				
 				@Override
@@ -125,18 +121,18 @@ public class ChargeUserFragment extends Fragment
 							
 							PostcCharge postcCharge = new PostcCharge();
 							
-							ListcDef listcCharge = new ListcDef();
+							ListcDef listcdowngrade = new ListcDef();
 							
-							if (sp.getString("username", null)==null||charge_user_var.getText().toString()==null)
+							if (sp.getString("username", null)==null||downgrade_user_var.getText().toString()==null)
 							{
 								return false;
 							}
 							 
 							postcCharge.setUsername(sp.getString("username", null));
 							
-							postcCharge.setCaptcha(charge_user_var.getText().toString());
+							postcCharge.setCaptcha(downgrade_user_var.getText().toString());
 							
-							postcCharge.setType("3");
+							postcCharge.setType("1");
 							
 							String result = (String) postGson.GsonPost(postcCharge, "cCharge");
 							
@@ -144,13 +140,13 @@ public class ChargeUserFragment extends Fragment
 							
 							Gson gson = new Gson();
 							
-							listcCharge = gson.fromJson(result,listType);
+							listcdowngrade = gson.fromJson(result,listType);
 							
 							Boolean success = false;
 							
-							success = listcCharge.getSuccess();
+							success = listcdowngrade.getSuccess();
 							
-							msg = listcCharge.getMsg();
+							msg = listcdowngrade.getMsg();
 							
 							return success;
 						};
@@ -158,35 +154,41 @@ public class ChargeUserFragment extends Fragment
 						protected void onPostExecute(Boolean result) {
 							super.onPostExecute(result);
 							
-								Toast.makeText(getActivity(),
-										msg,
+								if (result)
+								{
+									Toast.makeText(getActivity(),
+										"会员降级成功！",
 										Toast.LENGTH_SHORT).show();
+									
+									usertype = sp.getString("usertype", "");
+									
+									if (usertype.equals("1"))
+									{
+										action_userinfo.setTitle(getResources().getText(R.string.user_level_content_0));
+									}
+									if (usertype.equals("2"))
+									{
+										action_userinfo.setTitle(getResources().getText(R.string.user_level_content_1));
+									}
+									
+									if (usertype.equals("3"))
+									{
+										action_userinfo.setTitle(getResources().getText(R.string.user_level_content_2));
+									}
+									
+									YwblFragment ywbl = new YwblFragment();
+									getFragmentManager().beginTransaction().replace(R.id.content, ywbl).commit();
+								}
+								
 							
-								usertype = sp.getString("usertype", "");
-								
-								if (usertype.equals("1"))
-								{
-									action_userinfo.setTitle(getResources().getText(R.string.user_level_content_0));
-								}
-								if (usertype.equals("2"))
-								{
-									action_userinfo.setTitle(getResources().getText(R.string.user_level_content_1));
-								}
-								
-								if (usertype.equals("3"))
-								{
-									action_userinfo.setTitle(getResources().getText(R.string.user_level_content_2));
-								}
-								
-								YwblFragment ywbl = new YwblFragment();
-								getFragmentManager().beginTransaction().replace(R.id.content, ywbl).commit();
+							
 						};
 						
 					}.execute();
 				}
 			});
 			
-			charge_get_var_btn.setOnClickListener(new OnClickListener()
+			downgrade_get_var_btn.setOnClickListener(new OnClickListener()
 			{
 				
 				@Override
@@ -198,7 +200,7 @@ public class ChargeUserFragment extends Fragment
 							super.doInBackground(params);
 					ListcDef listcDef = new ListcDef();
 					GetCaptacha getCaptacha = new GetCaptacha();
-					listcDef = getCaptacha.GetCaptacha(charge_user_username.getText().toString());
+					listcDef = getCaptacha.GetCaptacha(downgrade_user_username.getText().toString());
 					msg = listcDef.getMsg().toString();
 					
 					Boolean success = listcDef.getSuccess();
@@ -214,6 +216,8 @@ public class ChargeUserFragment extends Fragment
 								Toast.makeText(getActivity(),
 										msg,
 										Toast.LENGTH_SHORT).show();
+								
+								
 							}
 							else {
 								Toast.makeText(getActivity(),
