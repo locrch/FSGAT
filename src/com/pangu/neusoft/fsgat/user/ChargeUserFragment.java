@@ -32,6 +32,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 
 public class ChargeUserFragment extends Fragment
 { 
@@ -41,7 +42,7 @@ public class ChargeUserFragment extends Fragment
 	SharedPreferences sp;
 	Editor editor;
 	String msg;
-	MenuItem action_userlevelcontent,action_userinfo,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
+	MenuItem action_userinfo,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
 	String usertype;
 	private void init()
 	{
@@ -61,7 +62,6 @@ public class ChargeUserFragment extends Fragment
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
 		
-		action_userlevelcontent = menu.findItem(R.id.action_userlevelcontent);
 		action_userinfo = menu.findItem(R.id.action_userinfo);
 		action_logout = menu.findItem(R.id.action_logout);
 		action_changepassword = menu.findItem(R.id.action_changepassword);
@@ -166,16 +166,16 @@ public class ChargeUserFragment extends Fragment
 								
 								if (usertype.equals("1"))
 								{
-									action_userinfo.setTitle(getResources().getText(R.string.user_level_content_0));
+									action_userinfo.setTitle(getResources().getText(R.string.user_level_content_1));
 								}
 								if (usertype.equals("2"))
 								{
-									action_userinfo.setTitle(getResources().getText(R.string.user_level_content_1));
+									action_userinfo.setTitle(getResources().getText(R.string.user_level_content_2));
 								}
 								
 								if (usertype.equals("3"))
 								{
-									action_userinfo.setTitle(getResources().getText(R.string.user_level_content_2));
+									action_userinfo.setTitle(getResources().getText(R.string.user_level_content_3));
 								}
 								
 								YwblFragment ywbl = new YwblFragment();
@@ -214,6 +214,7 @@ public class ChargeUserFragment extends Fragment
 								Toast.makeText(getActivity(),
 										msg,
 										Toast.LENGTH_SHORT).show();
+								action_userinfo.setTitle(getResources().getText(R.string.user_level_content_3));
 							}
 							else {
 								Toast.makeText(getActivity(),
@@ -222,7 +223,11 @@ public class ChargeUserFragment extends Fragment
 							
 							}
 								
-							
+							// 收起键盘
+							((InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE))
+							.hideSoftInputFromWindow(getActivity()
+									.getCurrentFocus().getWindowToken(),
+									InputMethodManager.HIDE_NOT_ALWAYS);
 						};
 						
 					}.execute();

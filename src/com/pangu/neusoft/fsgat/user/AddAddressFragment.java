@@ -118,13 +118,22 @@ public class AddAddressFragment extends Fragment
 				public void onClick(View v)
 				{
 					// TODO Auto-generated method stub
-	
-					new CustomAsynTask(getActivity())
+					if (addaddress_receiver.getText().toString().equals("")||
+						addaddress_address.getText().toString().equals("")||
+						addaddress_postcode.getText().toString().equals(""))
+					{
+						Toast.makeText(getActivity(), "请输入完整信息！",
+								Toast.LENGTH_SHORT).show();
+					}
+					else {
+						
+						new CustomAsynTask(getActivity())
 					{
 						@Override
 						protected Boolean doInBackground(Void... params)
 						{
-	
+							
+							
 							String[] keys = new String[]
 							{ "username", "receiver", "address", "postcode" };
 	
@@ -152,12 +161,13 @@ public class AddAddressFragment extends Fragment
 							
 							
 							
-							if (GetParamsMap.get("msg").toString().length()>50)
+							if (!result)
 							{
 								Toast.makeText(getActivity().getApplicationContext(),
-										R.string.toast_flase_msg,
+										"获取失败！",
 										Toast.LENGTH_LONG).show();
 							}
+							
 							else {
 								Toast.makeText(getActivity().getApplicationContext(),
 										(String) GetParamsMap.get("msg"),
@@ -199,6 +209,7 @@ public class AddAddressFragment extends Fragment
 						};
 						
 					}.execute();
+					}
 				}
 			});
 		}

@@ -312,7 +312,24 @@ public class AddpassFragment extends Fragment
 				public void onClick(View v)
 				{
 					// TODO Auto-generated method stub
-	
+					
+					if (addpass_passNumber.getText().toString().equals("")||
+									addpass_surName.getText().toString().equals("")||
+									addpass_givenName.getText().toString().equals("")||
+									addpass_dob.getText().toString().equals("")|| 
+									sex.equals("")||
+									addpass_pob.getText().toString().equals("")||
+									addpass_expireDate.getText().toString().equals("")||
+									addpass_issueDate.getText().toString().equals("")||
+									addpass_issueArea.getText().toString().equals("")||
+									areaid.equals(""))
+					{
+						Toast.makeText(getActivity(), "请输入完整信息！",
+								Toast.LENGTH_SHORT).show();
+					}
+					else {
+						
+					
 					new CustomAsynTask(getActivity())
 					{
 						@Override
@@ -373,6 +390,7 @@ public class AddpassFragment extends Fragment
 						};
 	
 					}.execute();
+					}
 				}
 			});
 		}

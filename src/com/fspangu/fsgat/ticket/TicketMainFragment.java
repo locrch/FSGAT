@@ -533,12 +533,15 @@ public class TicketMainFragment extends Fragment {
 						
 						if (company_yd.isChecked())
 						{
-							ticket_layout.setVisibility(View.GONE);
+							/*ticket_layout.setVisibility(View.GONE);
 							selection.setVisibility(View.VISIBLE);
-							
+							*/
+							ticket_layout.setVisibility(View.VISIBLE);
+							selection.setVisibility(View.GONE);
 							if (monoway_double.isChecked())
 							{
-								back_selection.setVisibility(View.VISIBLE);
+								/*back_selection.setVisibility(View.VISIBLE);*/
+								back_selection.setVisibility(View.GONE);
 							}
 						}
 					}
@@ -770,8 +773,11 @@ public class TicketMainFragment extends Fragment {
 				if (isChecked) {
 					if (place_hongkong.isChecked())
 					{
-						ticket_layout.setVisibility(View.GONE);
+					/*	ticket_layout.setVisibility(View.GONE);
 					selection.setVisibility(View.VISIBLE);
+					*/
+					ticket_layout.setVisibility(View.VISIBLE);
+					selection.setVisibility(View.GONE);
 					}else {
 						ticket_layout.setVisibility(View.VISIBLE);
 					selection.setVisibility(View.GONE);
@@ -782,7 +788,8 @@ public class TicketMainFragment extends Fragment {
 					{
 						if (place_hongkong.isChecked())
 						{
-							back_selection.setVisibility(View.VISIBLE);
+							/*back_selection.setVisibility(View.VISIBLE);*/
+							back_selection.setVisibility(View.GONE);
 						}
 						else {
 							ticket_layout.setVisibility(View.VISIBLE);
@@ -993,9 +1000,13 @@ public class TicketMainFragment extends Fragment {
 							
 							if (place_hongkong.isChecked()&&company_yd.isChecked())
 							{
-								selection.setVisibility(View.VISIBLE);
+								/*selection.setVisibility(View.VISIBLE);
 								back_selection.setVisibility(View.VISIBLE);
 								ticket_layout.setVisibility(View.GONE);
+								*/
+								selection.setVisibility(View.GONE);
+								back_selection.setVisibility(View.GONE);
+								ticket_layout.setVisibility(View.VISIBLE);
 							}
 							
 							if(fragment_layout.getVisibility()==0||fragment_layout!=null){
@@ -2481,9 +2492,11 @@ public class TicketMainFragment extends Fragment {
 						
 						if (company_yd.isChecked()&&place_hongkong.isChecked())
 						{
-							postbuyTicket.setReturnSeatNumbers(PutReturnseatNumbersList.getSeatNumbersList());
+							/*postbuyTicket.setReturnSeatNumbers(PutReturnseatNumbersList.getSeatNumbersList());*/
 							
+							zgt_ticket_count =Integer.valueOf(custom_np_num.getText().toString());
 							
+							postbuyTicket.setTicketCount(zgt_ticket_count);
 						}
 						else 
 						{
@@ -2505,10 +2518,14 @@ public class TicketMainFragment extends Fragment {
 						return false;
 						
 						
-						postbuyTicket.setTicketCount(PutseatNumbersList.getSeatNumbersList().size());
+						/*postbuyTicket.setTicketCount(PutseatNumbersList.getSeatNumbersList().size());
 						
 						postbuyTicket.setGoSeatNumbers(PutseatNumbersList.getSeatNumbersList());
+						*/
 						
+						zgt_ticket_count =Integer.valueOf(custom_np_num.getText().toString());
+						
+						postbuyTicket.setTicketCount(zgt_ticket_count);
 						
 					}else{
 						
@@ -2550,13 +2567,16 @@ public class TicketMainFragment extends Fragment {
 
 							if (company_yd.isChecked()&&place_hongkong.isChecked())
 							{
-								ConfirmInfo.setTicketcount(PutseatNumbersList
+								/*ConfirmInfo.setTicketcount(PutseatNumbersList
 										.getSeatNumbersList().size());
 
 								conf_allprice = PutseatNumbersList
 										.getSeatNumbersList().size()
-										* oneWayPrice;
+										* oneWayPrice;*/
+								
+								ConfirmInfo.setTicketcount(zgt_ticket_count);
 
+								conf_allprice = zgt_ticket_count * oneWayPrice;
 							} else
 							{
 

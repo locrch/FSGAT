@@ -116,7 +116,7 @@ public class MainActivity extends ActionBarActivity
 	private static FragmentManager fragmentManager;
 	private static RadioGroup radioGroup;
 
-	MenuItem action_userlevelcontent,action_userinfo,action_login,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory,action_messagebox;
+	MenuItem action_userinfo,action_login,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory,action_messagebox;
 	
 	String usertype;
 	
@@ -348,7 +348,6 @@ public class MainActivity extends ActionBarActivity
 
 		actionBar.setCustomView(R.layout.title_bar);
 
-		action_userlevelcontent = menu.findItem(R.id.action_userlevelcontent);
 		action_userinfo = menu.findItem(R.id.action_userinfo);
 		action_login = menu.findItem(R.id.action_login);
 		action_logout = menu.findItem(R.id.action_logout);
@@ -363,16 +362,16 @@ public class MainActivity extends ActionBarActivity
 		
 		if (usertype.equals("1"))
 		{
-			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_0));
+			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_1));
 		}
 		if (usertype.equals("2"))
 		{
-			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_1));
+			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_2));
 		}
 		
 		if (usertype.equals("3"))
 		{
-			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_2));
+			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_3));
 		}
 		
 		showbadge = (ImageView)findViewById(R.id.badge);
@@ -482,7 +481,6 @@ public class MainActivity extends ActionBarActivity
 		
 		if (!(sp.getString("username", "").equals("")))
 		{
-			action_userlevelcontent.setVisible(true);
 			action_userinfo.setVisible(true);
 			action_login.setVisible(false);
 			action_logout.setVisible(true);
@@ -580,15 +578,21 @@ public class MainActivity extends ActionBarActivity
 			if (usertype.equals("1"))
 			{
 			ChargeUserFragment cuf = new ChargeUserFragment();
-			transaction.add(R.id.content, cuf);
-        	transaction.addToBackStack(null);
-            transaction.commit();
+			if (!cuf.isVisible())
+			{
+			transaction.replace(R.id.content, cuf);
+        	transaction.commit();
+			}
+			
 			}
 			else {
-				DowngradeUserFragment duf = new DowngradeUserFragment();
-				transaction.add(R.id.content, duf);
-	        	transaction.addToBackStack(null);
-	            transaction.commit();
+			DowngradeUserFragment duf = new DowngradeUserFragment();
+			if (!duf.isVisible())
+			{
+			transaction.replace(R.id.content, duf);
+	        transaction.commit();
+			}
+				
 			}
 			
 			break;
@@ -784,7 +788,6 @@ public static void addShortcutToDesktop(Context context) {
 
 						editor.remove("username");
 						editor.commit();
-						action_userlevelcontent.setVisible(false);
 						action_userinfo.setVisible(false);
 						action_login.setVisible(true);
 						action_logout.setVisible(false);

@@ -11,12 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp" >
 
-        <TextView
-            android:id="@+id/charge_user_username_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="用户名：" />
-
         <EditText
             android:id="@+id/charge_user_username"
             android:layout_width="wrap_content"
@@ -25,6 +19,14 @@
             android:layout_alignParentTop="true"
             android:editable="false"
             android:layout_toRightOf="@+id/charge_user_username_label" />
+
+        <TextView
+            android:id="@+id/charge_user_username_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="用户名：" />
         
     </RelativeLayout>
 
@@ -32,15 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp" >
-
-        <TextView
-            android:id="@+id/charge_user_var_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/charge_user"
-            android:layout_alignParentTop="true"
-            android:gravity="center"
-            android:text="验证码：" />
 
         <EditText
             android:id="@+id/charge_user_var"
@@ -62,7 +55,20 @@
             android:layout_alignParentTop="true"
             android:background="@drawable/button_orange"
             android:text="获取验证码"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            android:textSize="@dimen/button_textsize"
+            />
+
+        <TextView
+            android:id="@+id/charge_user_var_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/charge_user_var"
+            android:layout_alignBottom="@+id/charge_user_var"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="验证码：" />
+
     </RelativeLayout>
 
 	<RelativeLayout
@@ -77,8 +83,52 @@
 		    android:layout_centerHorizontal="true"
 		    android:text="升级会员"
 		    android:background="@drawable/button_orange"
-		    android:textColor="#ffffff" />
+		    android:textColor="#ffffff"
+		    android:textSize="@dimen/button_textsize" />
 
 	</RelativeLayout>
-    
+
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:layout_marginTop="20dp" >
+
+		<TextView
+		    android:id="@+id/charge_user_text1"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:text="高级会员资费：10元/月"
+		    android:layout_marginBottom="10dp" />
+		<TextView
+		    android:id="@+id/charge_user_text2"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:text="高级会员可享受以下特权：" 
+		    android:textStyle="bold"
+		    android:layout_marginBottom="3dp"/>
+		<TextView
+		    android:id="@+id/charge_user_text3"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:text="*高级会员签注无限次免收快递费用。"
+		    android:textStyle="bold"
+		    android:layout_marginBottom="3dp" />
+		<TextView
+		    android:id="@+id/charge_user_text4"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:text="*高级会员可享受去港车票（价值180元）买三送一，购买车票满两套即可免费送票上门。"
+		    android:textStyle="bold"
+		    android:layout_marginBottom="3dp" />
+		<TextView
+		    android:id="@+id/charge_user_text5"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:text="*更多会员优惠请关注最新优惠活动。"
+		    android:textStyle="bold"
+		    android:layout_marginBottom="3dp" />
+		
+	</LinearLayout>
+	
 </LinearLayout>

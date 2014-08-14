@@ -51,9 +51,19 @@ public class PostJson
 			} else
 			{
 				joput.put("err", "error");
-			}*/
+			}*/ 
+			if (values[0]==null){
+				GetParamsMap.put("success", false);
+						
+				GetParamsMap.put("msg", "请输入完整信息!");
+						
+				return GetParamsMap;
+				}
+			
 				for (int i = 0; i < values.length; i++)
 				{
+					
+					
 					joput.put(keys[i], values[i]);
 				}
 				
@@ -152,6 +162,15 @@ public class PostJson
 			}*/
 				for (int i = 0; i < values.length; i++)
 				{
+					if (values[0]==null)
+					{
+						GetParamsMap.put("success", false);
+						
+						GetParamsMap.put("msg", "请输入完整信息!");
+						
+						return GetParamsMap;
+					}
+					
 					joput.put(keys[i], values[i]);
 				}
 				

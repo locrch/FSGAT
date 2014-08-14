@@ -239,7 +239,8 @@
             android:gravity="center"
             android:textSize="20sp"
             android:text="选择座位"
-            android:background="@drawable/frame_blue" />
+            android:background="@drawable/frame_blue"
+            android:visibility="gone" />
 		 
     </RelativeLayout>
 	
@@ -247,7 +248,7 @@
         android:id="@+id/ticket_main_ticket_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
          >
 
         <TextView
@@ -273,6 +274,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/ticket_main_ticket_label"
             android:orientation="horizontal"
+            
             >
             <Button 
             android:id="@+id/custom_np_down"
@@ -424,7 +426,8 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="选择选座" />
+            android:text="选择选座"
+            android:visibility="gone" />
 	     
 	 </RelativeLayout>
 </LinearLayout>
