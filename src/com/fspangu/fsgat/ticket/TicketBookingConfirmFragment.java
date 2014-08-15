@@ -112,11 +112,12 @@ public class TicketBookingConfirmFragment extends Fragment{
 			
 			if (TicketMainFragment.postbuyTicket.getIsExpress())
 			{
+				
 				sendway_oneself_layout.setVisibility(View.GONE);
 				sendway_mail_layout.setVisibility(View.VISIBLE);
 			}
 			else {
-				address_layout.setVisibility(View.GONE);
+				
 				sendway_oneself_layout.setVisibility(View.VISIBLE);
 				sendway_mail_layout.setVisibility(View.GONE);
 			}

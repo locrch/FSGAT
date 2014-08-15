@@ -321,7 +321,7 @@ public class PushMessageFragment extends Fragment{
 					Drawable btnDrawable = resources.getDrawable(R.drawable.seat_null); 
 					img.setImageDrawable(btnDrawable); 
 					img.setVisibility(View.GONE);
-					((MainActivity)getActivity()).setupMessagesBadge(((MainActivity)getActivity()).action_messagebox);
+				//	((MainActivity)getActivity()).setupMessagesBadge(((MainActivity)getActivity()).action_messagebox);
 				}
 			}
 			@SuppressWarnings("deprecation")

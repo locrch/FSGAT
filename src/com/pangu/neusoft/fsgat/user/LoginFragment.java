@@ -69,13 +69,14 @@ public class LoginFragment extends Fragment
 	String type;
 	ProtocolAlterDialog PAdialog;
 	
-	MenuItem action_userinfo,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
+	MenuItem action_userinfo_1,action_userinfo_2,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
-		action_userinfo = menu.findItem(R.id.action_userinfo);
+		action_userinfo_1 = menu.findItem(R.id.action_userinfo_1);
+		action_userinfo_2 = menu.findItem(R.id.action_userinfo_2);
 		action_logout = menu.findItem(R.id.action_logout);
 		action_changepassword = menu.findItem(R.id.action_changepassword);
 		action_setting = menu.findItem(R.id.action_setting);
@@ -85,7 +86,8 @@ public class LoginFragment extends Fragment
 		
 		if (sp.getString("username", "").equals(""))
 		{
-			action_userinfo.setVisible(false);
+			action_userinfo_1.setVisible(false);
+			action_userinfo_2.setVisible(false);
 		}
 		
 		Button actionbar_back_btn = (Button)getActivity().findViewById(R.id.actionbar_back_btn);
@@ -303,7 +305,6 @@ public class LoginFragment extends Fragment
 												fragmentManager.popBackStackImmediate();
 												transaction.commit();
 											}*/
-											action_userinfo.setVisible(true);
 											action_logout.setVisible(true);
 											action_changepassword.setVisible(true);
 											action_setting.setVisible(true);
@@ -311,20 +312,23 @@ public class LoginFragment extends Fragment
 											action_address.setVisible(true);
 											action_bookinghistory.setVisible(true);
 											
-											usertype = sp.getString("usertype", "1");
+											usertype = sp.getString("usertype", "");
 											
 											if (usertype.equals("1"))
 											{
-												action_userinfo.setTitle(getResources().getText(R.string.user_level_content_1));
+												action_userinfo_1.setVisible(true);
+												action_userinfo_2.setVisible(false);
 											}
 											if (usertype.equals("2"))
 											{
-												action_userinfo.setTitle(getResources().getText(R.string.user_level_content_2));
+												action_userinfo_2.setVisible(true);
+												action_userinfo_1.setVisible(false);
 											}
 											
 											if (usertype.equals("3"))
 											{
-												action_userinfo.setTitle(getResources().getText(R.string.user_level_content_3));
+												action_userinfo_2.setVisible(true);
+												action_userinfo_1.setVisible(false);
 											}
 										}
 									}

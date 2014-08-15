@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:paddingLeft="@dimen/activity_padding_width"
+    android:paddingRight="@dimen/activity_padding_width" >
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
@@ -305,6 +311,30 @@
             
         </RelativeLayout>
 
+    </LinearLayout>
+	
+    <LinearLayout
+        android:id="@+id/booking_confirm_sendway_mail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/border_grey_four"
+        android:padding="5dp"
+        android:visibility="gone"
+         >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
+
+            <TextView
+                android:id="@+id/booking_confirm_takeway_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*票到付款，邮递代收" />
+        </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/booking_confirm_address_layout"
             android:layout_width="match_parent"
@@ -327,32 +357,7 @@
                 android:text="收件地址："
                 android:textSize="@dimen/ticket_booking_confirm_textsize" />
         </RelativeLayout>
-
     </LinearLayout>
-	
-    <LinearLayout
-        android:id="@+id/booking_confirm_sendway_mail_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/border_grey_four"
-        android:padding="5dp"
-        android:visibility="gone"
-         >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/ticket_booking_confirm_content_marginBottom" >
-
-            <TextView
-                android:id="@+id/booking_confirm_takeway_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="*票到付款，邮递代收" />
-            
-        </RelativeLayout>
-    </LinearLayout>
-    
     
     <RelativeLayout
         android:layout_width="match_parent"
@@ -372,3 +377,4 @@
     </RelativeLayout>
 
 </LinearLayout>
+</ScrollView>

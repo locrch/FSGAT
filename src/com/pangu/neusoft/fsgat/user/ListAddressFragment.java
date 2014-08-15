@@ -349,10 +349,7 @@ public class ListAddressFragment extends Fragment
 
 				success = (Boolean) GetParamsMap.get("success");
 
-				if (success)
-				{
-
-				}
+				
 
 				return success;
 			}

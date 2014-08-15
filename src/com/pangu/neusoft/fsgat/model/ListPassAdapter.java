@@ -96,9 +96,7 @@ public class ListPassAdapter extends SimpleAdapter {
 
 						success = (Boolean) GetParamsMap.get("success");
 
-						if (success) {
-							
-						}
+						
 
 						return success;
 					}

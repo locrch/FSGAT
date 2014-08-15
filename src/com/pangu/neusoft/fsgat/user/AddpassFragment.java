@@ -31,6 +31,7 @@ import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -39,6 +40,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 
 @SuppressLint("NewApi")
 public class AddpassFragment extends Fragment
@@ -56,7 +58,7 @@ public class AddpassFragment extends Fragment
 	DatePickerDialog dpd_dob, dpd_expireDate, dpd_issueDate;
 	SharedPreferences sp;
 	Editor editor;
-	String sex;
+	String sex = "男";
 	String areaid = "07";
 	JSONObject joget;
 	HashMap<String, Object> GetParamsMap;
@@ -253,8 +255,10 @@ public class AddpassFragment extends Fragment
 				}
 			}
 		};
-
+		
 		addpass_sex.setOnCheckedChangeListener(mChangeRadio);
+		
+		
 	}
 
 	@Override
@@ -317,7 +321,7 @@ public class AddpassFragment extends Fragment
 									addpass_surName.getText().toString().equals("")||
 									addpass_givenName.getText().toString().equals("")||
 									addpass_dob.getText().toString().equals("")|| 
-									sex.equals("")||
+									sex.equals("")||sex.equals(null)||
 									addpass_pob.getText().toString().equals("")||
 									addpass_expireDate.getText().toString().equals("")||
 									addpass_issueDate.getText().toString().equals("")||

@@ -18,4 +18,5 @@
 	<dimen name="ticket_history_content_marginBottom">5dp</dimen>
 	<dimen name="location_map_btn_width">35dp</dimen>
 	<dimen name="location_map_btn_marginBottom">15dp</dimen>
+	
 </resources>

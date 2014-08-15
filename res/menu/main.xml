@@ -13,12 +13,15 @@
     -->
    
 	<item
-	    android:id="@+id/action_userinfo"
-        android:actionProviderClass="com.fspangu.fsgat.PlusActionProvider"
+	    android:id="@+id/action_userinfo_1"
         android:showAsAction="always|withText"
-        
+        android:title="@string/user_level_content_1"
         />
-	    
+	 <item
+	    android:id="@+id/action_userinfo_2"
+        android:showAsAction="always|withText"
+        android:title="@string/user_level_content_3"
+        />  
     <item
         android:id="@+id/action_logout"
         android:icon="@android:drawable/ic_menu_delete"
@@ -60,12 +63,12 @@
         android:icon="@android:drawable/ic_menu_info_details"
         android:showAsAction="always|withText"
         android:title="签注记录"/>
-    <item
+    <!-- <item
         android:id="@+id/action_messagebox"
         android:icon="@drawable/ic_menu_messagebox"
         
         android:showAsAction="always|withText"        
-        android:title="消息盒子"/>
+        android:title="消息盒子"/>  -->
     <item
         android:id="@+id/action_update"
         android:icon="@android:drawable/ic_menu_upload"

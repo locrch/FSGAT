@@ -2514,8 +2514,8 @@ public class TicketMainFragment extends Fragment {
 					
 					if (company_yd.isChecked()&&place_hongkong.isChecked())
 					{
-						if (PutseatNumbersList.getSeatNumbersList() == null)
-						return false;
+						/*if (PutseatNumbersList.getSeatNumbersList() == null)
+						return false;*/
 						
 						
 						/*postbuyTicket.setTicketCount(PutseatNumbersList.getSeatNumbersList().size());

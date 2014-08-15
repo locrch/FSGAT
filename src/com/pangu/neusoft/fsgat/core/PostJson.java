@@ -52,13 +52,7 @@ public class PostJson
 			{
 				joput.put("err", "error");
 			}*/ 
-			if (values[0]==null){
-				GetParamsMap.put("success", false);
-						
-				GetParamsMap.put("msg", "请输入完整信息!");
-						
-				return GetParamsMap;
-				}
+			
 			
 				for (int i = 0; i < values.length; i++)
 				{
@@ -120,13 +114,16 @@ public class PostJson
 		
 		try
 		{
-			if (joget!=null&&joget.getString("msg")!=null&&joget.getString("type")!=null)
+			if (joget!=null&&joget.getString("msg")!=null)
 			{
 				GetParamsMap.put("success", joget.getBoolean("success"));
 				
 				GetParamsMap.put("msg", joget.getString("msg"));
 				
-				GetParamsMap.put("type", joget.getString("type"));
+				if (joget.getString("type")!=null)
+				{
+					GetParamsMap.put("type", joget.getString("type"));
+				}
 				
 			}
 		} catch (JSONException e)
@@ -162,14 +159,7 @@ public class PostJson
 			}*/
 				for (int i = 0; i < values.length; i++)
 				{
-					if (values[0]==null)
-					{
-						GetParamsMap.put("success", false);
-						
-						GetParamsMap.put("msg", "请输入完整信息!");
-						
-						return GetParamsMap;
-					}
+					
 					
 					joput.put(keys[i], values[i]);
 				}

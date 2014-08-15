@@ -42,7 +42,7 @@ public class ChargeUserFragment extends Fragment
 	SharedPreferences sp;
 	Editor editor;
 	String msg;
-	MenuItem action_userinfo,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
+	MenuItem action_userinfo_1,action_userinfo_2,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
 	String usertype;
 	private void init()
 	{
@@ -62,7 +62,8 @@ public class ChargeUserFragment extends Fragment
 		// TODO Auto-generated method stub
 		super.onCreateOptionsMenu(menu, inflater);
 		
-		action_userinfo = menu.findItem(R.id.action_userinfo);
+		action_userinfo_1 = menu.findItem(R.id.action_userinfo_1);
+		action_userinfo_2 = menu.findItem(R.id.action_userinfo_2);
 		action_logout = menu.findItem(R.id.action_logout);
 		action_changepassword = menu.findItem(R.id.action_changepassword);
 		action_setting = menu.findItem(R.id.action_setting);
@@ -93,6 +94,8 @@ public class ChargeUserFragment extends Fragment
 		
 	}
 	
+	
+	
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState)
@@ -101,6 +104,7 @@ public class ChargeUserFragment extends Fragment
 			rootview = inflater.inflate(R.layout.fragment_charge_user, null);
 			init();
 			setHasOptionsMenu(true);
+			
 			return rootview;
 		}
 		@Override
@@ -166,16 +170,19 @@ public class ChargeUserFragment extends Fragment
 								
 								if (usertype.equals("1"))
 								{
-									action_userinfo.setTitle(getResources().getText(R.string.user_level_content_1));
+									action_userinfo_1.setVisible(true);
+									action_userinfo_2.setVisible(false);
 								}
 								if (usertype.equals("2"))
 								{
-									action_userinfo.setTitle(getResources().getText(R.string.user_level_content_2));
+									action_userinfo_2.setVisible(true);
+									action_userinfo_1.setVisible(false);
 								}
 								
 								if (usertype.equals("3"))
 								{
-									action_userinfo.setTitle(getResources().getText(R.string.user_level_content_3));
+									action_userinfo_2.setVisible(true);
+									action_userinfo_1.setVisible(false);
 								}
 								
 								YwblFragment ywbl = new YwblFragment();
@@ -214,7 +221,7 @@ public class ChargeUserFragment extends Fragment
 								Toast.makeText(getActivity(),
 										msg,
 										Toast.LENGTH_SHORT).show();
-								action_userinfo.setTitle(getResources().getText(R.string.user_level_content_3));
+								
 							}
 							else {
 								Toast.makeText(getActivity(),

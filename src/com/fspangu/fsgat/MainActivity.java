@@ -116,7 +116,7 @@ public class MainActivity extends ActionBarActivity
 	private static FragmentManager fragmentManager;
 	private static RadioGroup radioGroup;
 
-	MenuItem action_userinfo,action_login,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory,action_messagebox;
+	MenuItem action_userinfo_1,action_userinfo_2,action_login,action_logout,action_changepassword,action_setting,action_pass,action_address,action_bookinghistory;
 	
 	String usertype;
 	
@@ -348,7 +348,8 @@ public class MainActivity extends ActionBarActivity
 
 		actionBar.setCustomView(R.layout.title_bar);
 
-		action_userinfo = menu.findItem(R.id.action_userinfo);
+		action_userinfo_1 = menu.findItem(R.id.action_userinfo_1);
+		action_userinfo_2 = menu.findItem(R.id.action_userinfo_2);
 		action_login = menu.findItem(R.id.action_login);
 		action_logout = menu.findItem(R.id.action_logout);
 		action_changepassword = menu.findItem(R.id.action_changepassword);
@@ -356,22 +357,25 @@ public class MainActivity extends ActionBarActivity
 		action_pass = menu.findItem(R.id.action_pass);
 		action_address = menu.findItem(R.id.action_address);
 		action_bookinghistory = menu.findItem(R.id.action_bookinghistory);
-		action_messagebox = menu.findItem(R.id.action_messagebox);
+		//action_messagebox = menu.findItem(R.id.action_messagebox);
 		
 		usertype = sp.getString("usertype", "");
 		
 		if (usertype.equals("1"))
 		{
-			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_1));
+			action_userinfo_1.setVisible(true);
+			action_userinfo_2.setVisible(false);
 		}
 		if (usertype.equals("2"))
 		{
-			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_2));
+			action_userinfo_2.setVisible(true);
+			action_userinfo_1.setVisible(false);
 		}
 		
 		if (usertype.equals("3"))
 		{
-			action_userinfo.setTitle(getResources().getText(R.string.user_level_content_3));
+			action_userinfo_2.setVisible(true);
+			action_userinfo_1.setVisible(false);
 		}
 		
 		showbadge = (ImageView)findViewById(R.id.badge);
@@ -406,8 +410,9 @@ public class MainActivity extends ActionBarActivity
 			action_pass.setVisible(false);
 			action_address.setVisible(false);
 			action_bookinghistory.setVisible(false);
-			action_messagebox.setVisible(false);
-			//showbadge.setVisibility(View.GONE);
+			//action_messagebox.setVisible(false);
+			showbadge.setVisibility(View.GONE);
+			
 		}
 		else {
 			action_logout.setVisible(true);
@@ -416,12 +421,12 @@ public class MainActivity extends ActionBarActivity
 			action_pass.setVisible(true);
 			action_address.setVisible(true);
 			action_bookinghistory.setVisible(true);
-			action_messagebox.setVisible(true);
+			//action_messagebox.setVisible(true);
 			
 			
-			//showbadge.setVisibility(View.GONE);
+			showbadge.setVisibility(View.VISIBLE);
 			badge = new BadgeView(MainActivity.this, showbadge);
-			setupMessagesBadge(action_messagebox);
+			//setupMessagesBadge(action_messagebox);
 		}
 		
 		
@@ -448,26 +453,12 @@ public class MainActivity extends ActionBarActivity
 		});
 		
 		
-		
 			actionbar_back_btn.setVisibility(View.VISIBLE);
 			
 		return super.onCreateOptionsMenu(menu);  
 	}
 
 	
-	/*@Override
-	public boolean onCreatePanelMenu(int featureId, Menu menu)
-	{
-		// TODO Auto-generated method stub
-		action_userinfo = menu.findItem(R.id.action_userinfo);
-		if (featureId == R.id.action_userinfo)
-		{
-			View v = getLayoutInflater().inflate(  
-	                R.layout.menu_user_info, null);
-			 action_userinfo.setActionView(v);
-		}
-		return true;
-	}*/
 	
 	
 	
@@ -481,7 +472,26 @@ public class MainActivity extends ActionBarActivity
 		
 		if (!(sp.getString("username", "").equals("")))
 		{
-			action_userinfo.setVisible(true);
+			
+			usertype = sp.getString("usertype", "");
+			
+			if (usertype.equals("1"))
+			{
+				action_userinfo_1.setVisible(true);
+				action_userinfo_2.setVisible(false);
+			}
+			if (usertype.equals("2"))
+			{
+				action_userinfo_2.setVisible(true);
+				action_userinfo_1.setVisible(false);
+			}
+			
+			if (usertype.equals("3"))
+			{
+				action_userinfo_2.setVisible(true);
+				action_userinfo_1.setVisible(false);
+			}
+			
 			action_login.setVisible(false);
 			action_logout.setVisible(true);
 			action_changepassword.setVisible(true);
@@ -489,7 +499,7 @@ public class MainActivity extends ActionBarActivity
 			action_pass.setVisible(true);
 			action_address.setVisible(true);
 			action_bookinghistory.setVisible(true);
-			action_messagebox.setVisible(true);
+			//action_messagebox.setVisible(true);
 			//showbadge.setVisibility(View.GONE);
 		}
 		
@@ -503,14 +513,14 @@ public class MainActivity extends ActionBarActivity
 				getSupportFragmentManager().beginTransaction().add(R.id.content, lf).commit();
 			}
 			break;
-		case R.id.action_messagebox:
-			//显示消息盒子
-			
-			PushMessageFragment pshf=new PushMessageFragment();
-        	transaction.add(R.id.content, pshf);
-        	transaction.addToBackStack(null);
-            transaction.commit();
-			break;
+//		case R.id.action_messagebox:
+//			//显示消息盒子
+//			
+//			PushMessageFragment pshf=new PushMessageFragment();
+//        	transaction.add(R.id.content, pshf);
+//        	transaction.addToBackStack(null);
+//            transaction.commit();
+//			break;
 		case R.id.action_logout:
 			logout();			
 			
@@ -574,9 +584,8 @@ public class MainActivity extends ActionBarActivity
             transaction.commit();
 			break;
 			
-		case R.id.action_userinfo:
-			if (usertype.equals("1"))
-			{
+		case R.id.action_userinfo_1:
+			
 			ChargeUserFragment cuf = new ChargeUserFragment();
 			if (!cuf.isVisible())
 			{
@@ -584,18 +593,18 @@ public class MainActivity extends ActionBarActivity
         	transaction.commit();
 			}
 			
-			}
-			else {
+			break;
+		case R.id.action_userinfo_2:
+		
 			DowngradeUserFragment duf = new DowngradeUserFragment();
 			if (!duf.isVisible())
 			{
 			transaction.replace(R.id.content, duf);
 	        transaction.commit();
 			}
-				
-			}
 			
-			break;
+		break;	
+			
 		default:
 			
 			
@@ -624,7 +633,7 @@ public class MainActivity extends ActionBarActivity
 							"setOptionalIconsVisible", Boolean.TYPE);
 					m.setAccessible(true);
 					m.invoke(menu, true);
-					setupMessagesBadge(action_messagebox);
+					//setupMessagesBadge(action_messagebox);
 				} catch (Exception e)
 				{
 				}
@@ -788,7 +797,8 @@ public static void addShortcutToDesktop(Context context) {
 
 						editor.remove("username");
 						editor.commit();
-						action_userinfo.setVisible(false);
+						action_userinfo_1.setVisible(false);
+						action_userinfo_2.setVisible(false);
 						action_login.setVisible(true);
 						action_logout.setVisible(false);
 						action_changepassword.setVisible(false);
@@ -796,7 +806,7 @@ public static void addShortcutToDesktop(Context context) {
 						action_pass.setVisible(false);
 						action_address.setVisible(false);
 						action_bookinghistory.setVisible(false);
-						action_messagebox.setVisible(false);
+						//action_messagebox.setVisible(false);
 						showbadge.setVisibility(View.GONE);
 						getSupportFragmentManager().beginTransaction().add(R.id.content, new LoginFragment()).commit();
 						
