@@ -16,11 +16,13 @@
 	    android:id="@+id/action_userinfo_1"
         android:showAsAction="always|withText"
         android:title="@string/user_level_content_1"
+        android:visible="false"
         />
 	 <item
 	    android:id="@+id/action_userinfo_2"
         android:showAsAction="always|withText"
         android:title="@string/user_level_content_3"
+        android:visible="false"
         />  
     <item
         android:id="@+id/action_logout"

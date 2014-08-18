@@ -108,7 +108,7 @@ public class ListPassAdapter extends SimpleAdapter {
 								(String) GetParamsMap.get("msg"),
 								Toast.LENGTH_LONG).show();
 						
-						notifyDataSetChanged();
+					   
 						
 					}
 				}.execute();

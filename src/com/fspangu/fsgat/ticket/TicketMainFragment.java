@@ -2225,9 +2225,9 @@ public class TicketMainFragment extends Fragment {
 						
 						ReturnseatNumbersList = new ArrayList<seatNumber>();
 						
-						if (listSeatNumber.getSeatNumberList() == null) {
+						/*if (listSeatNumber.getSeatNumberList() == null) {
 							return false;
-						}
+						}*/
 						ReturnseatNumbersList = listSeatNumber.getSeatNumberList();
 						
 						Boolean success = listSeatNumber.getSuccess();
@@ -2315,9 +2315,9 @@ public class TicketMainFragment extends Fragment {
 						
 						seatNumbersList = new ArrayList<seatNumber>();
 						
-						if (listSeatNumber.getSeatNumberList() == null) {
+						/*if (listSeatNumber.getSeatNumberList() == null) {
 							return false;
-						}
+						}*/
 						seatNumbersList = listSeatNumber.getSeatNumberList();
 						
 						Boolean success = listSeatNumber.getSuccess();
