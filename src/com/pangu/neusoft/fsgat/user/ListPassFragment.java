@@ -194,6 +194,33 @@ public class ListPassFragment extends Fragment
 							
 							pass.setExpireDate(jo.getString("expireDate").toString());
 							
+							String sexcode = jo.getString("sex").toString();
+							
+							if (sexcode.equals("1"))
+							{
+								pass.setSex("男");
+								
+							}
+							else {
+								pass.setSex("女");
+							}
+							
+							pass.setPob(jo.getString("pob").toString());
+							
+							pass.setIssueArea(jo.getString("issueArea").toString());
+							
+							
+							
+							String areacode = jo.getString("area").toString();
+							
+							if (areacode.equals("07"))
+							{
+								pass.setArea("佛山市（不包括顺德）");
+							}
+							else {
+								pass.setArea("佛山市顺德区");
+							}
+							
 							ListPass.add(i, pass);
 	
 							adapterList.add(i,
@@ -255,7 +282,11 @@ public class ListPassFragment extends Fragment
 			                			+"姓名："+pass.getSurName()+pass.getGivenName()+"\n"
 			                			+"出生日期："+pass.getDob()+"\n"
 			                			+"签发日期："+pass.getIssueDate()+"\n"
-			                			+"有效期至："+pass.getExpireDate()). 
+			                			+"有效期至："+pass.getExpireDate()+"\n"
+			                			+"性别："+pass.getSex()+"\n"
+			                			+"出生地："+pass.getPob()+"\n"
+			                			+"签发地："+pass.getIssueArea()+"\n"
+			                			+"户口所在地："+pass.getArea()). 
 			                setIcon(R.drawable.ic_launcher).
 			                setNegativeButton("确定", new DialogInterface.OnClickListener() { 
 			                     
