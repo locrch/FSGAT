@@ -114,5 +114,5 @@
 <string name="user_level_content_2">高级会员（10元/月）</string>
 <string name="user_level_content_3">高级会员（10元/月）</string>
 <string name="huanhang">\n</string>
-<string name="numabc">abcdefghijklmnopqrstuvwxyz1234567890</string>
+<string name="numabc">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890</string>
 </resources>

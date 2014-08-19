@@ -63,59 +63,7 @@ public class ListPassAdapter extends SimpleAdapter {
 		passNumber = (TextView) myView
 				.findViewById(R.id.listpass_content_passNumber);
 		
-		Button delete_btn = (Button) myView
-				.findViewById(R.id.listpass_delete_btn);
-
-		final int p = position;
-
-		delete_btn.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				new CustomAsynTask(context1) {
-					@Override
-					protected Boolean doInBackground(Void... params) {
-						// TODO Auto-generated method stub
-						String[] keys = new String[] { "username", "passNumber" };
-						
-						ListPass lp =  (ListPass) listPass.getListpass();
-						
-						Pass pass = lp.get(p);
-						
-						String[] values = new String[] {
-								sp.getString("username", ""),
-								pass.getPassNumber().toString() };
-
-						PostJson postJson = new PostJson();
-
-						GetParamsMap = postJson
-								.Post(keys, values, "deletePass");
-
-						Boolean success = false;
-
-						success = (Boolean) GetParamsMap.get("success");
-
-						
-
-						return success;
-					}
-
-					protected void onPostExecute(Boolean result) {
-						super.onPostExecute(result);
-
-						Toast.makeText(context1.getApplicationContext(),
-								(String) GetParamsMap.get("msg"),
-								Toast.LENGTH_LONG).show();
-						
-					   
-						
-					}
-				}.execute();
-				
-			}
-			
-		});
+		
 
 		return myView;
 	}

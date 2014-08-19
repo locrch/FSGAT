@@ -301,7 +301,24 @@ public class ListPassFragment extends Fragment
 			                    @Override 
 			                    public void onClick(DialogInterface dialog, int which) { 
 			                        // TODO Auto-generated method stub
-			                    	
+			                    	new AlertDialog.Builder(getActivity()). 
+	    			                setTitle("提示"). 
+	    			                setMessage("您确定要删除地址吗？"). 
+	    			                setIcon(R.drawable.ic_launcher). 
+	    			                setPositiveButton("确定", new DialogInterface.OnClickListener() { 
+	    			                    @Override 
+	    			                    public void onClick(DialogInterface dialog, int which) { 
+	    			                    	deletePass(pass);			    			        				
+	    			                    } 
+	    			                }). 
+	    			                setNeutralButton("取消", new DialogInterface.OnClickListener() { 
+	    			                     
+	    			                    @Override 
+	    			                    public void onClick(DialogInterface dialog, int which) { 
+	    			                        // TODO Auto-generated method stub
+
+	    			                    } 
+	    			                }).show(); 
 			                    } 
 			                }).
 			                create(); 
@@ -324,6 +341,54 @@ public class ListPassFragment extends Fragment
 					transaction.commit();
 				}
 			});
+			
+			
 		}
+		
+		
+	}
+	
+	public void deletePass(final Pass pass){
+		new CustomAsynTask(getActivity()) {
+			@Override
+			protected Boolean doInBackground(Void... params) {
+				// TODO Auto-generated method stub
+				String[] keys = new String[] { "username", "passNumber" };
+				
+				
+				String[] values = new String[] {
+						sp.getString("username", ""),
+						pass.getPassNumber().toString() };
+
+				PostJson postJson = new PostJson();
+
+				GetParamsMap = postJson
+						.Post(keys, values, "deletePass");
+
+				Boolean success = false;
+
+				success = (Boolean) GetParamsMap.get("success");
+
+				
+
+				return success;
+			}
+
+			protected void onPostExecute(Boolean result) {
+				super.onPostExecute(result);
+
+				Toast.makeText(getActivity().getApplicationContext(),
+						(String) GetParamsMap.get("msg"),
+						Toast.LENGTH_LONG).show();
+				
+				if (result)
+				{
+					transaction.replace(R.id.content, new ListPassFragment());
+					transaction.commit();
+				}
+				
+			   
+			}
+		}.execute();
 	}
 }
