@@ -1,6 +1,8 @@
 package com.fspangu.fsgat.ticket;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -172,6 +174,8 @@ public class TicketMainFragment extends Fragment {
 	
 	Integer zgt_ticket_count = 1;
 	float conf_allprice = 0;
+	String update_mindate_string;
+	long update_mindate_long;
 	
 	DatePickerDialog  dpd_uptime_update,dpd_back_uptime_update;
 	Calendar calendar;
@@ -299,6 +303,7 @@ public class TicketMainFragment extends Fragment {
 					int dayOfMonth)
 			{
 				
+				update_mindate_string = String.valueOf(year)+String.valueOf(month)+String.valueOf(dayOfMonth);
 				uptime_update
 						.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
 			}
@@ -320,11 +325,29 @@ public class TicketMainFragment extends Fragment {
 		dpd_uptime_update = new DatePickerDialog(getActivity(), dateListener_uptime_update,
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH)+3);
-		dpd_uptime_update.getDatePicker().setMinDate(calendar.getTime().getTime());
+		dpd_uptime_update.getDatePicker().setMinDate(calendar.getTime().getTime()+259200000);
 		dpd_back_uptime_update = new DatePickerDialog(getActivity(), dateListener_back_uptime_update,
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH)+3);
-		dpd_back_uptime_update.getDatePicker().setMinDate(calendar.getTime().getTime());
+		
+		if (!back_uptime_update.getText().toString().equals(""))
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
+			  
+			  try
+			{
+				update_mindate_long = sdf.parse(update_mindate_string).getTime();
+			} catch (ParseException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}//毫秒
+			  dpd_back_uptime_update.getDatePicker().setMinDate(update_mindate_long);
+		}
+		else {
+			dpd_back_uptime_update.getDatePicker().setMinDate(calendar.getTime().getTime()+259200000);
+		}
+		
 		
 		
 		zgt_ticket_count_np.setMaxValue(10);
@@ -2392,6 +2415,8 @@ public class TicketMainFragment extends Fragment {
 			public boolean onTouch(View v, MotionEvent event)
 			{
 				// TODO Auto-generated method stub
+				
+				
 				dpd_back_uptime_update.show();
 				return false;
 			}

@@ -386,10 +386,13 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="乘车时间：" />
-		<Spinner style="@style/spinner_style"
+
+		<Spinner
 		    android:id="@+id/ticket_main_back_uptime_time_spinner"
+		    style="@style/spinner_style"
 		    android:layout_width="150dp"
 		    android:layout_height="wrap_content"
+		    android:layout_alignParentRight="true"
 		    android:layout_alignParentTop="true"
 		    android:layout_toRightOf="@+id/ticket_main_back_uptime_update"
 		    android:editable="false"
@@ -399,8 +402,8 @@
 		    android:id="@+id/ticket_main_back_uptime_update"
 		    android:layout_width="110dp"
 		    android:layout_height="wrap_content"
-		    android:layout_centerHorizontal="true"
 		    android:layout_centerVertical="true"
+		    android:layout_toRightOf="@+id/ticket_main_back_uptime_label"
 		    android:editable="false"
 		    android:ems="10" >
 
