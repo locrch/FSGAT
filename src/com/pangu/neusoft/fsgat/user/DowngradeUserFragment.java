@@ -159,13 +159,13 @@ public class DowngradeUserFragment extends Fragment
 							
 								if (result)
 								{
-									action_userinfo_1.setVisible(true);
-									action_userinfo_2.setVisible(false);
+									
 									Toast.makeText(getActivity(),
 										"会员降级成功！",
 										Toast.LENGTH_SHORT).show();
 									
-									
+									editor.putString("usertype", "1");
+									editor.commit();
 									
 									
 									YwblFragment ywbl = new YwblFragment();

@@ -61,7 +61,7 @@ public  class YwblFragment extends Fragment {
     @Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {  
     	setHasOptionsMenu(true);
-    	
+    	getActivity().supportInvalidateOptionsMenu(); 
 		        View view = inflater.inflate(R.layout.ywbl_fragment, null);
 //		        android.app.ActionBar actionBar = this.getActivity().getActionBar();
 //				actionBar.setCustomView(R.layout.title_bar);

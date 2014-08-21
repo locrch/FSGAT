@@ -96,6 +96,8 @@ public class ChargeUserFragment extends Fragment
 	
 	
 	
+	
+	
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState)
@@ -165,7 +167,13 @@ public class ChargeUserFragment extends Fragment
 								Toast.makeText(getActivity(),
 										msg,
 										Toast.LENGTH_SHORT).show();
-							
+								
+								if (result)
+								{
+									editor.putString("usertype", "3");
+									editor.commit();
+								}
+								
 								usertype = sp.getString("usertype", "");
 								
 								if (usertype.equals("1"))
@@ -184,7 +192,7 @@ public class ChargeUserFragment extends Fragment
 									action_userinfo_2.setVisible(true);
 									action_userinfo_1.setVisible(false);
 								}
-								
+								getActivity().supportInvalidateOptionsMenu();
 								YwblFragment ywbl = new YwblFragment();
 								getFragmentManager().beginTransaction().replace(R.id.content, ywbl).commit();
 						};
@@ -240,5 +248,31 @@ public class ChargeUserFragment extends Fragment
 					}.execute();
 				}
 			});
+		}
+		
+		@Override
+		public void onPrepareOptionsMenu(Menu menu)
+		{
+			// TODO Auto-generated method stub
+			super.onPrepareOptionsMenu(menu);
+			
+			usertype = sp.getString("usertype", "");
+			
+			if (usertype.equals("1"))
+			{
+				action_userinfo_1.setVisible(true);
+				action_userinfo_2.setVisible(false);
+			}
+			if (usertype.equals("2"))
+			{
+				action_userinfo_2.setVisible(true);
+				action_userinfo_1.setVisible(false);
+			}
+			
+			if (usertype.equals("3"))
+			{
+				action_userinfo_2.setVisible(true);
+				action_userinfo_1.setVisible(false);
+			}
 		}
 }

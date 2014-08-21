@@ -330,6 +330,7 @@ public class LoginFragment extends Fragment
 												action_userinfo_2.setVisible(true);
 												action_userinfo_1.setVisible(false);
 											}
+											 
 										}
 									}
 								}.execute();

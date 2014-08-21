@@ -319,12 +319,12 @@ public class TicketMainFragment extends Fragment {
 		
 		dpd_uptime_update = new DatePickerDialog(getActivity(), dateListener_uptime_update,
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-				calendar.get(Calendar.DAY_OF_MONTH));
-		
+				calendar.get(Calendar.DAY_OF_MONTH)+3);
+		dpd_uptime_update.getDatePicker().setMinDate(calendar.getTime().getTime());
 		dpd_back_uptime_update = new DatePickerDialog(getActivity(), dateListener_back_uptime_update,
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-				calendar.get(Calendar.DAY_OF_MONTH));
-		
+				calendar.get(Calendar.DAY_OF_MONTH)+3);
+		dpd_back_uptime_update.getDatePicker().setMinDate(calendar.getTime().getTime());
 		
 		
 		zgt_ticket_count_np.setMaxValue(10);

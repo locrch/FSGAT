@@ -191,7 +191,6 @@ public class MainActivity extends ActionBarActivity
 				"simple_notification_icon", "drawable", pkgName));
 		PushManager.setNotificationBuilder(this, 1, cBuilder);
 		
-	
 		
 	}
 
@@ -203,7 +202,6 @@ public class MainActivity extends ActionBarActivity
 		// TODO Auto-generated method stub
 		super.onStart();
 		android.app.ActionBar actionBar = getActionBar();
-		
 		
 	}
 	
@@ -457,8 +455,39 @@ public class MainActivity extends ActionBarActivity
 			
 		return super.onCreateOptionsMenu(menu);  
 	}
-
 	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu)
+	{
+		// TODO Auto-generated method stub
+		
+		
+		usertype = sp.getString("usertype", "");
+		
+		if (usertype.equals("1"))
+		{
+			
+			
+			action_userinfo_1.setVisible(true);
+			action_userinfo_2.setVisible(false);
+		}
+		if (usertype.equals("2"))
+		{
+			
+			action_userinfo_2.setVisible(true);
+			action_userinfo_1.setVisible(false);
+		}
+		
+		if (usertype.equals("3"))
+		{
+			
+			
+			action_userinfo_2.setVisible(true);
+			action_userinfo_1.setVisible(false);
+		}
+		
+		return true;
+	}
 	
 	
 	
@@ -796,6 +825,7 @@ public static void addShortcutToDesktop(Context context) {
 					{
 
 						editor.remove("username");
+						editor.remove("usertype");
 						editor.commit();
 						action_userinfo_1.setVisible(false);
 						action_userinfo_2.setVisible(false);

@@ -61,7 +61,9 @@ public  class ZhcxFragment extends Fragment {
 		
 		TextView actionbar_title = (TextView)getActivity().findViewById(R.id.actionbar_title);
 		
-		actionbar_title.setText("综合查询");	
+		actionbar_title.setText("综合查询");
+		
+		
 	}
 	
     @Override  
