@@ -37,6 +37,7 @@ import com.pangu.neusoft.fsgat.model.PostbuyTicket;
 import com.pangu.neusoft.fsgat.model.PostgetDepartureTime;
 import com.pangu.neusoft.fsgat.model.PostgetReturnUpstation;
 import com.pangu.neusoft.fsgat.model.PostgetSeatNumber;
+import com.pangu.neusoft.fsgat.model.PostgetUpstation;
 import com.pangu.neusoft.fsgat.model.PutReturnseatNumbersList;
 import com.pangu.neusoft.fsgat.model.PutseatNumbersList;
 import com.pangu.neusoft.fsgat.model.ReturnDownStation;
@@ -324,11 +325,11 @@ public class TicketMainFragment extends Fragment {
 		
 		dpd_uptime_update = new DatePickerDialog(getActivity(), dateListener_uptime_update,
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-				calendar.get(Calendar.DAY_OF_MONTH)+3);
+				calendar.get(Calendar.DAY_OF_MONTH)+4);
 		dpd_uptime_update.getDatePicker().setMinDate(calendar.getTime().getTime()+259200000);
 		dpd_back_uptime_update = new DatePickerDialog(getActivity(), dateListener_back_uptime_update,
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-				calendar.get(Calendar.DAY_OF_MONTH)+3);
+				calendar.get(Calendar.DAY_OF_MONTH)+4);
 		
 		if (!back_uptime_update.getText().toString().equals(""))
 		{
@@ -516,7 +517,125 @@ public class TicketMainFragment extends Fragment {
 		setHasOptionsMenu(true);
 		return inflater.inflate(R.layout.fragment_ticket_main, null);
 	}
-
+	
+	private boolean getUpStationMethod()
+	{
+		// TODO Auto-generated method stub
+		PostJSONfromGson postGson = new PostJSONfromGson();
+		
+		PostgetUpstation postgetUpStation = new PostgetUpstation();
+		
+		upstation = new Upstation();
+		
+		if (wayID==null||busCompanyID==null)
+		return false;
+		
+		postgetUpStation.setTicketDirectionID(wayID);
+		
+		postgetUpStation.setBusCompanyID(busCompanyID);
+		
+		ListupStation listupStation = new ListupStation();
+		
+		String result1 = (String) postGson.GsonPost(postgetUpStation, "getUpStation");
+		
+		Type listType1=new TypeToken<ListupStation>(){}.getType();
+		
+		Gson gson1 = new Gson();
+		
+		listupStation = gson1.fromJson(result1,listType1);
+		
+		ArrayList<Upstation> upStationsList = new ArrayList<Upstation>();
+		
+		Boolean success = false;
+		
+		success = listupStation.getSuccess();
+		
+		if (!success)
+		return false;
+		
+		upStationsList = listupStation.getUpStationList();
+		
+		
+		
+		listupStationName = new ArrayList<String>();
+		
+		if (!listupStationName.isEmpty()) {
+			listupStationName.clear();
+		}
+		
+		if (!listupStationID.isEmpty()) {
+			listupStationID.clear();
+		}
+		
+		for (int j = 0; j < upStationsList.size(); j++) {
+			
+			upstation = upStationsList.get(j);
+			
+			listupStationName.add(upstation.getStationName());
+			
+			listupStationID.add(upstation.getStationID());
+		}
+		return true;
+	}
+	
+	private boolean getDownStationMethod()
+	{
+		// TODO Auto-generated method stub
+		PostJSONfromGson postGson = new PostJSONfromGson();
+		
+		PostgetDownStation postgetDownStation = new PostgetDownStation();
+		
+		downstation = new downStation();
+		
+		if (wayID==null||busCompanyID==null)
+		return false;
+		
+		postgetDownStation.setTicketDirectionID(wayID);
+		
+		postgetDownStation.setBusCompanyID(busCompanyID);
+		
+		ListdownStation listdownStation = new ListdownStation();
+		
+		String result = (String) postGson.GsonPost(postgetDownStation, "getDownStation");
+		
+		Type listType=new TypeToken<ListdownStation>(){}.getType();
+		
+		Gson gson = new Gson();
+		
+		listdownStation = gson.fromJson(result,listType);
+		
+		ArrayList<downStation> downStationsList = new ArrayList<downStation>();
+		
+		Boolean success = false;
+		
+		downStationsList = listdownStation.getDownStationList();
+		
+		success = listdownStation.getSuccess();
+		
+		if (!success)
+		return false;
+		
+		listdownStationName = new ArrayList<String>();
+		
+		if (!listdownStationName.isEmpty()) {
+			listdownStationName.clear();
+		}
+		
+		if (!listdownStationID.isEmpty()) {
+			listdownStationID.clear();
+		}
+		
+		for (int j = 0; j < downStationsList.size(); j++) {
+			
+			downstation = downStationsList.get(j);
+			
+			listdownStationName.add(downstation.getStationName());
+			
+			listdownStationID.add(downstation.getStationID());
+		}
+		return true;
+	}
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -615,128 +734,12 @@ public class TicketMainFragment extends Fragment {
 					{
 						// TODO Auto-generated method stub
 						
-						String[] keys = new String[]
-						{ "ticketDirectionID","busCompanyID"};
-
-						
-						if (wayID==null|| busCompanyID==null)
-						return false;
-						
-						int[] values = new int[]
-						{wayID,busCompanyID};
-
-						PostJson postJson = new PostJson();
-
-						GetParamsMap = postJson.Post(keys, values,
-								"getUpStation","upStationList");
-
-						Boolean success = false;
-						
-						success = (Boolean) GetParamsMap.get("success");
-						JSONArray upStationList = (JSONArray) GetParamsMap
-								.get("upStationList"); 
-						if (upStationList==null) {
-							return false;
-						}
-						
-						success = (Boolean) GetParamsMap
-						.get("success");
-						
-							if (!listupStationName.isEmpty()) {
-								listupStationName.clear();
-							}
 							
-							for (int i = 0; i < upStationList.length(); i++)
-							{
-								try
-								{
-									JSONObject jo = (JSONObject) upStationList.get(i);
-			
-									adapterListMap = new HashMap<String, Object>();
-			
-									upstation = new Upstation();
-			
-									adapterListMap.put("stationID", jo.getString("stationID").toString());
-									adapterListMap.put("stationName", jo.getString("stationName")
-											.toString());
-									
-			
-									upstation.setStationID(jo.getString("stationID").toString());
-									upstation.setStationName(jo.getString("stationName").toString());
-									
-									listupStationName.add(i, jo.getString("stationName").toString());
-									
-									listupStationID.add(i,Integer.valueOf(jo.getString("stationID")));
-									
-									listupStation.add(i,upstation);
-									
-									adapterList.add(i,
-											(HashMap<String, Object>) adapterListMap);
-									
-									Log.i("upstation ID:" + i, listupStationName.get(i));
-									
-								} catch (JSONException e)
-								{
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								
-								}
-							
-							Log.i("upstation Size:", String.valueOf(listupStationName.size()) );
+							Boolean success = getUpStationMethod();
 							
 							/*上下车获取数据分割*/
 							
-							PostJSONfromGson postGson = new PostJSONfromGson();
-							
-							PostgetDownStation postgetDownStation = new PostgetDownStation();
-							
-							downstation = new downStation();
-							
-							if (wayID==null||busCompanyID==null)
-							return false;
-							
-							postgetDownStation.setTicketDirectionID(wayID);
-							
-							
-							postgetDownStation.setBusCompanyID(busCompanyID);
-							
-							ListdownStation listdownStation = new ListdownStation();
-							
-							String result = (String) postGson.GsonPost(postgetDownStation, "getDownStation");
-							
-							Type listType=new TypeToken<ListdownStation>(){}.getType();
-							
-							Gson gson = new Gson();
-							
-							listdownStation = gson.fromJson(result,listType);
-							
-							ArrayList<downStation> downStationsList = new ArrayList<downStation>();
-							
-							success = false;
-							
-							downStationsList = listdownStation.getDownStationList();
-							
-							success = listdownStation.getSuccess();
-							
-							listdownStationName = new ArrayList<String>();
-							
-							if (!listdownStationName.isEmpty()) {
-								listdownStationName.clear();
-							}
-							
-							if (!listdownStationID.isEmpty()) {
-								listdownStationID.clear();
-							}
-							
-							for (int j = 0; j < downStationsList.size(); j++) {
-								
-								downstation = downStationsList.get(j);
-								
-								listdownStationName.add(downstation.getStationName());
-								
-								listdownStationID.add(downstation.getStationID());
-							}
+							success = getDownStationMethod();
 							
 							
 						return success;
@@ -767,8 +770,7 @@ public class TicketMainFragment extends Fragment {
 								downplace_spinner
 										.setAdapter(adapter_downplace);
 
-							} else if (!result)
-							{
+							} else{
 								Toast.makeText(
 										getActivity()
 												.getApplicationContext(),
@@ -834,126 +836,11 @@ public class TicketMainFragment extends Fragment {
 					{
 						// TODO Auto-generated method stub
 						
-						String[] keys = new String[]
-						{ "ticketDirectionID","busCompanyID"};
-
+						Boolean success = getUpStationMethod();
 						
-						if (wayID==null|| busCompanyID==null)
-						return false;
+						/*上下车获取数据分割*/
 						
-						int[] values = new int[]
-						{wayID,busCompanyID};
-
-						PostJson postJson = new PostJson();
-
-						GetParamsMap = postJson.Post(keys, values,
-								"getUpStation","upStationList");
-
-						Boolean success = false;
-						
-						success = (Boolean) GetParamsMap.get("success");
-						JSONArray upStationList = (JSONArray) GetParamsMap
-								.get("upStationList"); 
-						if (upStationList==null) {
-							return false;
-						}
-						
-						success = (Boolean) GetParamsMap
-						.get("success");
-						
-							if (!listupStationName.isEmpty()) {
-								listupStationName.clear();
-							}
-							
-							for (int i = 0; i < upStationList.length(); i++)
-							{
-								try
-								{
-									JSONObject jo = (JSONObject) upStationList.get(i);
-			
-									adapterListMap = new HashMap<String, Object>();
-			
-									upstation = new Upstation();
-			
-									adapterListMap.put("stationID", jo.getString("stationID").toString());
-									adapterListMap.put("stationName", jo.getString("stationName")
-											.toString());
-									
-			
-									upstation.setStationID(jo.getString("stationID").toString());
-									upstation.setStationName(jo.getString("stationName").toString());
-									
-									listupStationName.add(i, jo.getString("stationName").toString());
-									
-									listupStationID.add(i,Integer.valueOf(jo.getString("stationID")));
-									
-									listupStation.add(i,upstation);
-									
-									adapterList.add(i,
-											(HashMap<String, Object>) adapterListMap);
-									
-									Log.i("upstation ID:" + i, listupStationName.get(i));
-									
-								} catch (JSONException e)
-								{
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								
-								}
-							
-							Log.i("upstation Size:", String.valueOf(listupStationName.size()) );
-							
-							/*上下车获取数据分割*/
-							
-							PostJSONfromGson postGson = new PostJSONfromGson();
-							
-							PostgetDownStation postgetDownStation = new PostgetDownStation();
-							
-							downstation = new downStation();
-							
-							if (wayID==null||busCompanyID==null)
-							return false;
-							
-							postgetDownStation.setTicketDirectionID(wayID);
-							
-							
-							postgetDownStation.setBusCompanyID(busCompanyID);
-							
-							ListdownStation listdownStation = new ListdownStation();
-							
-							String result = (String) postGson.GsonPost(postgetDownStation, "getDownStation");
-							
-							Type listType=new TypeToken<ListdownStation>(){}.getType();
-							
-							Gson gson = new Gson();
-							
-							listdownStation = gson.fromJson(result,listType);
-							
-							ArrayList<downStation> downStationsList = new ArrayList<downStation>();
-							
-							downStationsList = listdownStation.getDownStationList();
-							
-							success = listdownStation.getSuccess();
-							
-							listdownStationName = new ArrayList<String>();
-							
-							if (!listdownStationName.isEmpty()) {
-								listdownStationName.clear();
-							}
-							
-							if (!listdownStationID.isEmpty()) {
-								listdownStationID.clear();
-							}
-							
-							for (int j = 0; j < downStationsList.size(); j++) {
-								
-								downstation = downStationsList.get(j);
-								
-								listdownStationName.add(downstation.getStationName());
-								
-								listdownStationID.add(downstation.getStationID());
-							}
+						success = getDownStationMethod();
 							
 							
 						return success;
@@ -984,8 +871,7 @@ public class TicketMainFragment extends Fragment {
 								downplace_spinner
 										.setAdapter(adapter_downplace);
 
-							} else if (!result)
-							{
+							} else{
 								Toast.makeText(
 										getActivity()
 												.getApplicationContext(),
@@ -1066,6 +952,12 @@ public class TicketMainFragment extends Fragment {
 										
 										ListDepartureTime listDepartureTime1 = gson.fromJson(result1,listType1);
 										
+										Boolean success = listDepartureTime1.getSuccess();
+										
+										if (!success)
+										return false;
+										
+										
 										ArrayList<ReturnUpStation> returnUpStationList = new ArrayList<ReturnUpStation>();
 										
 										ArrayList<ReturnDownStation> returnDownStationList = new ArrayList<ReturnDownStation>();
@@ -1102,7 +994,10 @@ public class TicketMainFragment extends Fragment {
 											
 										}
 										
-										Boolean success = listDepartureTime1.getSuccess();
+										success = listDepartureTime1.getSuccess();
+										
+										if (!success)
+										return false;
 										
 										if (!listReturnDownStationName.isEmpty()) {
 											listReturnDownStationName.clear();
@@ -1294,126 +1189,11 @@ public class TicketMainFragment extends Fragment {
 							{
 								// TODO Auto-generated method stub
 								
-								String[] keys = new String[]
-								{ "ticketDirectionID","busCompanyID"};
-		
+								Boolean success = getUpStationMethod();
 								
-								if (wayID==null|| busCompanyID==null)
-								return false;
+								/*上下车获取数据分割*/
 								
-								int[] values = new int[]
-								{wayID,busCompanyID};
-		
-								PostJson postJson = new PostJson();
-		
-								GetParamsMap = postJson.Post(keys, values,
-										"getUpStation","upStationList");
-		
-								Boolean success = false;
-								
-								success = (Boolean) GetParamsMap.get("success");
-								JSONArray upStationList = (JSONArray) GetParamsMap
-										.get("upStationList"); 
-								if (upStationList==null) {
-									return false;
-								}
-								
-								success = (Boolean) GetParamsMap
-								.get("success");
-								
-									if (!listupStationName.isEmpty()) {
-										listupStationName.clear();
-									}
-									
-									for (int i = 0; i < upStationList.length(); i++)
-									{
-										try
-										{
-											JSONObject jo = (JSONObject) upStationList.get(i);
-					
-											adapterListMap = new HashMap<String, Object>();
-					
-											upstation = new Upstation();
-					
-											adapterListMap.put("stationID", jo.getString("stationID").toString());
-											adapterListMap.put("stationName", jo.getString("stationName")
-													.toString());
-											
-					
-											upstation.setStationID(jo.getString("stationID").toString());
-											upstation.setStationName(jo.getString("stationName").toString());
-											
-											listupStationName.add(i, jo.getString("stationName").toString());
-											
-											listupStationID.add(i,Integer.valueOf(jo.getString("stationID")));
-											
-											listupStation.add(i,upstation);
-											
-											adapterList.add(i,
-													(HashMap<String, Object>) adapterListMap);
-											
-											Log.i("upstation ID:" + i, listupStationName.get(i));
-											
-										} catch (JSONException e)
-										{
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										}
-										
-										}
-									
-									Log.i("upstation Size:", String.valueOf(listupStationName.size()) );
-									
-									/*上下车获取数据分割*/
-									
-									PostJSONfromGson postGson = new PostJSONfromGson();
-									
-									PostgetDownStation postgetDownStation = new PostgetDownStation();
-									
-									downstation = new downStation();
-									
-									if (wayID==null||busCompanyID==null)
-									return false;
-									
-									postgetDownStation.setTicketDirectionID(wayID);
-									
-									
-									postgetDownStation.setBusCompanyID(busCompanyID);
-									
-									ListdownStation listdownStation = new ListdownStation();
-									
-									String result = (String) postGson.GsonPost(postgetDownStation, "getDownStation");
-									
-									Type listType=new TypeToken<ListdownStation>(){}.getType();
-									
-									Gson gson = new Gson();
-									
-									listdownStation = gson.fromJson(result,listType);
-									
-									ArrayList<downStation> downStationsList = new ArrayList<downStation>();
-									
-									downStationsList = listdownStation.getDownStationList();
-									
-									success = listdownStation.getSuccess();
-									
-									listdownStationName = new ArrayList<String>();
-									
-									if (!listdownStationName.isEmpty()) {
-										listdownStationName.clear();
-									}
-									
-									if (!listdownStationID.isEmpty()) {
-										listdownStationID.clear();
-									}
-									
-									for (int j = 0; j < downStationsList.size(); j++) {
-										
-										downstation = downStationsList.get(j);
-										
-										listdownStationName.add(downstation.getStationName());
-										
-										listdownStationID.add(downstation.getStationID());
-									}
+								success = getDownStationMethod();
 									
 									
 								return success;
@@ -1444,8 +1224,7 @@ public class TicketMainFragment extends Fragment {
 										downplace_spinner
 												.setAdapter(adapter_downplace);
 
-									} else if (!result)
-									{
+									} else{
 										Toast.makeText(
 												getActivity()
 														.getApplicationContext(),
@@ -2460,7 +2239,7 @@ public class TicketMainFragment extends Fragment {
 					listTicketLine = gson.fromJson(result,listType);
 					
 					
-					if (listTicketLine.getMsg()==null||ticketLineID == null||listTicketLine.getSuccess()==null||contact.getText().toString()==null||tellphone.getText().toString()==null) {
+					if (listTicketLine.getMsg()==null||ticketLineID == null||listTicketLine.getSuccess()==null||contact.getText().toString()==null||tellphone.getText().toString()==null||custom_np_num.getText().toString().equals("0")) {
 						return false;
 					}
 					

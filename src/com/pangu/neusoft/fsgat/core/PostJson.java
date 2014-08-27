@@ -1,5 +1,6 @@
 package com.pangu.neusoft.fsgat.core;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.fspangu.fsgat.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.pangu.neusoft.fsgat.model.ListcDef;
 
 
 import android.util.Log;

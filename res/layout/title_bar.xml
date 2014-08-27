@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:background="#0fa8eb"
     >
 
@@ -14,18 +14,6 @@
         android:background="@drawable/back_btn"
         android:gravity="center" />
 
-    <TextView
-        android:id="@+id/actionbar_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/actionbar_back_btn"
-        android:gravity="center"
-        android:text="  佛山港澳通"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp" />
-
 	
 
 	<ImageView
@@ -35,5 +23,18 @@
 	    android:layout_alignParentRight="true"
 	    android:layout_alignTop="@+id/actionbar_back_btn"
 	    android:src="@drawable/ic_menu_messagebox" />
+
+	 <TextView
+        android:id="@+id/actionbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/actionbar_back_btn"
+        android:gravity="center"
+        android:paddingLeft="21sp"
+        android:text="佛山港澳通"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
 </RelativeLayout>

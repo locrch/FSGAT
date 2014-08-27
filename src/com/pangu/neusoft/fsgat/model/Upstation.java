@@ -1,13 +1,16 @@
 package com.pangu.neusoft.fsgat.model;
 
 public class Upstation {
-	private String stationID,stationName;
+	private String stationName;
+	private int stationID;
 
-	public String getStationID() {
+	public int getStationID()
+	{
 		return stationID;
 	}
 
-	public void setStationID(String stationID) {
+	public void setStationID(int stationID)
+	{
 		this.stationID = stationID;
 	}
 

@@ -209,7 +209,7 @@
 
 		    <EditText
 		        android:id="@+id/ticket_main_uptime_update"
-		        android:layout_width="110dp"
+		        android:layout_width="130dp"
 		        android:layout_height="wrap_content"
 		        android:layout_alignParentLeft="true"
 		        android:layout_centerVertical="true"
@@ -400,7 +400,7 @@
 
 		<EditText
 		    android:id="@+id/ticket_main_back_uptime_update"
-		    android:layout_width="110dp"
+		    android:layout_width="130dp"
 		    android:layout_height="wrap_content"
 		    android:layout_centerVertical="true"
 		    android:layout_toRightOf="@+id/ticket_main_back_uptime_label"
@@ -455,7 +455,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="联系人：" />
+            android:text="   联系人：" />
     </RelativeLayout>
 
     <RelativeLayout

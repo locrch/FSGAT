@@ -119,11 +119,11 @@ public class TicketHistoryFragment extends Fragment
 				listTicketOrder = gson.fromJson(result,listType);
 				
 				ticketOrderList = new ArrayList<ticketOrder>();
-				
+				if (!listTicketOrder.getSuccess())
+				return false;
 				ticketOrderList = listTicketOrder.getTicketOrderList();
 				
-				if (ticketOrderList==null)
-				return false;
+				
 				for (int i = 0; i < ticketOrderList.size(); i++)
 				{
 					ticketorder = new ticketOrder();

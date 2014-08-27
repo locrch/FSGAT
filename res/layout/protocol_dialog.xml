@@ -48,13 +48,18 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="30dp"
-            android:text="同意" />
+            android:text="同意"
+            android:textColor="#ffffff"
+            android:background="@drawable/button_orange"
+             />
 
         <Button
             android:id="@+id/protocol_dialog_disagree_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="不同意" />
+            android:text="不同意"
+            android:textColor="#ffffff"
+            android:background="@drawable/button_orange" />
     </LinearLayout>
     
 </RelativeLayout>

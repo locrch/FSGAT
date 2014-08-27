@@ -22,12 +22,15 @@ import com.fspangu.fsgat.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
+import com.pangu.neusoft.fsgat.model.ListTicketOrder;
+import com.pangu.neusoft.fsgat.model.ListcDef;
 import com.pangu.neusoft.fsgat.model.ListdownStation;
 import com.pangu.neusoft.fsgat.model.downStation;
 
 public class PostJSONfromGson {
 	private static final String TAG = "FSGAT";
 	String result;
+	Gson gson;
 	public Object GsonPost(Object putobject,String methodname)
 	{
 		
@@ -38,12 +41,12 @@ public class PostJSONfromGson {
 			
 			HttpPost hp = new HttpPost(PostJson.serverurl+methodname);
 			
-			Gson gson = new Gson();
+			gson = new Gson();
 			
 			// 请求json报文
 			 JSONObject joput = new JSONObject(gson.toJson(putobject));
 			
-			 
+			
 			 
 			joput.put("AppKey", "GangAoTongAndroid");
 			joput.put("AppSecret", "LLNvI2xxTLwZhAAORdHyRWC9yLfrSsppnn6uDMD-");
@@ -59,6 +62,9 @@ public class PostJSONfromGson {
 			// 获取返回json报文
 			
 				result = EntityUtils.toString(hr.getEntity());
+				
+				
+				
 				Log.d(TAG, putobject.toString()+"Gresult : " + result);
 				
 				
@@ -75,6 +81,13 @@ public class PostJSONfromGson {
 		{
 			// TODO: handle exception
 			Log.e(TAG, e.getMessage());
+			
+			String json_false = "{\"type\":null,\"success\":false,\"msg\":\"网络错误！\"}";
+				
+			result = json_false;
+				
+			return result;
+			
 		}
 		
 		finally{
